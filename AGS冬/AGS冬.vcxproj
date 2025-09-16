@@ -127,10 +127,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\Camera.h" />
+    <ClInclude Include="Common\Application.h" />
+    <ClInclude Include="Object\Player.h" />
+    <ClInclude Include="Manager\SceneManager.h" />
+    <ClInclude Include="Scene\BaseScene.h" />
     <ClInclude Include="Scene\GameScene.h" />
+    <ClInclude Include="Object\StageBase.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\Camera.cpp" />
+    <ClCompile Include="Common\Application.cpp" />
+    <ClCompile Include="Object\Player.cpp" />
+    <ClCompile Include="Manager\SceneManager.cpp" />
+    <ClCompile Include="Scene\BaseScene.cpp" />
     <ClCompile Include="Scene\GameScene.cpp" />
+    <ClCompile Include="Object\StageBase.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
