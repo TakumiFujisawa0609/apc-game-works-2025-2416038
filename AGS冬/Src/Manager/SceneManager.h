@@ -30,7 +30,7 @@ public:
 	static void CreateInstance(void);
 
 	// インスタンスの取得
-	static SceneManager& GetInstance(void);
+	static SceneManager* GetInstance(void);
 
 	// 初期化
 	void Init(void);
@@ -90,11 +90,8 @@ private:
 	// 外部から生成できない様にする
 	SceneManager(void);
 
-	// コピーコンストラクタも同様
-	SceneManager(const SceneManager& instance) = default;
-
 	// デストラクタも同様
-	~SceneManager(void) = default;
+	~SceneManager(void);
 
 	// デルタタイムをリセットする
 	void ResetDeltaTime(void);

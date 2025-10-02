@@ -122,7 +122,7 @@ void Player::Move(void)
 	auto& ins = InputManager::GetInstance();
 
 	// ƒJƒƒ‰‚ÌŠp“x‚ðŽæ“¾
-	VECTOR cameraAngles_ = SceneManager::GetInstance().GetCamera()->GetAngles();
+	VECTOR cameraAngles_ = SceneManager::GetInstance()->GetCamera()->GetAngles();
 
 	VECTOR dir = AsoUtility::VECTOR_ZERO;
 

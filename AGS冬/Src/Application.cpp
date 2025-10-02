@@ -86,18 +86,14 @@ void Application::Run(void)
 	// ゲームループ
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_0) == 0)
 	{
-		auto& ins = SceneManager::GetInstance();
-
 		//// フレームレート更新
 		//// 1/60秒経過していないなら再ループさせる
 		//if (!fps_->UpdateFrameRate()) continue;
-		if (ins.IsGameEnd())
-			return;i
 
-		//InputManager::GetInstance().Update();
-		ins.Update();
+		InputManager::GetInstance().Update();
+		SceneManager::GetInstance()->Update();
 
-		ins.Draw();
+		SceneManager::GetInstance()->Draw();
 
 		//fps_->CalcFrameRate();	// フレームレート計算
 		//fps_->DrawFrameRate();	// フレームレート描画

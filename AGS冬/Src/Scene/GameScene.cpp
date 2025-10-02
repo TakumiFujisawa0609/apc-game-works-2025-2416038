@@ -24,7 +24,7 @@ void GameScene::Init(void)
 	//stage_->Init();
 
 	// ƒJƒƒ‰
-	camera_ = SceneManager::GetInstance().GetCamera();
+	camera_ = SceneManager::GetInstance()->GetCamera();
 	
 
 	grid_ = new Grid();

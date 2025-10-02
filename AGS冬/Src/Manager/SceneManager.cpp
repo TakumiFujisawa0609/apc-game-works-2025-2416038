@@ -8,6 +8,29 @@
 
 SceneManager* SceneManager::instance_ = nullptr;
 
+SceneManager::SceneManager(void)
+{
+
+	sceneId_ = SCENE_ID::NONE;
+	waitSceneId_ = SCENE_ID::NONE;
+
+	scene_ = nullptr;
+	fader_ = nullptr;
+
+	isSceneChanging_ = false;
+
+	// デルタタイム
+	deltaTime_ = 1.0f / 60.0f;
+
+	camera_ = nullptr;
+	miniCamera_ = nullptr;
+
+}
+
+SceneManager::~SceneManager(void)
+{
+}
+
 void SceneManager::CreateInstance()
 {
 	if (instance_ == nullptr)
@@ -17,9 +40,9 @@ void SceneManager::CreateInstance()
 	instance_->Init();
 }
 
-SceneManager& SceneManager::GetInstance(void)
+SceneManager* SceneManager::GetInstance(void)
 {
-	return *instance_;
+	return instance_;
 }
 
 void SceneManager::Init(void)
@@ -41,8 +64,6 @@ void SceneManager::Init(void)
 
 	scene_ = new TitleScene();
 	scene_->Init();
-
-
 
 	isSceneChanging_ = false;
 
@@ -194,25 +215,6 @@ float SceneManager::GetDeltaTime(void) const
 Camera* SceneManager::GetCamera(void) const
 {
 	return camera_;
-}
-
-SceneManager::SceneManager(void)
-{
-
-	sceneId_ = SCENE_ID::NONE;
-	waitSceneId_ = SCENE_ID::NONE;
-
-	scene_ = nullptr;
-	fader_ = nullptr;
-
-	isSceneChanging_ = false;
-
-	// デルタタイム
-	deltaTime_ = 1.0f / 60.0f;
-
-	camera_ = nullptr;
-	miniCamera_ = nullptr;
-
 }
 
 void SceneManager::ResetDeltaTime(void)

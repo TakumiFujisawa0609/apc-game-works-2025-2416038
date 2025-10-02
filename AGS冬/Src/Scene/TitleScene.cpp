@@ -20,7 +20,7 @@ void TitleScene::Update(void)
 
 	if (ins.IsTrgDown(KEY_INPUT_SPACE))
 	{
-		SceneManager::GetInstance().ChangeScene(SceneManager::SCENE_ID::GAME);
+		SceneManager::GetInstance()->ChangeScene(SceneManager::SCENE_ID::GAME);
 	}
 }
 
