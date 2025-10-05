@@ -3,7 +3,7 @@
 #include "../Manager/Camera.h"
 #include "../Object/Grid.h"
 #include "../Object/Stagebase.h"
-#include "../Object/Player.h"
+#include "../Object/Actor/Player.h"
 #include "GameScene.h"
 
 
@@ -16,31 +16,37 @@ GameScene::~GameScene(void)
 
 void GameScene::Init(void)
 {
-	//// プレイヤー
-	//player_ = new Player();
-	//player_->Init();
+
 	//// ステージ
 	//stage_ = new StageBase();
 	//stage_->Init();
 
+	// プレイヤー
+	player_ = new Player();
+
+
+	player_->Init();
 	// カメラ
 	camera_ = SceneManager::GetInstance()->GetCamera();
-	
+	camera_->SetFollow(player_);
+	camera_->ChangeMode(Camera::MODE::FOLLOW);
 
 	grid_ = new Grid();
+
+
 	grid_->Init();
 }
 
 void GameScene::Update(void)
 {
-	/*player_->Update();
-	stage_->Update();*/
+	player_->Update();
+	//stage_->Update();
 }
 
 void GameScene::Draw(void)
 {
 	//stage_->Draw();
-	//player_->Draw();
+	player_->Draw();
 
 	DrawFormatString(
 		300, 200, 0xffffff,
@@ -53,10 +59,10 @@ void GameScene::Draw(void)
 
 void GameScene::Release(void)
 {
-	/*player_->Release();
+	player_->Release();
 	delete player_;
 
-	stage_->Release();
+	/*stage_->Release();
 	delete stage_;*/
 
 }

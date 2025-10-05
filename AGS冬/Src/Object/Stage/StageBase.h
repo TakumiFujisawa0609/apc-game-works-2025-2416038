@@ -3,13 +3,17 @@
 class StageBase
 {
 public:
+
 	StageBase(void);
-	~StageBase(void);
+	virtual ~StageBase(void);
+
 	void Init(void);
-	void Update(void);
-	void Draw(void);
-	void Release(void);
-private:
+	virtual void Update(void);
+	virtual void Draw(void);
+	virtual void Release(void);
+
+protected:
+
 	// ステージモデルのハンドルID
 	int modelId_;
 	// ステージモデルの位置

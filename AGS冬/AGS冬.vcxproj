@@ -139,6 +139,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Manager\PanelManager.h" />
+    <ClInclude Include="Src\Object\Stage\Panel.h" />
+    <ClInclude Include="Src\Object\Actor\ActorBase.h" />
     <ClInclude Include="Src\Object\Grid.h" />
     <ClInclude Include="Src\main.h" />
     <ClInclude Include="Src\Common\Fader.h" />
@@ -149,15 +152,18 @@
     <ClInclude Include="Src\Utility\MatrixUtility.h" />
     <ClInclude Include="Src\Manager\Camera.h" />
     <ClInclude Include="Src\Application.h" />
-    <ClInclude Include="Src\Object\Player.h" />
+    <ClInclude Include="Src\Object\Actor\Player.h" />
     <ClInclude Include="Src\Manager\SceneManager.h" />
     <ClInclude Include="Src\Scene\SceneBase.h" />
     <ClInclude Include="Src\Scene\GameScene.h" />
-    <ClInclude Include="Src\Object\StageBase.h" />
+    <ClInclude Include="Src\Object\Stage\StageBase.h" />
     <ClInclude Include="Src\Common\Vector2.h" />
     <ClInclude Include="Src\Scene\TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Manager\PanelManager.cpp" />
+    <ClCompile Include="Src\Object\Stage\Panel.cpp" />
+    <ClCompile Include="Src\Object\Actor\ActorBase.cpp" />
     <ClCompile Include="Src\Object\Grid.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\Common\Fader.cpp" />
@@ -168,11 +174,11 @@
     <ClCompile Include="Src\Utility\MatrixUtility.cpp" />
     <ClCompile Include="Src\Manager\Camera.cpp" />
     <ClCompile Include="Src\Application.cpp" />
-    <ClCompile Include="Src\Object\Player.cpp" />
+    <ClCompile Include="Src\Object\Actor\Player.cpp" />
     <ClCompile Include="Src\Manager\SceneManager.cpp" />
     <ClCompile Include="Src\Scene\SceneBase.cpp" />
     <ClCompile Include="Src\Scene\GameScene.cpp" />
-    <ClCompile Include="Src\Object\StageBase.cpp" />
+    <ClCompile Include="Src\Object\Stage\StageBase.cpp" />
     <ClCompile Include="Src\Common\Vector2.cpp" />
     <ClCompile Include="Src\Scene\TitleScene.cpp" />
   </ItemGroup>
