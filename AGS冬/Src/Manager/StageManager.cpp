@@ -16,18 +16,34 @@ void StageManager::Init(void)
 
 	// パネル1枚のサイズを取得
 	startPos_ = VGet(-PANEL_SIZE, 0.0f, PANEL_SIZE); // 左上原点
+	// ======== 3x3 グリッド配置 ========
+	const int rowCount = 3;
+	const int colCount = 3;
 
 	// 決められた数配置
-	for (int i = 0; i < PANEL_NUM; i++)
+	for (int row = 0; row < rowCount; ++row)
 	{
-		// 生成
-		StageBase* panel = new StageBase();
-		
-		// 初期化
-		panel->Init(stageModelIds_[static_cast<int>(StageBase::TYPE::PANEL)]);
+		for (int col = 0; col < colCount; ++col)
+		{
+			// 生成
+			StageBase* panel = new StageBase();
 
-		// ステージを登録
-		stages_[StageBase::TYPE::PANEL].emplace_back(panel);
+			// 初期化
+			panel->Init(
+				stageModelIds_[static_cast<int>(StageBase::TYPE::PANEL)]);
+
+			// 位置設定
+			VECTOR pos = VGet(
+				startPos_.x + col * PANEL_SIZE,
+				startPos_.y,
+				startPos_.z - row * PANEL_SIZE
+			);
+
+			panel->SetPos(pos);
+
+			// ステージを登録
+			stages_[StageBase::TYPE::PANEL].emplace_back(panel);
+		}
 	}
 }
 

@@ -12,7 +12,7 @@ void StageBase::Init(int baseModel)
 {
 	// ƒ‚ƒfƒ‹“Ç‚İ‚İ
 	modelId_ = MV1DuplicateModel(baseModel);
-
+	
 	// ˆÊ’u
 	pos_ = { 0.0f, 0.0f, 0.0f };
 	MV1SetPosition(modelId_, pos_);
@@ -32,4 +32,10 @@ void StageBase::Release(void)
 {
 	// ƒ‚ƒfƒ‹‰ğ•ú
 	MV1DeleteModel(modelId_);
+}
+
+void StageBase::SetPos(VECTOR pos)
+{
+	pos_ = pos;
+	MV1SetPosition(modelId_, pos_);
 }

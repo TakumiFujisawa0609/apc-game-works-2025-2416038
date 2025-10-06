@@ -107,12 +107,12 @@ void GameScene::UpdatePauseMenu()
 	{
 		switch (cursorIndex_)
 		{
-		case 0: // RESUME
+		case 0: // GAME
 			isPaused_ = false;
 			break;
 
-		case 1: // RETRY
-			SceneManager::GetInstance()->ChangeScene(SceneManager::SCENE_ID::GAME);
+		case 1: // OPTION
+
 			break;
 
 		case 2: // TITLE
@@ -124,7 +124,7 @@ void GameScene::UpdatePauseMenu()
 
 void GameScene::DrawPauseMenu()
 {
-	const char* menu[] = { "RESUME", "RETRY", "TITLE" };
+	const char* menu[] = { "GAME", "OPTION", "TITLE" };
 
 	// ”¼“§–¾”wŒi
 	DrawBox(0, 0, 1280, 720, GetColor(0, 0, 0), TRUE);

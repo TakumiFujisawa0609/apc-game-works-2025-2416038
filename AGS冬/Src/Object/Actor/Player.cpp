@@ -67,7 +67,7 @@ void Player::Move(void)
 	}
 
 	// WASD‚ÅƒJƒƒ‰‚ğˆÚ“®‚³‚¹‚é
-	const float movePow = 3.0f;
+	const float movePow = 6.0f;
 
 	if (!AsoUtility::EqualsVZero(dir))
 	{

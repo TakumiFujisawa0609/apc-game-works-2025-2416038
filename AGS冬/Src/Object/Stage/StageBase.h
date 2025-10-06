@@ -18,6 +18,8 @@ public:
 	virtual void Draw(void);
 	virtual void Release(void);
 
+	void SetPos(VECTOR pos);
+
 protected:
 
 	// ステージモデルのハンドルID
