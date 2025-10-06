@@ -12,6 +12,7 @@ public:
 		IDLE,
 		WALK,
 		JUMP,
+		DEAD,
 		MAX,
 	};
 
@@ -20,6 +21,8 @@ public:
 	{
 		IDLE,
 		WALK,
+		JUMP,
+		DEAD,
 		MAX,
 	};
 
@@ -58,6 +61,19 @@ protected:
 	void ChangeIdle(void);
 	void ChangeWalk(void);
 	void ChangeJump(void);
+	void ChangeDead(void);
+
+	// èÛë‘ï çXêV
+	void UpdateIdle(void);
+	void UpdateWalk(void);
+	void UpdateJump(void);
+	void UpdateDead(void);
+
+	// èÛë‘ï ï`âÊ
+	void DrawIdle(void);
+	void DrawWalk(void);
+	void DrawJump(void);
+	void DrawDead(void);
 
 
 private:

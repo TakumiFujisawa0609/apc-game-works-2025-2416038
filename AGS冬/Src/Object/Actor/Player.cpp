@@ -17,11 +17,43 @@ Player::~Player(void)
 void Player::Update(void)
 {
 	ActorBase::Update();
+
+	switch (state_)
+	{
+	case STATE::IDLE:
+		UpdateIdle();
+		break;
+	case STATE::WALK:
+		UpdateWalk();
+		break;
+	case STATE::JUMP:
+		UpdateJump();
+		break;
+	case STATE::DEAD:
+		UpdateDead();
+		break;
+	}
 }
 
 void Player::Draw(void)
 {
 	ActorBase::Draw();
+
+	switch (state_)
+	{
+	case STATE::IDLE:
+		DrawIdle();
+		break;
+	case STATE::WALK:
+		DrawWalk();
+		break;
+	case STATE::JUMP:
+		DrawJump();
+		break;
+	case STATE::DEAD:
+		DrawDead();
+		break;
+	}
 
 	DrawFormatString(
 		0, 50, 0xffffff,
@@ -35,6 +67,27 @@ void Player::Draw(void)
 void Player::Release(void)
 {
 	ActorBase::Release();
+}
+
+void Player::ChangeState(STATE state)
+{
+	state_ = state;
+
+	switch (state_)
+	{
+	case STATE::IDLE:
+		ChangeIdle();
+		break;
+	case STATE::WALK:
+		ChangeWalk();
+		break;
+	case STATE::JUMP:
+		ChangeJump();
+		break;
+	case STATE::DEAD:
+		ChangeDead();
+		break;
+	}
 }
 
 void Player::Move(void)
@@ -97,6 +150,63 @@ void Player::Move(void)
 	}
 
 
+}
+
+void Player::ChangeIdle(void)
+{
+	// アニメ再生
+	animationController_->Play(static_cast<int>(ANIM_TYPE::IDLE), true);
+}
+
+void Player::ChangeWalk(void)
+{
+	// アニメ再生
+	animationController_->Play(static_cast<int>(ANIM_TYPE::WALK), true);
+
+}
+
+void Player::ChangeJump(void)
+{
+	// アニメ再生
+	animationController_->Play(static_cast<int>(ANIM_TYPE::JUMP));
+}
+
+void Player::ChangeDead(void)
+{
+	// アニメ再生
+	animationController_->Play(static_cast<int>(ANIM_TYPE::DEAD));
+}
+
+void Player::UpdateIdle(void)
+{
+}
+
+void Player::UpdateWalk(void)
+{
+}
+
+void Player::UpdateJump(void)
+{
+}
+
+void Player::UpdateDead(void)
+{
+}
+
+void Player::DrawIdle(void)
+{
+}
+
+void Player::DrawWalk(void)
+{
+}
+
+void Player::DrawJump(void)
+{
+}
+
+void Player::DrawDead(void)
+{
 }
 
 void Player::InitLoad(void)
