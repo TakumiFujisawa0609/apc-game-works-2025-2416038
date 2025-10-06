@@ -8,10 +8,10 @@ StageBase::~StageBase(void)
 {
 }
 
-void StageBase::Init(void)
+void StageBase::Init(int baseModel)
 {
 	// ÉÇÉfÉãì«Ç›çûÇ›
-	modelId_ = MV1LoadModel("Data/Model/Stage/panel.mv1");
+	modelId_ = MV1DuplicateModel(baseModel);
 
 	// à íu
 	pos_ = { 0.0f, 0.0f, 0.0f };

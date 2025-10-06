@@ -8,18 +8,17 @@ Panel::~Panel(void)
 {
 }
 
-void Panel::Init(void)
-{
-}
-
-void Panel::Update(void)
-{
-}
-
-void Panel::Draw(void)
-{
-}
-
-void Panel::Release(void)
-{
-}
+//void Panel::Update(void)
+//{
+//	StageBase::Update();
+//}
+//
+//void Panel::Draw(void)
+//{
+//	StageBase::Draw();
+//}
+//
+//void Panel::Release(void)
+//{
+//	StageBase::Release();
+//}

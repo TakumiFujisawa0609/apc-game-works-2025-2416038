@@ -9,10 +9,9 @@ public:
 	Panel(void);
 	~Panel(void);
 
-	void Init(void);
-	void Update(void);
-	void Draw(void);
-	void Release(void);
+	//void Update(void);
+	//void Draw(void);
+	//void Release(void);
 
 private:
 };

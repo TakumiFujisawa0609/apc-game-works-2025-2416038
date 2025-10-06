@@ -4,10 +4,16 @@ class StageBase
 {
 public:
 
+	enum class TYPE
+	{
+		PANEL,
+		MAX,
+	};
+
 	StageBase(void);
 	virtual ~StageBase(void);
 
-	void Init(void);
+	void Init(int baseModel);
 	virtual void Update(void);
 	virtual void Draw(void);
 	virtual void Release(void);
