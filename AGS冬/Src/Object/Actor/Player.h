@@ -6,6 +6,15 @@ class Player : public ActorBase
 {
 public:
 
+	// 状態
+	enum class STATE
+	{
+		IDLE,
+		WALK,
+		JUMP,
+		MAX,
+	};
+
 	// アニメーション種別
 	enum class ANIM_TYPE
 	{
@@ -23,7 +32,12 @@ public:
 	void Draw(void) override;
 	void Release(void) override;
 
+	// 状態遷移
+	void ChangeState(STATE state);
+
 protected:
+
+	STATE state_;
 
 	// リソースロード
 	void InitLoad(void) override;
@@ -39,6 +53,11 @@ protected:
 
 	// 移動処理
 	void Move(void) override;
+
+	// 状態遷移
+	void ChangeIdle(void);
+	void ChangeWalk(void);
+	void ChangeJump(void);
 
 
 private:

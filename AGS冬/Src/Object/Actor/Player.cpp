@@ -121,6 +121,8 @@ void Player::InitTransform(void)
 
 void Player::InitAnimation(void)
 {
+	state_ = STATE::IDLE;
+
 	// モデルアニメーション制御の初期化
 	animationController_ = new AnimationController(modelId_);
 

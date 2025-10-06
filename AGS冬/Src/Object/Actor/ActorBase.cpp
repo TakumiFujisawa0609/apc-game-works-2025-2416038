@@ -55,15 +55,18 @@ void ActorBase::Draw(void)
 {
 	MV1DrawModel(modelId_);
 }
+
 void ActorBase::Release(void)
 {
 	MV1DeleteModel(modelId_);
 	delete animationController_;
 }
+
 const VECTOR& ActorBase::GetPos(void) const
 {
 	return pos_;
 }
+
 void ActorBase::InitTransformPost(void)
 {
 	// 大きさをモデルに反映
@@ -82,9 +85,11 @@ void ActorBase::InitTransformPost(void)
 	// 座標をモデルに反映
 	MV1SetPosition(modelId_, pos_);
 }
+
 void ActorBase::Move(void)
 {
 }
+
 void ActorBase::DelayRotate(void)
 {
 	// 移動方向から角度に変換する
