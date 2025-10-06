@@ -1,8 +1,8 @@
 #include "../Manager/InputManager.h"
 #include "../Manager/SceneManager.h"
+#include "../Manager/StageManager.h"
 #include "../Manager/Camera.h"
 #include "../Object/Grid.h"
-#include "../Object/Stagebase.h"
 #include "../Object/Actor/Player.h"
 #include "GameScene.h"
 
@@ -17,22 +17,17 @@ GameScene::~GameScene(void)
 void GameScene::Init(void)
 {
 
-	//// ステージ
-	//stage_ = new StageBase();
-	//stage_->Init();
-
-	// プレイヤー
+	// ステージ
+	stageManager_ = new StageManager();
 	player_ = new Player();
+	grid_ = new Grid();
 
-
+	stageManager_->Init();
 	player_->Init();
 	// カメラ
 	camera_ = SceneManager::GetInstance()->GetCamera();
 	camera_->SetFollow(player_);
 	camera_->ChangeMode(Camera::MODE::FOLLOW);
-
-	grid_ = new Grid();
-
 
 	grid_->Init();
 }
@@ -40,12 +35,12 @@ void GameScene::Init(void)
 void GameScene::Update(void)
 {
 	player_->Update();
-	//stage_->Update();
+	stageManager_->Update();
 }
 
 void GameScene::Draw(void)
 {
-	//stage_->Draw();
+	stageManager_->Draw();
 	player_->Draw();
 
 	DrawFormatString(
@@ -62,8 +57,8 @@ void GameScene::Release(void)
 	player_->Release();
 	delete player_;
 
-	/*stage_->Release();
-	delete stage_;*/
+	stageManager_->Release();
+	delete stageManager_;
 
 }
 

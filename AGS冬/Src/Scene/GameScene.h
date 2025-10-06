@@ -3,7 +3,7 @@
 class Camera;
 class Grid;
 class Camera;
-class StageBase;
+class StageManager;
 class Player;
 
 class GameScene : public SceneBase
@@ -26,7 +26,7 @@ private:
 
 	Camera* camera_;
 	Grid* grid_;
-	StageBase* stage_;
+	StageManager* stageManager_;
 	Player* player_;
 
 };

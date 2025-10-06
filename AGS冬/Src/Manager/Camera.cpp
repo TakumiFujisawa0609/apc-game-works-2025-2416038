@@ -206,7 +206,8 @@ void Camera::MoveXYZDirectionPad(void)
 	angles_.y += dir.x * rotPow * 2.0f;
 
 	// ã‰º‚ÌŠp“x§ŒÀ
-	if (angles_.x > DX_PI_F / 2.0f) { angles_.x = DX_PI_F / 2.0f; }
+	if (angles_.x > DX_PI_F / 6.0f) { angles_.x = DX_PI_F / 6.0f; }
+	if (angles_.x < -DX_PI_F / 6.0f) { angles_.x = -DX_PI_F / 6.0f; }
 }
 
 void Camera::Release(void)
