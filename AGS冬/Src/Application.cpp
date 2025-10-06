@@ -3,7 +3,7 @@
 #include "Manager/SceneManager.h"
 //#include "Manager/SoundManager.h"
 #include "Application.h"
-#//include "Common/FpsControl.h"
+#include "Common/FpsControl.h"
 
 
 Application* Application::instance_ = nullptr;
@@ -74,9 +74,9 @@ void Application::Init(void)
 	//SoundManager::GetInstance();
 	//SoundManager::GetInstance()->Init();
 
-	//// FPS初期化
-	//fps_ = new FpsControl;
-	//fps_->Init();
+	// FPS初期化
+	fps_ = new FpsControl;
+	fps_->Init();
 
 
 }
@@ -86,17 +86,17 @@ void Application::Run(void)
 	// ゲームループ
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_0) == 0)
 	{
-		//// フレームレート更新
-		//// 1/60秒経過していないなら再ループさせる
-		//if (!fps_->UpdateFrameRate()) continue;
+		// フレームレート更新
+		// 1/60秒経過していないなら再ループさせる
+		if (!fps_->UpdateFrameRate()) continue;
 
 		InputManager::GetInstance().Update();
 		SceneManager::GetInstance()->Update();
 
 		SceneManager::GetInstance()->Draw();
 
-		//fps_->CalcFrameRate();	// フレームレート計算
-		//fps_->DrawFrameRate();	// フレームレート描画
+		fps_->CalcFrameRate();	// フレームレート計算
+		fps_->DrawFrameRate();	// フレームレート描画
 
 
 		ScreenFlip();

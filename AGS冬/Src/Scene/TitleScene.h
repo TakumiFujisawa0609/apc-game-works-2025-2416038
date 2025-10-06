@@ -19,5 +19,7 @@ public:
 
 private:
 
-
+	void UpdateMenu(void);
+	int cursorIndex_;   // ← メニューカーソル位置
+	int moveDelay_;     // ← 押しっぱなし防止用タイマー
 };

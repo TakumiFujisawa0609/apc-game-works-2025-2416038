@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Common\FpsControl.h" />
     <ClInclude Include="Src\Manager\StageManager.h" />
     <ClInclude Include="Src\Object\Stage\Panel.h" />
     <ClInclude Include="Src\Object\Actor\ActorBase.h" />
@@ -161,6 +162,7 @@
     <ClInclude Include="Src\Scene\TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Common\FpsControl.cpp" />
     <ClCompile Include="Src\Manager\StageManager.cpp" />
     <ClCompile Include="Src\Object\Stage\Panel.cpp" />
     <ClCompile Include="Src\Object\Actor\ActorBase.cpp" />

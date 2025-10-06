@@ -26,6 +26,7 @@ void InputManager::Init(void)
 
 	// ゲームで使用したいキーを、
 	// 事前にここで登録しておいてください
+	InputManager::GetInstance().Add(KEY_INPUT_ESCAPE);
 	InputManager::GetInstance().Add(KEY_INPUT_SPACE);
 	InputManager::GetInstance().Add(KEY_INPUT_N);
 	InputManager::GetInstance().Add(KEY_INPUT_Z);
@@ -388,6 +389,34 @@ VECTOR InputManager::GetDirectionXZAKey(int aKeyX, int aKeyY)
 	// Zは前に倒すとマイナス値が返ってくるので反転
 	ret = VNorm({ dirX, 0.0f, -dirZ });
 	return ret;
+}
+
+// メニュー操作用の入力方向を取得
+VECTOR InputManager::GetMenuInputDir()
+{
+	VECTOR dir = { 0, 0, 0 };
+
+	// キーボード・十字キー
+	if (CheckHitKey(KEY_INPUT_UP) || IsPadBtnTrgDown(JOYPAD_NO::PAD1, JOYPAD_BTN::TOP))
+		dir.z = -1;
+	if (CheckHitKey(KEY_INPUT_DOWN) || IsPadBtnTrgDown(JOYPAD_NO::PAD1, JOYPAD_BTN::DOWN))
+		dir.z = 1;
+	if (CheckHitKey(KEY_INPUT_LEFT) || IsPadBtnTrgDown(JOYPAD_NO::PAD1, JOYPAD_BTN::LEFT))
+		dir.x = -1;
+	if (CheckHitKey(KEY_INPUT_RIGHT) || IsPadBtnTrgDown(JOYPAD_NO::PAD1, JOYPAD_BTN::RIGHT))
+		dir.x = 1;
+
+	// 左スティック入力を追加（一定しきい値以上のみ有効）
+	auto pad = GetJPadInputState(JOYPAD_NO::PAD1);
+	float stickX = pad.AKeyLX / AKEY_VAL_MAX;
+	float stickY = pad.AKeyLY / AKEY_VAL_MAX;
+
+	if (fabs(stickY) > 0.5f)
+		dir.z = (stickY < 0) ? -1 : 1;
+	if (fabs(stickX) > 0.5f)
+		dir.x = (stickX > 0) ? 1 : -1;
+
+	return dir;
 }
 
 

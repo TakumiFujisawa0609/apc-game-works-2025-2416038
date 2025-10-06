@@ -44,6 +44,7 @@ public:
 		DOWN,
 		R_TRIGGER,
 		L_TRIGGER,
+		START,
 		MAX
 	};
 
@@ -126,7 +127,8 @@ public:
 	// アナログキーの入力値から方向を取得
 	VECTOR GetDirectionXZAKey(int aKeyX, int aKeyY);
 
-
+	// メニュー操作用の方向ベクトルを取得
+	VECTOR GetMenuInputDir();
 private:
 
 	// キー情報

@@ -29,5 +29,12 @@ private:
 	StageManager* stageManager_;
 	Player* player_;
 
+	void UpdatePauseMenu();  // ← ポーズ中メニュー処理
+	void DrawPauseMenu();    // ← ポーズメニュー描画
+
+	bool isPaused_ = false;
+	int cursorIndex_ = 0;
+	int moveDelay_ = 0;
+
 };
 
