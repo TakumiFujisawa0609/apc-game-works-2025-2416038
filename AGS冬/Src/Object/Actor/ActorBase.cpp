@@ -44,7 +44,7 @@ void ActorBase::Update(void)
 	MV1SetRotationMatrix(modelId_, mat);
 
 	// プレイヤーの移動処理
-	Move();
+	//Move();
 	MV1SetPosition(modelId_, pos_);
 
 	// アニメーションの更新

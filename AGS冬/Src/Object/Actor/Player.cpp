@@ -23,12 +23,6 @@ void Player::Update(void)
 	case STATE::IDLE:
 		UpdateIdle();
 		break;
-	case STATE::WALK:
-		UpdateWalk();
-		break;
-	case STATE::JUMP:
-		UpdateJump();
-		break;
 	case STATE::DEAD:
 		UpdateDead();
 		break;
@@ -43,12 +37,6 @@ void Player::Draw(void)
 	{
 	case STATE::IDLE:
 		DrawIdle();
-		break;
-	case STATE::WALK:
-		DrawWalk();
-		break;
-	case STATE::JUMP:
-		DrawJump();
 		break;
 	case STATE::DEAD:
 		DrawDead();
@@ -78,19 +66,13 @@ void Player::ChangeState(STATE state)
 	case STATE::IDLE:
 		ChangeIdle();
 		break;
-	case STATE::WALK:
-		ChangeWalk();
-		break;
-	case STATE::JUMP:
-		ChangeJump();
-		break;
 	case STATE::DEAD:
 		ChangeDead();
 		break;
 	}
 }
 
-void Player::Move(void)
+void Player::ProcessMove(void)
 {
 	auto& ins = InputManager::GetInstance();
 
@@ -145,24 +127,47 @@ void Player::Move(void)
 	}
 	else
 	{
-		// 停止したら待機アニメーション再生
-		animationController_->Play(static_cast<int>(ANIM_TYPE::IDLE), true);
+		// 待機アニメーション
+		animationController_->Play(static_cast<int>(ANIM_TYPE::IDLE));
 	}
 
 
+}
+
+// ジャンプ処理
+void Player::ProcessJump(void)
+{
+	InputManager& ins = InputManager::GetInstance();
+
+	// ジャンプ判定
+	if (ins.IsTrgDown(KEY_INPUT_SPACE) && !isJump_)
+	{
+		isJump_ = true;
+		jumpPow_ = JUMP_POW;
+
+		// ジャンプアニメーション再生
+		animationController_->Play(static_cast<int>(ANIM_TYPE::JUMP), false);
+	}
+
+	// 重力(加速度を速度に加算していく)
+	jumpPow_ -= GRAVITY_POW;
+	pos_.y += jumpPow_;
+
+	// 落下中かジャンプ中なら、空中にいると見なす
+	if (jumpPow_ < 0.0f && !isJump_)
+	{
+		isJump_ = true;
+	}
+	else if (pos_.y == 0.0f)
+	{
+		isJump_ = false;
+	}
 }
 
 void Player::ChangeIdle(void)
 {
 	// アニメ再生
 	animationController_->Play(static_cast<int>(ANIM_TYPE::IDLE), true);
-}
-
-void Player::ChangeWalk(void)
-{
-	// アニメ再生
-	animationController_->Play(static_cast<int>(ANIM_TYPE::WALK), true);
-
 }
 
 void Player::ChangeJump(void)
@@ -179,10 +184,10 @@ void Player::ChangeDead(void)
 
 void Player::UpdateIdle(void)
 {
-}
-
-void Player::UpdateWalk(void)
-{
+	// 移動処理
+	ProcessMove();
+	// ジャンプ処理
+	ProcessJump();
 }
 
 void Player::UpdateJump(void)
@@ -194,10 +199,6 @@ void Player::UpdateDead(void)
 }
 
 void Player::DrawIdle(void)
-{
-}
-
-void Player::DrawWalk(void)
 {
 }
 
@@ -247,5 +248,8 @@ void Player::InitAnimation(void)
 
 void Player::InitPost(void)
 {
-
+	// ジャンプ力の初期化
+	jumpPow_ = 0.0f;
+	// ジャンプフラグ初期化
+	isJump_ = false;
 }

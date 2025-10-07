@@ -24,6 +24,7 @@ void GameScene::Init(void)
 
 	stageManager_->Init();
 	player_->Init();
+
 	// ƒJƒƒ‰
 	camera_ = SceneManager::GetInstance()->GetCamera();
 	camera_->SetFollow(player_);

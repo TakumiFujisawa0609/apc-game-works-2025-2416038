@@ -10,8 +10,6 @@ public:
 	enum class STATE
 	{
 		IDLE,
-		WALK,
-		JUMP,
 		DEAD,
 		MAX,
 	};
@@ -25,6 +23,11 @@ public:
 		DEAD,
 		MAX,
 	};
+
+	// 重力
+	static constexpr float GRAVITY_POW = 1.5f;
+	// ジャンプ力
+	static constexpr float JUMP_POW = 30.0f;
 
 	// コンストラクタ
 	Player(void);
@@ -55,26 +58,26 @@ protected:
 	void InitPost(void) override;
 
 	// 移動処理
-	void Move(void) override;
+	void ProcessMove(void);
+	void ProcessJump(void);
 
 	// 状態遷移
 	void ChangeIdle(void);
-	void ChangeWalk(void);
 	void ChangeJump(void);
 	void ChangeDead(void);
 
 	// 状態別更新
 	void UpdateIdle(void);
-	void UpdateWalk(void);
 	void UpdateJump(void);
 	void UpdateDead(void);
 
 	// 状態別描画
 	void DrawIdle(void);
-	void DrawWalk(void);
 	void DrawJump(void);
 	void DrawDead(void);
 
+	bool isJump_;
+	float jumpPow_;
 
 private:
 };
