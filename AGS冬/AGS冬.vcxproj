@@ -139,6 +139,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Utility\CollisionShape.h" />
+    <ClInclude Include="Src\Common\Collision.h" />
     <ClInclude Include="Src\Common\FpsControl.h" />
     <ClInclude Include="Src\Manager\StageManager.h" />
     <ClInclude Include="Src\Object\Stage\Panel.h" />
@@ -162,6 +164,8 @@
     <ClInclude Include="Src\Scene\TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Utility\CollisionShape.cpp" />
+    <ClCompile Include="Src\Common\Collision.cpp" />
     <ClCompile Include="Src\Common\FpsControl.cpp" />
     <ClCompile Include="Src\Manager\StageManager.cpp" />
     <ClCompile Include="Src\Object\Stage\Panel.cpp" />

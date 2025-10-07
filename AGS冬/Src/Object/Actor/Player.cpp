@@ -72,6 +72,14 @@ void Player::ChangeState(STATE state)
 	}
 }
 
+void Player::CollisionStage(VECTOR pos)
+{
+	// 衝突判定に指定座標に押し戻す
+	pos_ = pos;
+	jumpPow_ = 0.0f;
+	isJump_ = false;
+}
+
 void Player::ProcessMove(void)
 {
 	auto& ins = InputManager::GetInstance();
@@ -158,10 +166,6 @@ void Player::ProcessJump(void)
 	{
 		isJump_ = true;
 	}
-	else if (pos_.y == 0.0f)
-	{
-		isJump_ = false;
-	}
 }
 
 void Player::ChangeIdle(void)
@@ -226,8 +230,7 @@ void Player::InitTransform(void)
 	localAngles_ = { 0.0f, AsoUtility::Deg2RadF(180.0f), 0.0f };
 
 	// 位置
-	pos_ = AsoUtility::VECTOR_ZERO;
-
+	pos_ = VGet(0.0f, 120.0f, 0.0f);
 }
 
 void Player::InitAnimation(void)
@@ -252,4 +255,7 @@ void Player::InitPost(void)
 	jumpPow_ = 0.0f;
 	// ジャンプフラグ初期化
 	isJump_ = false;
+
+	halfW_ = 30.0f;
+	halfH_ = 80.0f;
 }

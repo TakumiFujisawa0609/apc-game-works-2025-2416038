@@ -4,6 +4,7 @@
 #include "../Manager/Camera.h"
 #include "../Object/Grid.h"
 #include "../Object/Actor/Player.h"
+#include "../Common/Collision.h"
 #include "GameScene.h"
 
 
@@ -20,10 +21,12 @@ void GameScene::Init(void)
 	// ステージ
 	stageManager_ = new StageManager();
 	player_ = new Player();
+	collision_ = new Collision();
 	grid_ = new Grid();
 
 	stageManager_->Init();
 	player_->Init();
+	collision_->Init(player_, stageManager_);
 
 	// カメラ
 	camera_ = SceneManager::GetInstance()->GetCamera();
@@ -50,14 +53,16 @@ void GameScene::Update(void)
 		return;
 	}
 
-	player_->Update();
 	stageManager_->Update();
+	player_->Update();
+	collision_->Update();
 }
 
 void GameScene::Draw(void)
 {
 	stageManager_->Draw();
 	player_->Draw();
+	collision_->Draw();
 
 	DrawFormatString(
 		300, 200, 0xffffff,
@@ -76,11 +81,14 @@ void GameScene::Draw(void)
 
 void GameScene::Release(void)
 {
+	stageManager_->Release();
+	delete stageManager_;
+
 	player_->Release();
 	delete player_;
 
-	stageManager_->Release();
-	delete stageManager_;
+	collision_->Release();
+	delete collision_;
 
 }
 

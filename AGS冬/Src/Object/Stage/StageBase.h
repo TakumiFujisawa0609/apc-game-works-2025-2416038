@@ -20,6 +20,8 @@ public:
 
 	void SetPos(VECTOR pos);
 
+	int GetModelId();
+
 protected:
 
 	// ステージモデルのハンドルID

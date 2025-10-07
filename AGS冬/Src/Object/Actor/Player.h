@@ -25,7 +25,7 @@ public:
 	};
 
 	// d—Í
-	static constexpr float GRAVITY_POW = 1.5f;
+	static constexpr float GRAVITY_POW = 9.0f;
 	// ƒWƒƒƒ“ƒv—Í
 	static constexpr float JUMP_POW = 30.0f;
 
@@ -40,6 +40,8 @@ public:
 
 	// ó‘Ô‘JˆÚ
 	void ChangeState(STATE state);
+
+	void CollisionStage(VECTOR pos);
 
 protected:
 

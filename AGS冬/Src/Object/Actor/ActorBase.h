@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <DxLib.h>
+#include "../../Utility/CollisionShape.h"
 class AnimationController;
 
 class ActorBase
@@ -21,6 +22,8 @@ public:
 	// 座標を取得
 	const VECTOR& GetPos(void) const;
 
+	virtual CollisionShape::AABB GetAABB() const;
+
 protected:
 
 	// アニメーション制御
@@ -39,6 +42,10 @@ protected:
 
 	// 移動方向
 	VECTOR moveDir_;
+
+	// 横幅・縦幅
+	float halfW_;
+	float halfH_;
 
 	// リソースロード
 	virtual void InitLoad(void) = 0;

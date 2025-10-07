@@ -5,6 +5,7 @@ class Grid;
 class Camera;
 class StageManager;
 class Player;
+class Collision;
 
 class GameScene : public SceneBase
 {
@@ -28,6 +29,7 @@ private:
 	Grid* grid_;
 	StageManager* stageManager_;
 	Player* player_;
+	Collision* collision_;
 
 	void UpdatePauseMenu();  // ← ポーズ中メニュー処理
 	void DrawPauseMenu();    // ← ポーズメニュー描画

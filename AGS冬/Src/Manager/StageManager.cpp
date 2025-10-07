@@ -89,3 +89,29 @@ void StageManager::Release(void)
 		MV1DeleteModel(modelId);
 	}
 }
+
+bool StageManager::IsCollisionLine(VECTOR topPos, VECTOR downPos, MV1_COLL_RESULT_POLY* result)
+{
+	for (const auto pair : stages_)
+	{
+		for (StageBase* stage : pair.second)
+		{
+			// ü•ª‚Æƒ‚ƒfƒ‹‚ÌÕ“Ë”»’è
+			MV1_COLL_RESULT_POLY res =
+				MV1CollCheck_Line(stage->GetModelId(), -1, topPos, downPos);
+			
+			if (res.HitFlag)
+			{
+				// Œ‹‰Ê‚ð•Ô‚·
+				*result = res;
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+const std::map<StageBase::TYPE, std::vector<StageBase*>>& StageManager::GetStages()
+{
+	return stages_;
+}

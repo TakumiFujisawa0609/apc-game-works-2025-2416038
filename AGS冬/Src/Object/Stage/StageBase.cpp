@@ -39,3 +39,8 @@ void StageBase::SetPos(VECTOR pos)
 	pos_ = pos;
 	MV1SetPosition(modelId_, pos_);
 }
+
+int StageBase::GetModelId()
+{
+	return modelId_;
+}
