@@ -12,7 +12,7 @@ public:
 	
 	static constexpr int PANEL_NUM = 9;
 
-	static constexpr float PANEL_SIZE = 800.0f;
+	static constexpr float PANEL_SIZE = 800.0f * 0.8f;
 
 	// コンストラクタ
 	StageManager(void);

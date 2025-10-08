@@ -80,7 +80,7 @@ void Player::CollisionStage(VECTOR pos)
 
 	// 衝突判定に指定座標に押し戻す
 	//  少し上に押し戻すことでガクつき防止
-	pos_.y = pos.y + 1.0f;
+	pos_.y = pos.y;
 	jumpPow_ = 0.0f;
 	jumpState_ = JumpState::Ground;
 }
@@ -152,8 +152,18 @@ void Player::ProcessJump(void)
 {
 	InputManager& ins = InputManager::GetInstance();
 
-	// ジャンプ判定
-	if (ins.IsTrgDown(KEY_INPUT_SPACE) && jumpState_ == JumpState::Ground)
+	// ゲームパッド入力取得
+	InputManager::JOYPAD_IN_STATE pad =
+		ins.GetJPadInputState(InputManager::JOYPAD_NO::PAD1);
+
+	// --- ジャンプ入力判定 ---
+	bool isJumpPressed =
+		ins.IsTrgDown(KEY_INPUT_SPACE) ||                  // キーボード SPACE
+		ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, // ゲームパッド Aボタン
+			InputManager::JOYPAD_BTN::DOWN);
+
+	// --- ジャンプ開始処理 ---
+	if (isJumpPressed && jumpState_ == JumpState::Ground)
 	{
 		jumpState_ = JumpState::Rising;
 		jumpPow_ = JUMP_POW;
@@ -167,7 +177,7 @@ void Player::ProcessJump(void)
 	pos_.y += jumpPow_;
 
 	// 落下中かジャンプ中なら、空中にいると見なす
-	if (jumpPow_ < 0.0f && jumpState_ == JumpState::Rising)
+	if (jumpPow_ < 0.0f || jumpState_ == JumpState::Rising)
 	{
 		jumpState_ = JumpState::Falling;
 	}
@@ -228,7 +238,7 @@ void Player::InitLoad(void)
 void Player::InitTransform(void)
 {
 	// 大きさ
-	scales_ = { 0.2f, 0.2f, 0.2f };
+	scales_ = { 0.8f, 0.8f, 0.8f };
 
 	// モデルの角度
 	angles_ = { 0.0f, 0.0f, 0.0f };

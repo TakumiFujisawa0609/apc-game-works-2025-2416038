@@ -21,7 +21,7 @@ void Collision::Update()
 	// ステージブロックとプレイヤーの衝突
     VECTOR playerPos = player_->GetPos();
     VECTOR top = VGet(playerPos.x, playerPos.y, playerPos.z);
-    VECTOR down = VGet(playerPos.x, playerPos.y - 100.0f, playerPos.z);
+    VECTOR down = VGet(playerPos.x, playerPos.y - 5.0f, playerPos.z);
 
     MV1_COLL_RESULT_POLY result;
 
@@ -37,7 +37,7 @@ void Collision::Update()
             if (result.HitFlag == 1)
             {
                 VECTOR hitPos = result.HitPosition;
-                hitPos.y += 1.0f; // 少し上に押し戻して浮き沈み防止
+                hitPos.y += 2.0f; // 少し上に押し戻して浮き沈み防止
 
                 player_->CollisionStage(hitPos);
 

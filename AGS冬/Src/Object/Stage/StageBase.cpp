@@ -13,7 +13,7 @@ void StageBase::Init(int baseModel)
 	// ÉÇÉfÉãì«Ç›çûÇ›
 	modelId_ = MV1DuplicateModel(baseModel);
 
-	InitTransform();
+	//InitTransform();
 
 	InitTransformPost();
 }
@@ -47,6 +47,10 @@ int StageBase::GetModelId()
 
 void StageBase::InitTransformPost(void)
 {
+	pos_ = { 0.0f, -39.22f, 0.0f };
+
+	scales_ = { 1.0f, 1.0f, 1.0f };
+
 	MV1SetPosition(modelId_, pos_);
 
 	MV1SetScale(modelId_, scales_);

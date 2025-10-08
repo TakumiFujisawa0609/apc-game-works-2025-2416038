@@ -8,12 +8,12 @@ Panel::~Panel(void)
 {
 }
 
-void Panel::InitTransform(void)
-{
-	pos_ = { 0.0f, -39.22f, 0.0f };
-
-	scales_ = { 0.2f, 0.2f, 0.2f };
-}
+//void Panel::InitTransform(void)
+//{
+//	pos_ = { 0.0f, -39.22f, 0.0f };
+//
+//	scales_ = { 0.2f, 0.2f, 0.2f };
+//}
 
 //void Panel::Update(void)
 //{

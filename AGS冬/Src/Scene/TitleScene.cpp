@@ -52,22 +52,33 @@ void TitleScene::UpdateMenu(void)
     // 入力間隔（押しっぱなし防止）
     if (moveDelay_ > 0) moveDelay_--;
 
+    // --- カーソル移動（十字キー／スティック） ---
     if (moveDelay_ == 0)
     {
-        if (dir.z < 0) { cursorIndex_--; moveDelay_ = 15; }
-        if (dir.z > 0) { cursorIndex_++; moveDelay_ = 15; }
+        // ↑キー
+        if (ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::TOP) ||
+            dir.z < 0)
+        {
+            cursorIndex_--;
+            moveDelay_ = 15;
+        }
+
+        // ↓キー
+        if (ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN) == false && dir.z > 0)
+        {
+            cursorIndex_++;
+            moveDelay_ = 15;
+        }
 
         // カーソル範囲制御
         if (cursorIndex_ < 0) cursorIndex_ = 2;
         if (cursorIndex_ > 2) cursorIndex_ = 0;
     }
 
-    // -----------------------------
-   //   メニュー決定処理
-   // -----------------------------
+    // --- 決定（Aボタン or SPACE） ---
     bool decide =
-        ins.IsTrgDown(KEY_INPUT_SPACE) ||
-        ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
+        ins.IsTrgDown(KEY_INPUT_SPACE) ||  // キーボードSPACE
+        ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN); // Aボタン
 
     if (decide)
     {
@@ -78,12 +89,10 @@ void TitleScene::UpdateMenu(void)
             break;
 
         case 1: // OPTION
-            // ここにオプションシーン遷移処理を書く
             // SceneManager::GetInstance()->ChangeScene(SceneManager::SCENE_ID::OPTION);
             break;
 
         case 2: // EXIT
-            // ゲーム終了
             DxLib_End();
             break;
         }
