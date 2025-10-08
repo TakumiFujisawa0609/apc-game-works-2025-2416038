@@ -14,5 +14,7 @@ public:
 	//void Release(void);
 
 private:
+
+	void InitTransform(void);
 };
 

@@ -21,15 +21,29 @@ void Collision::Update()
 	// ステージブロックとプレイヤーの衝突
     VECTOR playerPos = player_->GetPos();
     VECTOR top = VGet(playerPos.x, playerPos.y, playerPos.z);
-    VECTOR down = VGet(playerPos.x, playerPos.y - 30.0f, playerPos.z);
-    float r = 30.0f;
+    VECTOR down = VGet(playerPos.x, playerPos.y - 100.0f, playerPos.z);
 
     MV1_COLL_RESULT_POLY result;
 
-    if (stageManager_->IsCollisionLine(top, down, &result))
+    const auto& stages = stageManager_->GetStages();
+    for (const auto pair : stages)
     {
-        // プレイヤーに衝突座標を渡す
-        player_->CollisionStage(result.HitPosition);
+        for (StageBase* stage : pair.second)
+        {
+            int stageModelId = stage->GetModelId();
+
+            result = MV1CollCheck_Line(stageModelId, -1, top, down, -1);
+            // 当たってたら
+            if (result.HitFlag == 1)
+            {
+                VECTOR hitPos = result.HitPosition;
+                hitPos.y += 1.0f; // 少し上に押し戻して浮き沈み防止
+
+                player_->CollisionStage(hitPos);
+
+                return; // 最初のヒットだけ処理
+            }
+        }
     }
 }
 

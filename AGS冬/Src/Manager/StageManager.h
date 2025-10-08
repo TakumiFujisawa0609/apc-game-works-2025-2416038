@@ -24,7 +24,6 @@ public:
 	void Draw(void);
 	void Release(void);
 
-	bool IsCollisionLine(VECTOR topPos, VECTOR downPos, MV1_COLL_RESULT_POLY* result);
 
 	const std::map<StageBase::TYPE, std::vector<StageBase*>>& GetStages();
 

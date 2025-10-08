@@ -14,6 +14,12 @@ public:
 		MAX,
 	};
 
+	enum class JumpState {
+		Ground,
+		Rising,
+		Falling,
+	};
+
 	// アニメーション種別
 	enum class ANIM_TYPE
 	{
@@ -25,7 +31,7 @@ public:
 	};
 
 	// 重力
-	static constexpr float GRAVITY_POW = 9.0f;
+	static constexpr float GRAVITY_POW = 1.0f;
 	// ジャンプ力
 	static constexpr float JUMP_POW = 30.0f;
 
@@ -46,6 +52,7 @@ public:
 protected:
 
 	STATE state_;
+	JumpState jumpState_;
 
 	// リソースロード
 	void InitLoad(void) override;
