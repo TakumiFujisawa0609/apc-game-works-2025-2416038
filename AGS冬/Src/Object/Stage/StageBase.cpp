@@ -49,7 +49,7 @@ void StageBase::InitTransformPost(void)
 {
 	pos_ = { 0.0f, -39.22f, 0.0f };
 
-	scales_ = { 1.0f, 1.0f, 1.0f };
+	scales_ = { 5.0f, 1.0f, 5.0f };
 
 	MV1SetPosition(modelId_, pos_);
 
