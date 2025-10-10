@@ -160,7 +160,7 @@ void Player::ProcessJump(void)
 	bool isJumpPressed =
 		ins.IsTrgDown(KEY_INPUT_SPACE) ||                  // キーボード SPACE
 		ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, // ゲームパッド Aボタン
-			InputManager::JOYPAD_BTN::DOWN);
+			InputManager::JOYPAD_BTN::A);
 
 	// --- ジャンプ開始処理 ---
 	if (isJumpPressed && jumpState_ == JumpState::Ground)

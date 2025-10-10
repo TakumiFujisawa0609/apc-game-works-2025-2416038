@@ -64,7 +64,7 @@ void TitleScene::UpdateMenu(void)
         }
 
         // ↓キー
-        if (ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN) == false && dir.z > 0)
+        if (ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN) || dir.z > 0)
         {
             cursorIndex_++;
             moveDelay_ = 15;
@@ -78,7 +78,7 @@ void TitleScene::UpdateMenu(void)
     // --- 決定（Aボタン or SPACE） ---
     bool decide =
         ins.IsTrgDown(KEY_INPUT_SPACE) ||  // キーボードSPACE
-        ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN); // Aボタン
+        ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::A); // Aボタン
 
     if (decide)
     {

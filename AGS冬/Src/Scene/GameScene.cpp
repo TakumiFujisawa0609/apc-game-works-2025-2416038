@@ -110,7 +110,7 @@ void GameScene::UpdatePauseMenu()
 
 	bool decide =
 		ins.IsTrgDown(KEY_INPUT_SPACE) ||
-		ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::DOWN);
+		ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::A);
 
 	if (decide)
 	{

@@ -27,6 +27,7 @@ void InputManager::Init(void)
 	// ゲームで使用したいキーを、
 	// 事前にここで登録しておいてください
 	InputManager::GetInstance().Add(KEY_INPUT_ESCAPE);
+	//InputManager::GetInstance().Add(KEY_INPUT);
 	InputManager::GetInstance().Add(KEY_INPUT_SPACE);
 	InputManager::GetInstance().Add(KEY_INPUT_N);
 	InputManager::GetInstance().Add(KEY_INPUT_Z);
@@ -271,17 +272,32 @@ InputManager::JOYPAD_IN_STATE InputManager::GetJPadInputState(JOYPAD_NO no)
 		// X   B
 		//   A
 
-		idx = static_cast<int>(JOYPAD_BTN::TOP);
+		idx = static_cast<int>(JOYPAD_BTN::Y);
 		ret.ButtonsNew[idx] = d.Buttons[3];// Y
 
-		idx = static_cast<int>(JOYPAD_BTN::LEFT);
+		idx = static_cast<int>(JOYPAD_BTN::X);
 		ret.ButtonsNew[idx] = d.Buttons[2];// X
 
-		idx = static_cast<int>(JOYPAD_BTN::RIGHT);
+		idx = static_cast<int>(JOYPAD_BTN::B);
 		ret.ButtonsNew[idx] = d.Buttons[1];// B
 
-		idx = static_cast<int>(JOYPAD_BTN::DOWN);
+		idx = static_cast<int>(JOYPAD_BTN::A);
 		ret.ButtonsNew[idx] = d.Buttons[0];// A
+
+		idx = static_cast<int>(JOYPAD_BTN::TOP);
+		ret.ButtonsNew[idx] = d.Buttons[4];// ↑
+
+		idx = static_cast<int>(JOYPAD_BTN::LEFT);
+		ret.ButtonsNew[idx] = d.Buttons[5];// ←		// DxLibのボタン番号を調べろ！
+
+		idx = static_cast<int>(JOYPAD_BTN::RIGHT);
+		ret.ButtonsNew[idx] = d.Buttons[6];// →
+
+		idx = static_cast<int>(JOYPAD_BTN::DOWN);
+		ret.ButtonsNew[idx] = d.Buttons[7];// ↓
+
+		idx = static_cast<int>(JOYPAD_BTN::START);
+		ret.ButtonsNew[idx] = d.Buttons[11];// START
 
 		idx = static_cast<int>(JOYPAD_BTN::R_TRIGGER);
 		ret.ButtonsNew[idx] = x.RightTrigger;// R_TRIGGER
