@@ -158,7 +158,7 @@ void SceneManager::Draw(void)
 	scene_->Draw();
 
 	// カメラ描画
-	camera_->DrawDebug();
+	//camera_->DrawDebug();
 	// ミニカメラ
 	//miniCamera_->Draw();
 

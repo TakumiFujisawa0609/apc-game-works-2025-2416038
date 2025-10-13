@@ -26,7 +26,13 @@ void Player::Update(void)
 	case STATE::DEAD:
 		UpdateDead();
 		break;
+	case STATE::END:
+		UpdateEnd();
+		break;
 	}
+
+	// リスポーン処理
+	Respawn();
 }
 
 void Player::Draw(void)
@@ -41,15 +47,18 @@ void Player::Draw(void)
 	case STATE::DEAD:
 		DrawDead();
 		break;
+	case STATE::END:
+		DrawEnd();
+		break;
 	}
 
-	DrawFormatString(
+	/*DrawFormatString(
 		0, 50, 0xffffff,
 		"キャラ角度　 ：(% .1f, % .1f, % .1f)",
 		AsoUtility::Rad2DegF(angles_.x),
 		AsoUtility::Rad2DegF(angles_.y),
 		AsoUtility::Rad2DegF(angles_.z)
-	);
+	);*/
 }
 
 void Player::Release(void)
@@ -69,12 +78,59 @@ void Player::ChangeState(STATE state)
 	case STATE::DEAD:
 		ChangeDead();
 		break;
+	case STATE::END:
+		ChangeEnd();
+		break;
 	}
+}
+
+bool Player::IsInvincible(void)
+{
+	return false;
+}
+
+void Player::Respawn()
+{
+	if (pos_.y < RESPAWN_LEN)
+	{
+		pos_ = RESPAWN_POS;
+
+		jumpPow_ = 0.0f;
+
+		jumpState_ = JumpState::Falling;
+
+		ChangeState(STATE::IDLE);
+	}
+	MV1SetPosition(modelId_, pos_);
+}
+
+bool Player::IsStateEnd(void)
+{
+	return false;
+}
+
+void Player::Damage(int damage)
+{
+	hp_ -= damage;
+	if (hp_ < 0)
+	{
+		hp_ = 0;
+	}
+
+	// hpが０になったら死亡状態に
+	if (hp_ == 0) {
+		ChangeState(STATE::DEAD);
+	}
+}
+
+int Player::GetHp(void)
+{
+	return hp_;
 }
 
 void Player::CollisionStage(VECTOR pos)
 {
-	printfDx("Collision hit pos: (%.2f, %.2f, %.2f)\n", pos.x, pos.y, pos.z);
+	//printfDx("Collision hit pos: (%.2f, %.2f, %.2f)\n", pos.x, pos.y, pos.z);
 
 	if (jumpState_ == JumpState::Rising) return; // 上昇中は無視
 
@@ -201,6 +257,10 @@ void Player::ChangeDead(void)
 	animationController_->Play(static_cast<int>(ANIM_TYPE::DEAD));
 }
 
+void Player::ChangeEnd(void)
+{
+}
+
 void Player::UpdateIdle(void)
 {
 	// 移動処理
@@ -217,6 +277,10 @@ void Player::UpdateDead(void)
 {
 }
 
+void Player::UpdateEnd(void)
+{
+}
+
 void Player::DrawIdle(void)
 {
 }
@@ -226,6 +290,10 @@ void Player::DrawJump(void)
 }
 
 void Player::DrawDead(void)
+{
+}
+
+void Player::DrawEnd(void)
 {
 }
 
@@ -275,4 +343,6 @@ void Player::InitPost(void)
 
 	halfW_ = 30.0f;
 	halfH_ = 80.0f;
+
+	hp_ = MAX_HP;
 }

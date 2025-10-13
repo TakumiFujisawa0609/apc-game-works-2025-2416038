@@ -5,6 +5,7 @@
 #include "../Object/Grid.h"
 #include "../Object/Actor/Player.h"
 #include "../Common/Collision.h"
+#include "../UI/HpManager.h"
 #include "GameScene.h"
 
 
@@ -23,6 +24,7 @@ void GameScene::Init(void)
 	player_ = new Player();
 	collision_ = new Collision();
 	grid_ = new Grid();
+	hpManager_ = new HpManager(player_);
 
 	stageManager_->Init();
 	player_->Init();
@@ -34,10 +36,20 @@ void GameScene::Init(void)
 	camera_->ChangeMode(Camera::MODE::FOLLOW);
 
 	grid_->Init();
+
+	hpManager_->Init();
+
+	// ゲームおーば判定
+	isGameOver_ = false;
 }
 
 void GameScene::Update(void)
 {
+	// ゲームオーバー判定
+	if (player_->IsStateEnd()) {
+		isGameOver_ = true;
+	}
+
 	auto& ins = InputManager::GetInstance();
 	// --- ポーズ切り替え ---
 	if (ins.IsTrgDown(KEY_INPUT_ESCAPE) ||
@@ -64,13 +76,15 @@ void GameScene::Draw(void)
 	player_->Draw();
 	collision_->Draw();
 
+	hpManager_->Draw();
+
 	DrawFormatString(
 		300, 200, 0xffffff,
 		"Game Scene"
 	);
 
 	// グリッド線
-	grid_->Draw();
+	//grid_->Draw();
 
 
 	if (isPaused_)
@@ -89,6 +103,9 @@ void GameScene::Release(void)
 
 	collision_->Release();
 	delete collision_;
+
+	hpManager_->Release();
+	delete hpManager_;
 
 }
 

@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Src\UI\HpManager.h" />
     <ClInclude Include="Src\Utility\CollisionShape.h" />
     <ClInclude Include="Src\Common\Collision.h" />
     <ClInclude Include="Src\Common\FpsControl.h" />
@@ -164,6 +165,7 @@
     <ClInclude Include="Src\Scene\TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\UI\HpManager.cpp" />
     <ClCompile Include="Src\Utility\CollisionShape.cpp" />
     <ClCompile Include="Src\Common\Collision.cpp" />
     <ClCompile Include="Src\Common\FpsControl.cpp" />

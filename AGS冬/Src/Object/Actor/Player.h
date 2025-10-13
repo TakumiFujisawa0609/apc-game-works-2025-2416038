@@ -11,6 +11,7 @@ public:
 	{
 		IDLE,
 		DEAD,
+		END,
 		MAX,
 	};
 
@@ -35,6 +36,25 @@ public:
 	// ジャンプ力
 	static constexpr float JUMP_POW = 30.0f;
 
+	// 地面衝突用線分の長さ
+	static constexpr float COLLISION_LEN = 10.0f;
+
+	// リスポーン開始位置
+	static constexpr float RESPAWN_LEN = -1500.0f;
+
+	// リスポーン位置
+	static constexpr VECTOR RESPAWN_POS = { 0.0f, 500.0f, 0.0f };
+
+	// 標準の拡散光色
+	static constexpr COLOR_F COLOR_DIF_DEFAULT = { 1.0f, 1.0f, 1.0f, 1.0f };
+	// 点滅時の拡散光色
+	static constexpr COLOR_F COLOR_DIF_BLINK = { 1.0f, 0.5f, 0.5f, 1.0f };
+	// 点滅間隔
+	static constexpr int TERM_BLINK = 8;
+
+	// 最大HP
+	static constexpr int MAX_HP = 3;
+
 	// コンストラクタ
 	Player(void);
 	// デストラクタ
@@ -46,6 +66,21 @@ public:
 
 	// 状態遷移
 	void ChangeState(STATE state);
+
+	// 無敵中(ダメージ、ノックバックを受けない)
+	bool IsInvincible(void);
+
+	// リスポーン処理
+	void Respawn();
+
+	// 終了遷移
+	bool IsStateEnd(void);
+
+	// ダメージを与える
+	void Damage(int damage);
+	// HPの取得
+	int GetHp(void);
+
 
 	void CollisionStage(VECTOR pos);
 
@@ -74,19 +109,24 @@ protected:
 	void ChangeIdle(void);
 	void ChangeJump(void);
 	void ChangeDead(void);
+	void ChangeEnd(void);
 
 	// 状態別更新
 	void UpdateIdle(void);
 	void UpdateJump(void);
 	void UpdateDead(void);
+	void UpdateEnd(void);
 
 	// 状態別描画
 	void DrawIdle(void);
 	void DrawJump(void);
 	void DrawDead(void);
+	void DrawEnd(void);
 
 	bool isJump_;
 	float jumpPow_;
+
+	int hp_;
 
 private:
 };

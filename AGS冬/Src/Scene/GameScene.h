@@ -3,6 +3,7 @@
 class Camera;
 class Grid;
 class Camera;
+class HpManager;
 class StageManager;
 class Player;
 class Collision;
@@ -30,6 +31,7 @@ private:
 	StageManager* stageManager_;
 	Player* player_;
 	Collision* collision_;
+	HpManager* hpManager_;
 
 	void UpdatePauseMenu();  // ← ポーズ中メニュー処理
 	void DrawPauseMenu();    // ← ポーズメニュー描画
@@ -37,6 +39,9 @@ private:
 	bool isPaused_ = false;
 	int cursorIndex_ = 0;
 	int moveDelay_ = 0;
+
+	// ゲームオーバーフラグ
+	bool isGameOver_;
 
 };
 
