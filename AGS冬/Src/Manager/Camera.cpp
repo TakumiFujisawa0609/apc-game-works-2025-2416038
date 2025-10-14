@@ -173,8 +173,8 @@ void Camera::MoveXYZDirection(void)
 	float rotPow = 1.0f * DX_PI_F / 180.0f;
 
 
-	if (ins.IsNew(KEY_INPUT_DOWN)) { angles_.x -= rotPow; }
-	if (ins.IsNew(KEY_INPUT_UP)) { angles_.x += rotPow; }
+	if (ins.IsNew(KEY_INPUT_DOWN)) { angles_.x += rotPow; }
+	if (ins.IsNew(KEY_INPUT_UP)) { angles_.x -= rotPow; }
 	if (ins.IsNew(KEY_INPUT_RIGHT)) { angles_.y += rotPow; }
 	if (ins.IsNew(KEY_INPUT_LEFT)) { angles_.y -= rotPow; }
 

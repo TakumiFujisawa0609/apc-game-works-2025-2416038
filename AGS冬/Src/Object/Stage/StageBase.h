@@ -23,7 +23,7 @@ public:
 	int GetModelId();
 
 protected:
-
+	int img_;
 	// ステージモデルのハンドルID
 	int modelId_;
 	// ステージモデルの位置

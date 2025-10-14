@@ -77,7 +77,7 @@ void TitleScene::UpdateMenu(void)
 
     // --- 決定（Aボタン or SPACE） ---
     bool decide =
-        ins.IsTrgDown(KEY_INPUT_SPACE) ||  // キーボードSPACE
+        ins.IsTrgDown(KEY_INPUT_RETURN) ||  // キーボードSPACE
         ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::A); // Aボタン
 
     if (decide)

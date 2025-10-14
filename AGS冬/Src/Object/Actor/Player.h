@@ -43,7 +43,7 @@ public:
 	static constexpr float RESPAWN_LEN = -1500.0f;
 
 	// リスポーン位置
-	static constexpr VECTOR RESPAWN_POS = { 0.0f, 500.0f, 0.0f };
+	static constexpr VECTOR RESPAWN_POS = { 0.0f, 350.0f, 0.0f };
 
 	// 標準の拡散光色
 	static constexpr COLOR_F COLOR_DIF_DEFAULT = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -127,6 +127,8 @@ protected:
 	float jumpPow_;
 
 	int hp_;
+
+	bool isRespawn_ = true;
 
 private:
 };

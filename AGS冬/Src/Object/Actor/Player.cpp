@@ -59,6 +59,8 @@ void Player::Draw(void)
 		AsoUtility::Rad2DegF(angles_.y),
 		AsoUtility::Rad2DegF(angles_.z)
 	);*/
+
+	//DrawFormatString(0,0,0xffffff,"JumpState:%d",jumpState_);
 }
 
 void Player::Release(void)
@@ -91,22 +93,31 @@ bool Player::IsInvincible(void)
 
 void Player::Respawn()
 {
+	if (!isRespawn_) return; // 死んだら処理しない
+
 	if (pos_.y < RESPAWN_LEN)
 	{
+		// 落下前に生きているかチェック
+		if (hp_ <= 1) // ダメージで0になる場合
+		{
+			Damage(1);       // HP減らす
+			ChangeState(STATE::DEAD); // 即死亡
+			return;          // リスポーン処理中断
+		}
+
+		// まだ生きているならリスポーン
 		pos_ = RESPAWN_POS;
-
 		jumpPow_ = 0.0f;
-
 		jumpState_ = JumpState::Falling;
 
-		ChangeState(STATE::IDLE);
+		Damage(1);
 	}
 	MV1SetPosition(modelId_, pos_);
 }
 
 bool Player::IsStateEnd(void)
 {
-	return false;
+	return state_ == STATE::DEAD;
 }
 
 void Player::Damage(int damage)
@@ -132,7 +143,7 @@ void Player::CollisionStage(VECTOR pos)
 {
 	//printfDx("Collision hit pos: (%.2f, %.2f, %.2f)\n", pos.x, pos.y, pos.z);
 
-	if (jumpState_ == JumpState::Rising) return; // 上昇中は無視
+	//if (jumpState_ == JumpState::Rising) return; // 上昇中は無視
 
 	// 衝突判定に指定座標に押し戻す
 	//  少し上に押し戻すことでガクつき防止
@@ -171,7 +182,7 @@ void Player::ProcessMove(void)
 	}
 
 	// WASDでカメラを移動させる
-	const float movePow = 6.0f;
+	const float movePow = 8.0f;
 
 	if (!AsoUtility::EqualsVZero(dir))
 	{
@@ -232,8 +243,8 @@ void Player::ProcessJump(void)
 	jumpPow_ -= GRAVITY_POW;
 	pos_.y += jumpPow_;
 
-	// 落下中かジャンプ中なら、空中にいると見なす
-	if (jumpPow_ < 0.0f || jumpState_ == JumpState::Rising)
+	// 落下中なら、空中にいると見なす
+	if (jumpPow_ < 0.0f)
 	{
 		jumpState_ = JumpState::Falling;
 	}
@@ -255,6 +266,8 @@ void Player::ChangeDead(void)
 {
 	// アニメ再生
 	animationController_->Play(static_cast<int>(ANIM_TYPE::DEAD));
+
+	isRespawn_ = false;
 }
 
 void Player::ChangeEnd(void)

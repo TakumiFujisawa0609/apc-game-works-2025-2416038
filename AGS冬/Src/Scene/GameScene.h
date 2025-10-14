@@ -5,8 +5,10 @@ class Grid;
 class Camera;
 class HpManager;
 class StageManager;
+class GimmickManager;
 class Player;
 class Collision;
+class Timer;
 
 class GameScene : public SceneBase
 {
@@ -32,6 +34,9 @@ private:
 	Player* player_;
 	Collision* collision_;
 	HpManager* hpManager_;
+	GimmickManager* gimmickManager_;
+	Timer* timer_;
+
 
 	void UpdatePauseMenu();  // ← ポーズ中メニュー処理
 	void DrawPauseMenu();    // ← ポーズメニュー描画
@@ -43,5 +48,7 @@ private:
 	// ゲームオーバーフラグ
 	bool isGameOver_;
 
+	bool isClear_;
+	float clearStartTime_;
 };
 

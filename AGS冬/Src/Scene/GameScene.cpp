@@ -2,10 +2,12 @@
 #include "../Manager/SceneManager.h"
 #include "../Manager/StageManager.h"
 #include "../Manager/Camera.h"
+#include "../Manager/GimmickManager.h"
 #include "../Object/Grid.h"
 #include "../Object/Actor/Player.h"
 #include "../Common/Collision.h"
 #include "../UI/HpManager.h"
+#include "../Common/Timer.h"
 #include "GameScene.h"
 
 
@@ -22,12 +24,17 @@ void GameScene::Init(void)
 	// ステージ
 	stageManager_ = new StageManager();
 	player_ = new Player();
+	//gimmickManager_ = new GimmickManager();
 	collision_ = new Collision();
 	grid_ = new Grid();
 	hpManager_ = new HpManager(player_);
 
+
+	timer_ = new Timer();
+
 	stageManager_->Init();
 	player_->Init();
+	//gimmickManager_->Init();
 	collision_->Init(player_, stageManager_);
 
 	// カメラ
@@ -41,6 +48,9 @@ void GameScene::Init(void)
 
 	// ゲームおーば判定
 	isGameOver_ = false;
+
+	isClear_ = false;
+	clearStartTime_ = 0.0f;
 }
 
 void GameScene::Update(void)
@@ -51,12 +61,22 @@ void GameScene::Update(void)
 	}
 
 	auto& ins = InputManager::GetInstance();
+
 	// --- ポーズ切り替え ---
-	if (ins.IsTrgDown(KEY_INPUT_ESCAPE) ||
-		ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::START))
+	if (!isGameOver_ && !isClear_)
 	{
-		isPaused_ = !isPaused_;
+		if (ins.IsTrgDown(KEY_INPUT_ESCAPE) ||
+			ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::Y))
+		{
+			isPaused_ = !isPaused_;
+
+			if (isPaused_)
+				timer_->Pause();   // ★タイマー停止
+			else
+				timer_->Resume();  // ★タイマー再開
+		}
 	}
+
 
 	// --- ポーズ中はゲーム停止してメニューのみ ---
 	if (isPaused_)
@@ -67,29 +87,101 @@ void GameScene::Update(void)
 
 	stageManager_->Update();
 	player_->Update();
+	//gimmickManager_->Update();
 	collision_->Update();
+
+	if (isGameOver_ || isClear_)
+	{
+		timer_->Pause();
+
+		if (ins.IsTrgDown(KEY_INPUT_RETURN) ||
+			ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::Y))
+		{
+			SceneManager::GetInstance()->ChangeScene(SceneManager::SCENE_ID::TITLE);
+		}
+	}
+
+	// === 経過時間チェック ===
+	if (timer_->IsOver(20.0f))  // ← 120秒経過でクリア
+	{
+		isClear_ = true;
+		clearStartTime_ = timer_->GetElapsedSec();
+		return;
+	}
 }
 
 void GameScene::Draw(void)
 {
 	stageManager_->Draw();
 	player_->Draw();
+	//gimmickManager_->Draw();
 	collision_->Draw();
 
 	hpManager_->Draw();
 
-	DrawFormatString(
-		300, 200, 0xffffff,
-		"Game Scene"
-	);
+	if (GetJoypadNum() == 0)
+	{
+		DrawFormatString(300, 150, 0xffffff,"ESCでポーズ");
+	}
+	else
+	{
+		DrawFormatString(300, 150, 0xffffff,"Yでポーズ");
+	}
 
 	// グリッド線
 	//grid_->Draw();
 
+	float elapsed = timer_->GetElapsedSec();
+	float remaining = 20.0f - elapsed;
+	if (remaining < 0) remaining = 0;
+
+	SetFontSize(30);
+	DrawFormatString(0, 5, GetColor(255, 255, 255),
+		"クリアまで: %.1f", remaining);
 
 	if (isPaused_)
 	{
 		DrawPauseMenu();
+	}
+
+	// --- クリア表示 ---
+	if (isClear_)
+	{
+		// 画面中央に半透明黒＋文字
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
+		DrawBox(0, 0, 1280, 720, GetColor(0, 0, 0), TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		SetFontSize(39);
+		DrawFormatString(430, 240, GetColor(255, 255, 0), "CLEAR");
+
+		if (GetJoypadNum() == 0)
+		{
+			DrawFormatString(560, 480, GetColor(255, 255, 0), "Enterでタイトルへ→");
+		}
+		else
+		{
+			DrawFormatString(620, 480, GetColor(255, 255, 0), "Yでタイトルへ→");
+		}
+	}
+	
+
+	if (isGameOver_)
+	{
+		// 画面中央に半透明黒＋文字
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
+		DrawBox(0, 0, 1280, 720, GetColor(0, 0, 0), TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		SetFontSize(39);
+		DrawFormatString(430, 240, GetColor(255, 255, 0), "GAME OVER");
+
+		if (GetJoypadNum() == 0)
+		{
+			DrawFormatString(560, 480, GetColor(255, 255, 0), "Enterでタイトルへ→");
+		}
+		else
+		{
+			DrawFormatString(620, 480, GetColor(255, 255, 0), "Yでタイトルへ→");
+		}
 	}
 }
 
@@ -100,6 +192,9 @@ void GameScene::Release(void)
 
 	player_->Release();
 	delete player_;
+
+	//gimmickManager_->Release();
+	//delete gimmickManager_;
 
 	collision_->Release();
 	delete collision_;
@@ -126,7 +221,7 @@ void GameScene::UpdatePauseMenu()
 	}
 
 	bool decide =
-		ins.IsTrgDown(KEY_INPUT_SPACE) ||
+		ins.IsTrgDown(KEY_INPUT_RETURN) ||
 		ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::A);
 
 	if (decide)
@@ -135,6 +230,7 @@ void GameScene::UpdatePauseMenu()
 		{
 		case 0: // GAME
 			isPaused_ = false;
+			timer_->Resume();  // ★タイマー再開
 			break;
 
 		case 1: // OPTION
