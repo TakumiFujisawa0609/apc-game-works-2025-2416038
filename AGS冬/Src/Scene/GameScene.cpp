@@ -29,8 +29,8 @@ void GameScene::Init(void)
 	grid_ = new Grid();
 	hpManager_ = new HpManager(player_);
 
-
 	timer_ = new Timer();
+
 
 	stageManager_->Init();
 	player_->Init();
@@ -62,11 +62,24 @@ void GameScene::Update(void)
 
 	auto& ins = InputManager::GetInstance();
 
+	if (isGameOver_ || isClear_)
+	{
+		timer_->Pause();
+
+		if (ins.IsTrgDown(KEY_INPUT_RETURN) ||
+			ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::B))
+		{
+			SceneManager::GetInstance()->ChangeScene(SceneManager::SCENE_ID::TITLE);
+		}
+	}
+
+	if (isClear_) return; // クリアしてたら更新止める
+
 	// --- ポーズ切り替え ---
 	if (!isGameOver_ && !isClear_)
 	{
 		if (ins.IsTrgDown(KEY_INPUT_ESCAPE) ||
-			ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::Y))
+			ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::START))
 		{
 			isPaused_ = !isPaused_;
 
@@ -90,19 +103,9 @@ void GameScene::Update(void)
 	//gimmickManager_->Update();
 	collision_->Update();
 
-	if (isGameOver_ || isClear_)
-	{
-		timer_->Pause();
-
-		if (ins.IsTrgDown(KEY_INPUT_RETURN) ||
-			ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::Y))
-		{
-			SceneManager::GetInstance()->ChangeScene(SceneManager::SCENE_ID::TITLE);
-		}
-	}
 
 	// === 経過時間チェック ===
-	if (timer_->IsOver(20.0f))  // ← 120秒経過でクリア
+	if (timer_->IsOver(30.0f))  // ← 120秒経過でクリア
 	{
 		isClear_ = true;
 		clearStartTime_ = timer_->GetElapsedSec();
@@ -125,19 +128,21 @@ void GameScene::Draw(void)
 	}
 	else
 	{
-		DrawFormatString(300, 150, 0xffffff,"Yでポーズ");
+		DrawFormatString(280, 150, 0xffffff,"STARTボタンでポーズ");
 	}
+
+	DrawFormatString(300, 300, 0xffffff, "ギミック未実装");
 
 	// グリッド線
 	//grid_->Draw();
 
 	float elapsed = timer_->GetElapsedSec();
-	float remaining = 20.0f - elapsed;
+	float remaining = 30.0f - elapsed;
 	if (remaining < 0) remaining = 0;
 
 	SetFontSize(30);
 	DrawFormatString(0, 5, GetColor(255, 255, 255),
-		"クリアまで: %.1f", remaining);
+		"クリアまで : %.1f", remaining);
 
 	if (isPaused_)
 	{
@@ -160,7 +165,7 @@ void GameScene::Draw(void)
 		}
 		else
 		{
-			DrawFormatString(620, 480, GetColor(255, 255, 0), "Yでタイトルへ→");
+			DrawFormatString(620, 480, GetColor(255, 255, 0), "Bでタイトルへ→");
 		}
 	}
 	
@@ -180,7 +185,7 @@ void GameScene::Draw(void)
 		}
 		else
 		{
-			DrawFormatString(620, 480, GetColor(255, 255, 0), "Yでタイトルへ→");
+			DrawFormatString(620, 480, GetColor(255, 255, 0), "Bでタイトルへ→");
 		}
 	}
 }

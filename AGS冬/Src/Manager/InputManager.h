@@ -38,7 +38,7 @@ public:
 	// ゲームコントローラーボタン
 	enum class JOYPAD_BTN
 	{
-		LEFT = 0,
+		LEFT,
 		RIGHT,
 		TOP,
 		DOWN,
