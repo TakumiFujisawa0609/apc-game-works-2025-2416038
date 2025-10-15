@@ -40,7 +40,7 @@ public:
 	static constexpr float COLLISION_LEN = 10.0f;
 
 	// リスポーン開始位置
-	static constexpr float RESPAWN_LEN = -1500.0f;
+	static constexpr float RESPAWN_LEN = -3500.0f;
 
 	// リスポーン位置
 	static constexpr VECTOR RESPAWN_POS = { 0.0f, 350.0f, 0.0f };

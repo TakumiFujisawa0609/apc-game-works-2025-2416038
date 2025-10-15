@@ -52,6 +52,8 @@ void Player::Draw(void)
 		break;
 	}
 
+	VECTOR p = VAdd(pos_, VGet(0.0f, 80.0f, 0.0f));
+	//DrawSphere3D(p, 40.0f, 16, GetColor(255, 0, 0), GetColor(255, 0, 0), TRUE);
 	/*DrawFormatString(
 		0, 50, 0xffffff,
 		"キャラ角度　 ：(% .1f, % .1f, % .1f)",
