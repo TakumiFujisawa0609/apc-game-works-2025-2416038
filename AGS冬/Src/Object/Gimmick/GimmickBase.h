@@ -1,0 +1,29 @@
+#pragma once
+#include <DxLib.h>
+
+class GimmickBase
+{
+public:
+	GimmickBase(void);
+	virtual ~GimmickBase(void);
+	virtual void Init(void);
+	virtual void Update(void);
+	virtual void Draw(void);
+	virtual void Release(void);
+
+	bool IsActive();
+
+protected:
+
+	bool isActive_ = false;  // 現在発動中かどうか
+
+	// リソースロード
+	virtual void InitLoad(void) = 0;
+	// 大きさ、回転、座標の初期化
+	virtual void InitTransform(void) = 0;
+	// 大きさ、回転、座標のモデル設定
+	void InitTransformPost(void);
+
+	// 初期化後の個別処理
+	virtual void InitPost(void) = 0;
+};

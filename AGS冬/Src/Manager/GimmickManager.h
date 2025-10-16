@@ -23,10 +23,8 @@ public:
 private:
 
     std::vector<GimmickBase*> gimmicks_;
-    float spawnTimer_ = 0.0f;
-    float spawnInterval_;
+    GimmickBase* currentGimmick_;
 
-    // ギミックを発動させる（例：ランダムで）
-    void SpawnRandomGimmick();
+    int timer_;
 };
 

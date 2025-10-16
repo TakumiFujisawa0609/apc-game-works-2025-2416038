@@ -24,7 +24,7 @@ void GameScene::Init(void)
 	// ステージ
 	stageManager_ = new StageManager();
 	player_ = new Player();
-	//gimmickManager_ = new GimmickManager();
+	gimmickManager_ = new GimmickManager();
 	collision_ = new Collision();
 	grid_ = new Grid();
 	hpManager_ = new HpManager(player_);
@@ -34,7 +34,7 @@ void GameScene::Init(void)
 
 	stageManager_->Init();
 	player_->Init();
-	//gimmickManager_->Init();
+	gimmickManager_->Init();
 	collision_->Init(player_, stageManager_);
 
 	// カメラ
@@ -100,7 +100,7 @@ void GameScene::Update(void)
 
 	stageManager_->Update();
 	player_->Update();
-	//gimmickManager_->Update();
+	gimmickManager_->Update();
 	collision_->Update();
 
 
@@ -117,7 +117,7 @@ void GameScene::Draw(void)
 {
 	stageManager_->Draw();
 	player_->Draw();
-	//gimmickManager_->Draw();
+	gimmickManager_->Draw();
 	collision_->Draw();
 
 	hpManager_->Draw();
@@ -198,8 +198,8 @@ void GameScene::Release(void)
 	player_->Release();
 	delete player_;
 
-	//gimmickManager_->Release();
-	//delete gimmickManager_;
+	gimmickManager_->Release();
+	delete gimmickManager_;
 
 	collision_->Release();
 	delete collision_;
