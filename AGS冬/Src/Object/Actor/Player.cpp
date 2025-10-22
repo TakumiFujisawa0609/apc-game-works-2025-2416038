@@ -328,7 +328,7 @@ void Player::InitTransform(void)
 	localAngles_ = { 0.0f, AsoUtility::Deg2RadF(180.0f), 0.0f };
 
 	// ˆÊ’u
-	pos_ = VGet(0.0f, 39.22f, 0.0f);
+	pos_ = VGet(150.0f, 50.0f, 150.0f);
 }
 
 void Player::InitAnimation(void)

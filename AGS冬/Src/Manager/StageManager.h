@@ -9,10 +9,13 @@ class StageBase;
 class StageManager
 {
 public:
-	
-	static constexpr int PANEL_NUM = 9;
 
-	static constexpr float PANEL_SIZE = 800.0f * 0.8f;
+	static constexpr int DIVISIONS = 3;
+
+	static constexpr float STARTX = -300.0f;
+	static constexpr float STARTZ = -300.0f;
+
+	static constexpr float STEP = 600.0f;
 
 	// コンストラクタ
 	StageManager(void);

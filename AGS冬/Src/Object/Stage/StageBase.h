@@ -31,7 +31,10 @@ protected:
 	VECTOR scales_;
 
 	// 大きさ、回転、座標の初期化
-	//virtual void InitTransform(void) = 0;
+	virtual void InitTransform(void) = 0;
+
+	// 色の初期化
+	virtual void InitColor(void) = 0;
 
 	// 大きさ、回転、座標のモデル設定
 	void InitTransformPost(void);

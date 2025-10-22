@@ -14,7 +14,7 @@ void StageBase::Init(int baseModel)
 	modelId_ = MV1DuplicateModel(baseModel);
 
 	//img_ = LoadGraph("Data/Image/タイトルなし.png");
-	//InitTransform();
+	InitTransform();
 
 	InitTransformPost();
 }
@@ -30,39 +30,39 @@ void StageBase::Draw(void)
 	// ステージ描画
 	MV1DrawModel(modelId_);
 
-    // モデルの上に少し浮かせて描く
-    const float lineY = pos_.y + 38.0f;
+    //// モデルの上に少し浮かせて描く
+    //const float lineY = pos_.y + 38.0f;
 
-    // 範囲
-    const float left = -800.0f;
-    const float right = 800.0f;
-    const float front = -800.0f; // 手前
-    const float back = 800.0f; // 奥
-    const int divisions = 3;
+    //// 範囲
+    //const float left = -800.0f;
+    //const float right = 800.0f;
+    //const float front = -800.0f; // 手前
+    //const float back = 800.0f; // 奥
+    //const int divisions = 3;
 
-    unsigned int color = GetColor(255, 0, 0); // 赤線
+    //unsigned int color = GetColor(255, 0, 0); // 赤線
 
-    // 区切り間隔
-    float stepX = (right - left) / divisions; // 約266.66
-    float stepZ = (back - front) / divisions;
+    //// 区切り間隔
+    //float stepX = (right - left) / divisions; // 約266.66
+    //float stepZ = (back - front) / divisions;
 
-    // 横線（X方向に伸びる）
-    for (int i = 0; i <= divisions; ++i)
-    {
-        float z = front + stepZ * i;
-        VECTOR a = VGet(left, lineY, z);
-        VECTOR b = VGet(right, lineY, z);
-        DrawLine3D(a, b, color);
-    }
+    //// 横線（X方向に伸びる）
+    //for (int i = 0; i <= divisions; ++i)
+    //{
+    //    float z = front + stepZ * i;
+    //    VECTOR a = VGet(left, lineY, z);
+    //    VECTOR b = VGet(right, lineY, z);
+    //    DrawLine3D(a, b, color);  
+    //}
 
-    // 縦線（Z方向に伸びる）
-    for (int i = 0; i <= divisions; ++i)
-    {
-        float x = left + stepX * i;
-        VECTOR a = VGet(x, lineY, front);
-        VECTOR b = VGet(x, lineY, back);
-        DrawLine3D(a, b, color);
-    }
+    //// 縦線（Z方向に伸びる）
+    //for (int i = 0; i <= divisions; ++i)
+    //{
+    //    float x = left + stepX * i;
+    //    VECTOR a = VGet(x, lineY, front);
+    //    VECTOR b = VGet(x, lineY, back);
+    //    DrawLine3D(a, b, color);
+    //}
 }
 
 void StageBase::Release(void)
@@ -86,10 +86,6 @@ int StageBase::GetModelId()
 
 void StageBase::InitTransformPost(void)
 {
-	pos_ = { 0.0f, -39.22f, 0.0f };
-
-	scales_ = { 2.0f, 1.0f, 2.0f };
-
 	MV1SetPosition(modelId_, pos_);
 
 	MV1SetScale(modelId_, scales_);

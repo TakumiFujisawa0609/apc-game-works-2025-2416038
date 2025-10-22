@@ -13,9 +13,6 @@ ActorBase::~ActorBase(void)
 }
 void ActorBase::Init(void)
 {
-	// リソースロード
-	InitLoad();
-
 	// Transform初期化
 	InitTransform();
 
@@ -27,6 +24,18 @@ void ActorBase::Init(void)
 
 	// 初期化後の個別処理
 	InitPost();
+}
+
+void ActorBase::Load(void)
+{
+	// リソースロード
+	InitLoad();
+}
+
+void ActorBase::LoadEnd(void)
+{
+	// 初期化
+	Init();
 }
 
 void ActorBase::Update(void)

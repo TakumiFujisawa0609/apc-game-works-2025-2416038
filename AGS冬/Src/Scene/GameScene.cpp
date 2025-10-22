@@ -5,7 +5,7 @@
 #include "../Manager/GimmickManager.h"
 #include "../Object/Grid.h"
 #include "../Object/Actor/Player.h"
-#include "../Common/Collision.h"
+#include "../Object/Actor/ActorBase.h"
 #include "../UI/HpManager.h"
 #include "../Common/Timer.h"
 #include "GameScene.h"
@@ -25,17 +25,21 @@ void GameScene::Init(void)
 	stageManager_ = new StageManager();
 	player_ = new Player();
 	gimmickManager_ = new GimmickManager();
-	collision_ = new Collision();
 	grid_ = new Grid();
 	hpManager_ = new HpManager(player_);
-
 	timer_ = new Timer();
 
+	// アクター配列に入れる
+	allActor_.push_back(player_);
+	// 全てのアクターを読み込み
+	for (auto actor : allActor_)
+	{
+		// 読み込み
+		actor->Load();
+	}
 
 	stageManager_->Init();
-	player_->Init();
 	gimmickManager_->Init();
-	collision_->Init(player_, stageManager_);
 
 	// カメラ
 	camera_ = SceneManager::GetInstance()->GetCamera();
@@ -99,10 +103,22 @@ void GameScene::Update(void)
 	}
 
 	stageManager_->Update();
-	player_->Update();
-	gimmickManager_->Update();
-	collision_->Update();
 
+	// 全てのアクターを回す
+	for (auto actor : allActor_)
+	{
+		// 更新処理
+		actor->Update();
+
+		// 当たり判定を取るか？
+		if (actor)
+		{
+			// 当たり判定
+			FieldCollision(actor);
+		}
+	}
+
+	gimmickManager_->Update();
 
 	// === 経過時間チェック ===
 	if (timer_->IsOver(30.0f))  // ← 120秒経過でクリア
@@ -116,9 +132,13 @@ void GameScene::Update(void)
 void GameScene::Draw(void)
 {
 	stageManager_->Draw();
-	player_->Draw();
+	// 全てのアクターを回す
+	for (auto actor : allActor_)
+	{
+		// 更新処理
+		actor->Draw();
+	}
 	gimmickManager_->Draw();
-	collision_->Draw();
 
 	hpManager_->Draw();
 
@@ -195,14 +215,16 @@ void GameScene::Release(void)
 	stageManager_->Release();
 	delete stageManager_;
 
-	player_->Release();
-	delete player_;
+	// 全てのアクターを回す
+	for (auto actor : allActor_)
+	{
+		// 更新処理
+		actor->Release();
+		delete actor;
+	}
 
 	gimmickManager_->Release();
 	delete gimmickManager_;
-
-	collision_->Release();
-	delete collision_;
 
 	hpManager_->Release();
 	delete hpManager_;
@@ -266,6 +288,10 @@ void GameScene::DrawPauseMenu()
 	}
 
 	DrawFormatString(580, 220, GetColor(255, 255, 255), "== PAUSE MENU ==");
+}
+
+void GameScene::FieldCollision(ActorBase* actor)
+{
 }
 
 

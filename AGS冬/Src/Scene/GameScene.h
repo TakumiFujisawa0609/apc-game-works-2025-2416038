@@ -7,7 +7,7 @@ class HpManager;
 class StageManager;
 class GimmickManager;
 class Player;
-class Collision;
+class ActorBase
 class Timer;
 
 class GameScene : public SceneBase
@@ -26,13 +26,13 @@ public:
 	// ‰ğ•úˆ—
 	void Release(void) override;
 
+
 private:
 
 	Camera* camera_;
 	Grid* grid_;
 	StageManager* stageManager_;
 	Player* player_;
-	Collision* collision_;
 	HpManager* hpManager_;
 	GimmickManager* gimmickManager_;
 	Timer* timer_;
@@ -50,5 +50,8 @@ private:
 
 	bool isClear_;
 	float clearStartTime_;
+
+	// Õ“Ë”»’è(°)
+	void FieldCollision(ActorBase* actor);
 };
 

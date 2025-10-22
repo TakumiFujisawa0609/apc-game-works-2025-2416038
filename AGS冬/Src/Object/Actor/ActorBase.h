@@ -15,6 +15,8 @@ public:
 	virtual ~ActorBase(void);
 
 	void Init(void);
+	void Load(void);			// ì«Ç›çûÇ›
+	void LoadEnd(void);			// ì«Ç›çûÇ›å„
 	virtual void Update(void);
 	virtual void Draw(void);
 	virtual void Release(void);

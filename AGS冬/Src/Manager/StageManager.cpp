@@ -13,17 +13,33 @@ void StageManager::Init(void)
 {
 	// ステージモデルの読み込み
 	stageModelIds_.emplace_back(
-		MV1LoadModel("Data/Model/Stage/panel.mv1"));
+		MV1LoadModel("Data/Model/Stage/Panel.mv1"));
 
-	// 生成
-	StageBase* panel = new StageBase();
+	for (int z = 0; z < DIVISIONS; z++)
+	{
+		for (int x = 0; x < DIVISIONS; x++)
+		{
+			// 生成
+			StageBase* panel = new Panel();
 
-	// 初期化
-	panel->Init(
-		stageModelIds_[static_cast<int>(StageBase::TYPE::PANEL)]);
+			// 初期化
+			panel->Init(
+				stageModelIds_[static_cast<int>(StageBase::TYPE::PANEL)]);
 
-	// ステージを登録
-	stages_[StageBase::TYPE::PANEL].emplace_back(panel);
+			// 配置座標
+			VECTOR pos = VGet(
+				STARTX + x * STEP,
+				0.0f,
+				STARTZ + z * STEP
+			);
+
+			// 位置設定
+			panel->SetPos(pos);
+
+			// ステージを登録
+			stages_[StageBase::TYPE::PANEL].emplace_back(panel);
+		}
+	}
 }
 
 void StageManager::Update(void)
