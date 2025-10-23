@@ -7,7 +7,8 @@ class HpManager;
 class StageManager;
 class GimmickManager;
 class Player;
-class ActorBase
+class ActorBase;
+class Collision;
 class Timer;
 
 class GameScene : public SceneBase
@@ -35,6 +36,7 @@ private:
 	Player* player_;
 	HpManager* hpManager_;
 	GimmickManager* gimmickManager_;
+	Collision* collision_;
 	Timer* timer_;
 
 
@@ -51,7 +53,5 @@ private:
 	bool isClear_;
 	float clearStartTime_;
 
-	// è’ìÀîªíË(è∞)
-	void FieldCollision(ActorBase* actor);
 };
 

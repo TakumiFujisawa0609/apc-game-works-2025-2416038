@@ -29,6 +29,7 @@ private:
 	Player* player_;
 	StageManager* stageManager_;
 
-	bool IsHitAABB(const AABB& a, const AABB& b);
+	// Õ“Ë”»’è(°)
+	void PlayerAndFloorCollision();
 };
 

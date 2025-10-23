@@ -45,6 +45,11 @@ protected:
 	// 移動方向
 	VECTOR moveDir_;
 
+	// カプセルの当たり判定座標
+	VECTOR startCapsulePos_;
+	VECTOR endCapsulePos_;
+	float capsuleRadius_;
+
 	// 横幅・縦幅
 	float halfW_;
 	float halfH_;

@@ -81,6 +81,11 @@ public:
 	// HP‚ÌŽæ“¾
 	int GetHp(void);
 
+	// ƒJƒvƒZƒ‹‚Ì“–‚½‚è”»’è‚ðŽæ“¾
+	const VECTOR& GetStartCapsulePos(void) const { return startCapsulePos_; }
+	const VECTOR& GetEndCapsulePos(void) const { return endCapsulePos_; }
+	const float& GetCapsuleRadius(void) const { return capsuleRadius_; }
+
 
 	void CollisionStage(VECTOR pos);
 

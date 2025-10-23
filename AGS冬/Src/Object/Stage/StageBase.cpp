@@ -12,11 +12,14 @@ void StageBase::Init(int baseModel)
 {
 	// モデル読み込み
 	modelId_ = MV1DuplicateModel(baseModel);
+    // 衝突判定情報の構築
+    MV1SetupCollInfo(modelId_, -1);
 
 	//img_ = LoadGraph("Data/Image/タイトルなし.png");
 	InitTransform();
 
 	InitTransformPost();
+
 }
 
 void StageBase::Update(void)

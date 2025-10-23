@@ -62,7 +62,7 @@ void Player::Draw(void)
 		AsoUtility::Rad2DegF(angles_.z)
 	);*/
 
-	//DrawFormatString(0,0,0xffffff,"JumpState:%d",jumpState_);
+	DrawFormatString(0,0,0xffffff,"JumpState:%d",jumpState_);
 }
 
 void Player::Release(void)
@@ -152,6 +152,9 @@ void Player::CollisionStage(VECTOR pos)
 	pos_.y = pos.y;
 	jumpPow_ = 0.0f;
 	jumpState_ = JumpState::Ground;
+
+	// ÉÇÉfÉãà íuîΩâf
+	//MV1SetPosition(modelId_, pos_);
 }
 
 void Player::ProcessMove(void)
@@ -328,7 +331,12 @@ void Player::InitTransform(void)
 	localAngles_ = { 0.0f, AsoUtility::Deg2RadF(180.0f), 0.0f };
 
 	// à íu
-	pos_ = VGet(150.0f, 50.0f, 150.0f);
+	pos_ = VGet(150.0f, 300.0f, 150.0f);
+
+	// ìñÇΩÇËîªíËÇçÏê¨
+	startCapsulePos_ = { 0.0f,110,0.0f };
+	endCapsulePos_ = { 0.0f,15.0f,0.0f };
+	capsuleRadius_ = 20.0f;
 }
 
 void Player::InitAnimation(void)

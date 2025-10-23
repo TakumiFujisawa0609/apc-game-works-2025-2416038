@@ -7,12 +7,18 @@
 
 ActorBase::ActorBase(void)
 {
+	startCapsulePos_ = { 0.0f,0.0f,0.0f };
+	endCapsulePos_ = { 0.0f,0.0f,0.0f };
+	capsuleRadius_ = 0.0f;
 }
 ActorBase::~ActorBase(void)
 {
 }
 void ActorBase::Init(void)
 {
+	// リソースロード
+	InitLoad();
+
 	// Transform初期化
 	InitTransform();
 
