@@ -36,7 +36,7 @@ void Collision::PlayerAndFloorCollision()
 	VECTOR pPos = player_->GetPos();
 
 	// 前フレーム位置 → 現在位置 にレイを伸ばす
-	VECTOR startPos = pPos;
+	VECTOR startPos = VAdd(pPos, { 0,20.0f, 0 });
 	VECTOR endPos = VAdd(pPos, { 0,-10.0f, 0 });
 
 	// ステージ全体に対してチェック
@@ -54,9 +54,8 @@ void Collision::PlayerAndFloorCollision()
 
 			if (res.HitFlag)
 			{
-				// 当たった位置を少し上にずらす（めり込み防止）
+				// 当たった位置
 				VECTOR hitPos = res.HitPosition;
-				hitPos.y += 1;
 
 				// プレイヤーに衝突情報を渡す
 				player_->CollisionStage(hitPos);

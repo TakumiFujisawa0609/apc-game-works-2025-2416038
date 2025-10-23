@@ -149,7 +149,7 @@ void Player::CollisionStage(VECTOR pos)
 
 	// Õ“Ë”»’è‚Éw’èÀ•W‚É‰Ÿ‚µ–ß‚·
 	//  ­‚µã‚É‰Ÿ‚µ–ß‚·‚±‚Æ‚ÅƒKƒN‚Â‚«–h~
-	pos_.y = pos.y;
+	pos_ = pos;
 	jumpPow_ = 0.0f;
 	jumpState_ = JumpState::Ground;
 
