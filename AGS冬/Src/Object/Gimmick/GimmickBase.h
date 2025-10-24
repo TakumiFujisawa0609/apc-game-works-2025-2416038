@@ -1,6 +1,14 @@
 #pragma once
 #include <DxLib.h>
 
+enum class GimmickType {
+	NONE,
+	LASER,	 // レーザー
+	FALLING, // 落下物
+	QUIZ,	 // クイズ
+	MAX
+};;
+
 class GimmickBase
 {
 public:
@@ -12,6 +20,8 @@ public:
 	virtual void Release(void);
 
 	bool IsActive();
+
+	virtual GimmickType GetType() const;
 
 protected:
 

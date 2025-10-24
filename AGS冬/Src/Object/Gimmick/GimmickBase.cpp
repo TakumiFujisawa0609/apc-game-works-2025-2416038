@@ -31,6 +31,11 @@ bool GimmickBase::IsActive()
 	return isActive_;
 }
 
+GimmickType GimmickBase::GetType() const
+{
+	return GimmickType::NONE;
+}
+
 void GimmickBase::InitTransformPost(void)
 {
 }

@@ -12,6 +12,7 @@ public:
 		int direction;  // 0=左→右, 1=右→左, 2=奥→手前, 3=手前→奥
 		int timer;      // 経過時間
 		bool fired;     // 発射中か
+		int modelHandle; // モデルハンドル
 	};
 
 	GimmickLaser(void);
@@ -22,9 +23,14 @@ public:
 	void Draw() override;
 	void Release() override;
 
+	GimmickType GetType() const override;
+
 private:
 
 	std::vector<LaserInfo> lasers_;
+
+	int modelId_;
+
 	int spawnTimer_ = 0; // 次のレーザー生成用タイマー
 	int activeCount_ = 0; // 今何本目か
 

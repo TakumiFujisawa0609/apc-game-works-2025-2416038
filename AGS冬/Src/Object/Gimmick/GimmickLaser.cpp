@@ -9,7 +9,19 @@ void GimmickLaser::Init()
     lasers_.clear();
     spawnTimer_ = 0;
     activeCount_ = 0;
-    isActive_ = true;
+
+    // モデルロード（共通レーザーモデル）
+    modelId_ = MV1LoadModel("Data/Model/Gimmick/Laser.mv1");
+
+    // マテリアルをすべてエミッシブに設定
+    int materialNum = MV1GetMaterialNum(modelId_);
+    for (int i = 0; i < materialNum; ++i)
+    {
+        MV1SetMaterialDifColor(modelId_, i, GetColorF(1, 1, 1, 1)); // 拡散反射
+        MV1SetMaterialSpcColor(modelId_, i, GetColorF(1, 1, 1, 1)); // 鏡面反射
+        MV1SetMaterialEmiColor(modelId_, i, GetColorF(1, 1, 1, 1)); // 自発光
+        MV1SetMaterialAmbColor(modelId_, i, GetColorF(1, 1, 1, 1)); // 環境光
+    }
 }
 
 void GimmickLaser::Update()
@@ -18,8 +30,8 @@ void GimmickLaser::Update()
 
     spawnTimer_++;
 
-    // 2秒(120F)ごとに1本追加、最大4本
-    if (spawnTimer_ >= 120 && activeCount_ < 4)
+    // 4秒(240F)ごとに1本追加、最大4本
+    if (spawnTimer_ >= 240 && activeCount_ < 4)
     {
         spawnTimer_ = 0;
 
@@ -27,7 +39,10 @@ void GimmickLaser::Update()
         l.direction = GetRand(3);
         l.timer = 0;
         l.fired = true;
-        l.pos = 1000.0f; // スタート位置（遠方から）
+        l.pos = 1000.0f;    // スタート位置
+
+        // 個別モデルを作成（複製）
+        l.modelHandle = MV1DuplicateModel(modelId_);
 
         lasers_.push_back(l);
         activeCount_++;
@@ -38,14 +53,11 @@ void GimmickLaser::Update()
     for (auto& l : lasers_)
     {
         if (!l.fired) continue;
-        allEnd = false;
 
         l.timer++;
+        const float speed = 10.0f;
 
-        // 移動スピード
-        const float speed = 25.0f;
-
-        // 進行方向ごとの移動
+        // 移動
         switch (l.direction)
         {
         case 0: l.pos -= speed; break; // 左→右
@@ -54,9 +66,30 @@ void GimmickLaser::Update()
         case 3: l.pos -= speed; break; // 手前→奥
         }
 
-        // ある程度近づいたら消滅
+        // モデルの位置と回転を設定
+        VECTOR pos;
+        float rotY = 0.0f;
+
+        switch (l.direction)
+        {
+        case 0: pos = VGet(-l.pos, 40.0f, 300.0f); rotY = DX_PI_F * 0.5f; break; // 左→右
+        case 1: pos = VGet(l.pos, 40.0f, 300.0f);  rotY = DX_PI_F * -0.5f; break; // 右→左
+        case 2: pos = VGet(300.0f, 40.0f, -l.pos); rotY = 0.0f; break; // 奥→手前
+        case 3: pos = VGet(300.0f, 40.0f, l.pos);  rotY = DX_PI_F; break; // 手前→奥
+        }
+
+        MV1SetPosition(l.modelHandle, pos);
+        MV1SetRotationXYZ(l.modelHandle, VGet(0, rotY, 0));
+
+        // モデルを元のサイズで固定
+        MV1SetScale(l.modelHandle, VGet(2.8f, 1.0f, 1.0f));
+
+        // 消滅条件
         if (l.pos < -1000.0f)
+        {
+            MV1DeleteModel(l.modelHandle);
             l.fired = false;
+        }
     }
 
     // 全部消えたら終了
@@ -68,46 +101,30 @@ void GimmickLaser::Draw()
 {
     if (!isActive_) return;
 
-    unsigned int color = GetColor(255, 0, 0);
-    float len = 800.0f;
-    float y = 40.0f;
-
-    for (const auto& l : lasers_)
+    for (auto& l : lasers_)
     {
         if (!l.fired) continue;
-
-        VECTOR start, end;
-
-        switch (l.direction)
-        {
-        case 0: // 左→右
-            start = VGet(-l.pos, y, -len);
-            end = VGet(-l.pos, y, len);
-            break;
-
-        case 1: // 右→左
-            start = VGet(l.pos, y, -len);
-            end = VGet(l.pos, y, len);
-            break;
-
-        case 2: // 奥→手前
-            start = VGet(-len, y, -l.pos);
-            end = VGet(len, y, -l.pos);
-            break;
-
-        case 3: // 手前→奥
-            start = VGet(-len, y, l.pos);
-            end = VGet(len, y, l.pos);
-            break;
-        }
-
-        DrawLine3D(start, end, color);
+        MV1DrawModel(l.modelHandle);
     }
 }
 
 void GimmickLaser::Release()
 {
+    for (auto & l : lasers_)
+    {
+        if (l.fired)
+            MV1DeleteModel(l.modelHandle);
+    }
+
     lasers_.clear();
+
+    // 元モデル削除
+    MV1DeleteModel(modelId_);
+}
+
+GimmickType GimmickLaser::GetType() const
+{
+    return GimmickType::LASER;
 }
 
 void GimmickLaser::InitLoad(void)

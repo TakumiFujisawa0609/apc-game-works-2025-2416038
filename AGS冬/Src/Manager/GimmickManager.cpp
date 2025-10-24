@@ -1,4 +1,5 @@
 #include "../Object/Gimmick/GimmickLaser.h"
+#include "../Object/Gimmick/GimmickFalling.h"
 #include "GimmickManager.h"
 
 GimmickManager::GimmickManager()
@@ -12,6 +13,8 @@ GimmickManager::~GimmickManager()
 void GimmickManager::Init()
 {
     gimmicks_.push_back(new GimmickLaser());
+    gimmicks_.push_back(new GimmickFalling());
+
     timer_ = 0;
     currentGimmick_ = nullptr;
 }
@@ -35,7 +38,24 @@ void GimmickManager::Update()
 
 void GimmickManager::Draw()
 {
-    if (currentGimmick_) currentGimmick_->Draw();
+    if (currentGimmick_)
+    {
+        currentGimmick_->Draw();
+
+        // --- デバッグ表示 ---
+        const char* gimmickName = "None";
+        switch (currentGimmick_->GetType())
+        {
+        case GimmickType::LASER: gimmickName = "レーザー"; break;
+        case GimmickType::FALLING:  gimmickName = "落下部"; break;
+        case GimmickType::QUIZ:   gimmickName = "クイズ"; break;
+        default: break;
+        }
+        
+		SetFontSize(30);
+        DrawFormatString(340, 50, GetColor(255, 255, 0), "発動中 : %s", gimmickName);
+        SetFontSize(16);
+    }
 }
 
 void GimmickManager::Release()

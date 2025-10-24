@@ -62,7 +62,7 @@ void Player::Draw(void)
 		AsoUtility::Rad2DegF(angles_.z)
 	);*/
 
-	DrawFormatString(0,0,0xffffff,"JumpState:%d",jumpState_);
+	//DrawFormatString(0,0,0xffffff,"JumpState:%d",jumpState_);
 }
 
 void Player::Release(void)

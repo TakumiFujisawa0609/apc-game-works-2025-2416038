@@ -127,7 +127,7 @@ void GameScene::Update(void)
 	collision_->Update();
 
 	// === 経過時間チェック ===
-	if (timer_->IsOver(30.0f))  // ← 120秒経過でクリア
+	if (timer_->IsOver(60.0f))  // ← 120秒経過でクリア
 	{
 		isClear_ = true;
 		clearStartTime_ = timer_->GetElapsedSec();
@@ -167,7 +167,7 @@ void GameScene::Draw(void)
 	//grid_->Draw();
 
 	float elapsed = timer_->GetElapsedSec();
-	float remaining = 30.0f - elapsed;
+	float remaining = 60.0f - elapsed;
 	if (remaining < 0) remaining = 0;
 
 	SetFontSize(30);
