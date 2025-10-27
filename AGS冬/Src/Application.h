@@ -19,8 +19,8 @@ public:
 	//-------------------------------------------
 
 	// スクリーンサイズ
-	static constexpr int SCREEN_SIZE_X = 1920/2;
-	static constexpr int SCREEN_SIZE_Y = 1080/2;
+	static constexpr int SCREEN_SIZE_X = 1920;
+	static constexpr int SCREEN_SIZE_Y = 1080;
 	static constexpr int COLOR_BIT_DIPTH = 32;
 
 	// 明示的にインステンスを生成する

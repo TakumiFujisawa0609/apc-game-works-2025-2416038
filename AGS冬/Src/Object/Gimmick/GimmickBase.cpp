@@ -38,4 +38,5 @@ GimmickType GimmickBase::GetType() const
 
 void GimmickBase::InitTransformPost(void)
 {
+	
 }

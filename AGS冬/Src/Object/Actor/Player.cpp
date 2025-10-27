@@ -143,12 +143,9 @@ int Player::GetHp(void)
 
 void Player::CollisionStage(VECTOR pos)
 {
-	//printfDx("Collision hit pos: (%.2f, %.2f, %.2f)\n", pos.x, pos.y, pos.z);
-
 	//if (jumpState_ == JumpState::Rising) return; // 上昇中は無視
 
 	// 衝突判定に指定座標に押し戻す
-	//  少し上に押し戻すことでガクつき防止
 	pos_ = pos;
 	jumpPow_ = 0.0f;
 	jumpState_ = JumpState::Ground;
@@ -245,8 +242,10 @@ void Player::ProcessJump(void)
 	}
 
 	// 重力(加速度を速度に加算していく)
-	jumpPow_ -= GRAVITY_POW;
-	pos_.y += jumpPow_;
+	if (jumpState_ != JumpState::Ground) {
+		jumpPow_ -= GRAVITY_POW;
+		pos_.y += jumpPow_;
+	}
 
 	// 落下中なら、空中にいると見なす
 	if (jumpPow_ < 0.0f)
@@ -331,7 +330,7 @@ void Player::InitTransform(void)
 	localAngles_ = { 0.0f, AsoUtility::Deg2RadF(180.0f), 0.0f };
 
 	// 位置
-	pos_ = VGet(150.0f, 300.0f, 150.0f);
+	pos_ = VGet(150.0f, 0.0f, 150.0f);
 
 	// 当たり判定を作成
 	startCapsulePos_ = { 0.0f,110,0.0f };

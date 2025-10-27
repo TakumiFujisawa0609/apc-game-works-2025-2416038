@@ -184,7 +184,7 @@ void GameScene::Draw(void)
 	{
 		// âÊñ íÜâõÇ…îºìßñæçïÅ{ï∂éö
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
-		DrawBox(0, 0, 1280, 720, GetColor(0, 0, 0), TRUE);
+		DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		SetFontSize(39);
 		DrawFormatString(430, 240, GetColor(255, 255, 0), "CLEAR");
@@ -204,7 +204,7 @@ void GameScene::Draw(void)
 	{
 		// âÊñ íÜâõÇ…îºìßñæçïÅ{ï∂éö
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
-		DrawBox(0, 0, 1280, 720, GetColor(0, 0, 0), TRUE);
+		DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		SetFontSize(39);
 		DrawFormatString(430, 240, GetColor(255, 255, 0), "GAME OVER");
@@ -292,16 +292,16 @@ void GameScene::DrawPauseMenu()
 	const char* menu[] = { "GAME", "OPTION", "TITLE" };
 
 	// îºìßñæîwåi
-	DrawBox(0, 0, 1280, 720, GetColor(0, 0, 0), TRUE);
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 180);
-	DrawBox(0, 0, 1280, 720, GetColor(0, 0, 0), TRUE);
+	DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
+	DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	for (int i = 0; i < 3; i++)
 	{
 		int color = (i == cursorIndex_) ? GetColor(255, 255, 0) : GetColor(255, 255, 255);
-		DrawFormatString(600, 300 + i * 40, color, menu[i]);
+		DrawFormatString(1000, 500 + i * 40, color, menu[i]);
 	}
 
-	DrawFormatString(580, 220, GetColor(255, 255, 255), "== PAUSE MENU ==");
+	DrawFormatString(950, 400, GetColor(255, 255, 255), "PAUSE MENU");
 }

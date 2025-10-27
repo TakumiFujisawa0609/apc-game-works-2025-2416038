@@ -27,6 +27,8 @@ protected:
 
 	bool isActive_ = false;  // 現在発動中かどうか
 
+	VECTOR scl_;
+
 	// リソースロード
 	virtual void InitLoad(void) = 0;
 	// 大きさ、回転、座標の初期化

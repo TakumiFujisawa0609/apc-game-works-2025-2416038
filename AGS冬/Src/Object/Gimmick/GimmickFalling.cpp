@@ -8,8 +8,8 @@ void GimmickFalling::Init() {
 
     GimmickBase::Init();
 
-    modelId_ = MV1LoadModel("Data/Model/Gimmick/Laser.mv1");
-	if (modelId_ == -1) printfDx("GimmickFalling: モデル読み込み失敗\n");
+    modelId_ = MV1LoadModel("Data/Model/Gimmick/FallingObject.mv1");
+
     // 3x3 パネル座標を Gimmick 内で作る
     panels_.clear();
     const float startX = -300.0f;
@@ -25,6 +25,8 @@ void GimmickFalling::Init() {
     waveTimer_ = 0.0f;
     waveActive_ = false;
     waveInfos_.clear();
+
+    scl_ = { 650.0f, 650.0f, 650.0f };
 
     SetupWave();
 }
@@ -69,7 +71,7 @@ void GimmickFalling::Update() {
                 info.isWarning = false;
                 info.isFalling = true;
                 info.modelHandle = MV1DuplicateModel(modelId_);
-				if (info.modelHandle == -1) printfDx("GimmickFalling: モデル複製失敗\n");
+
                 MV1SetPosition(info.modelHandle, VGet(info.panelPos.x, info.fallY, info.panelPos.z));
             }
         }
@@ -77,11 +79,11 @@ void GimmickFalling::Update() {
         // 落下
         if (info.isFalling) {
             info.fallY -= 15.0f;
-            if (info.fallY <= 0.0f) {
-                info.fallY = 0.0f;
+            if (info.fallY <= 230.0f) {
+                info.fallY = 230.0f;
                 info.isFalling = false;
             }
-            //MV1SetScale(info.modelHandle, VGet(10.0f, 10.0f, 10.0f));
+            MV1SetScale(info.modelHandle, scl_);
             MV1SetPosition(info.modelHandle, VGet(info.panelPos.x, info.fallY, info.panelPos.z));
         }
 
@@ -120,6 +122,7 @@ void GimmickFalling::Draw() {
             VECTOR bottom = VGet(info.panelPos.x, 0.0f, info.panelPos.z);
             DrawCone3D(top, bottom, radius, 32, col, col, TRUE);
         }
+		MV1DrawModel(info.modelHandle);
 
 		DrawFormatString(0, 500, 0xffffff, "pos(%.f, %.f, %.f)", info.panelPos.x, info.fallY, info.panelPos.z);
     }
@@ -149,6 +152,7 @@ void GimmickFalling::InitLoad()
 
 void GimmickFalling::InitTransform()
 {
+	
 }
 
 void GimmickFalling::InitPost()
