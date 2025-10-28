@@ -47,13 +47,13 @@ void GimmickManager::Draw()
         switch (currentGimmick_->GetType())
         {
         case GimmickType::LASER: gimmickName = "レーザー"; break;
-        case GimmickType::FALLING:  gimmickName = "落下部"; break;
+        case GimmickType::FALLING:  gimmickName = "落下物"; break;
         case GimmickType::QUIZ:   gimmickName = "クイズ"; break;
         default: break;
         }
         
-		SetFontSize(30);
-        DrawFormatString(340, 50, GetColor(255, 255, 0), "発動中 : %s", gimmickName);
+		SetFontSize(50);
+        DrawFormatString(540, 50, GetColor(255, 255, 0), "発動中 : %s", gimmickName);
         SetFontSize(16);
     }
 }

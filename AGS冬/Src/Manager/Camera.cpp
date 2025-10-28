@@ -179,7 +179,7 @@ void Camera::MoveXYZDirection(void)
 
 	// ã‰º‚ÌŠp“x§ŒÀ
 	if (angles_.x > DX_PI_F / 6.0f) { angles_.x = DX_PI_F / 6.0f; }
-	if (angles_.x < -DX_PI_F / 6.0f) { angles_.x = -DX_PI_F / 6.0f; }
+	if (angles_.x < -DX_PI_F / 4.3f) { angles_.x = -DX_PI_F / 4.3f; }
 
 }
 

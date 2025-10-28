@@ -234,18 +234,18 @@ void Player::ProcessJump(void)
 	// --- ジャンプ開始処理 ---
 	if (isJumpPressed && jumpState_ == JumpState::Ground)
 	{
-		jumpState_ = JumpState::Rising;
-		jumpPow_ = JUMP_POW;
+		if (jumpState_ != JumpState::Ground) {
+			jumpPow_ -= GRAVITY_POW; pos_.y += jumpPow_;
 
-		// ジャンプアニメーション再生
-		animationController_->Play(static_cast<int>(ANIM_TYPE::JUMP), false);
+			// ジャンプアニメーション再生
+			animationController_->Play(static_cast<int>(ANIM_TYPE::JUMP), false);
+		}
 	}
 
 	// 重力(加速度を速度に加算していく)
-	if (jumpState_ != JumpState::Ground) {
-		jumpPow_ -= GRAVITY_POW;
-		pos_.y += jumpPow_;
-	}
+		if (jumpState_ != JumpState::Ground) {
+			jumpPow_ -= GRAVITY_POW; pos_.y += jumpPow_;
+		}
 
 	// 落下中なら、空中にいると見なす
 	if (jumpPow_ < 0.0f)

@@ -26,7 +26,7 @@ void GimmickFalling::Init() {
     waveActive_ = false;
     waveInfos_.clear();
 
-    scl_ = { 650.0f, 650.0f, 650.0f };
+    scl_ = { 650.0f, 550.0f, 650.0f };
 
     SetupWave();
 }
@@ -79,8 +79,8 @@ void GimmickFalling::Update() {
         // —Ž‰º
         if (info.isFalling) {
             info.fallY -= 15.0f;
-            if (info.fallY <= 230.0f) {
-                info.fallY = 230.0f;
+            if (info.fallY <= 260.0f) {
+                info.fallY = 260.0f;
                 info.isFalling = false;
             }
             MV1SetScale(info.modelHandle, scl_);

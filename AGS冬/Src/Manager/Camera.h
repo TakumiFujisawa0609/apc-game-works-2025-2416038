@@ -12,9 +12,9 @@ public:
 	// カメラの初期角度
 	static constexpr VECTOR DERFAULT_ANGLES = { 0.0f, 0.0f, 0.0f };
 	// 追従対象からカメラへの相対座標
-	static constexpr VECTOR FOLLOW_CAMERA_LOCAL_POS = { 0.0f, 200.0f, -350.0f };
+	static constexpr VECTOR FOLLOW_CAMERA_LOCAL_POS = { 0.0f, 500.0f, -500.0f };
 	// 追従対象から注視点への相対座標
-	static constexpr VECTOR FOLLOW_TARGET_LOCAL_POS = { 0.0f, 0.0f, 150.0f };
+	static constexpr VECTOR FOLLOW_TARGET_LOCAL_POS = { 0.0f, 0.0f, 0.0f };
 
 	// カメラのクリップ範囲
 	static constexpr float VIEW_NEAR = 1.0f;

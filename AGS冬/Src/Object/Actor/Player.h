@@ -32,7 +32,7 @@ public:
 	};
 
 	// d—Í
-	static constexpr float GRAVITY_POW = 1.0f;
+	static constexpr float GRAVITY_POW = 0.8f;
 	// ƒWƒƒƒ“ƒv—Í
 	static constexpr float JUMP_POW = 30.0f;
 

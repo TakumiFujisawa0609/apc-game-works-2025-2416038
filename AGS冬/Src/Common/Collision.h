@@ -31,5 +31,7 @@ private:
 
 	// Õ“Ë”»’è(°)
 	void PlayerAndFloorCollision();
+
+	// 
 };
 
