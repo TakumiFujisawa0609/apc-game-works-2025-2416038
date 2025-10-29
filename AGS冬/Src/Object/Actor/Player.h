@@ -10,6 +10,9 @@ public:
 	enum class STATE
 	{
 		IDLE,
+		RUN,
+		JUMP,
+		FALL,
 		DEAD,
 		END,
 		MAX,
@@ -24,10 +27,11 @@ public:
 	// アニメーション種別
 	enum class ANIM_TYPE
 	{
-		IDLE,
-		WALK,
-		JUMP,
 		DEAD,
+		FALL,
+		IDLE,
+		JUMP,
+		RUN,
 		MAX,
 	};
 
@@ -112,19 +116,25 @@ protected:
 
 	// 状態遷移
 	void ChangeIdle(void);
+	void ChanegeRun(void);
 	void ChangeJump(void);
+	void ChabgeFall(void);
 	void ChangeDead(void);
 	void ChangeEnd(void);
 
 	// 状態別更新
 	void UpdateIdle(void);
+	void UpdateRun(void);
 	void UpdateJump(void);
+	void UpdateFall(void);
 	void UpdateDead(void);
 	void UpdateEnd(void);
 
 	// 状態別描画
 	void DrawIdle(void);
+	void DrawRun(void);
 	void DrawJump(void);
+	void DrawFall(void);
 	void DrawDead(void);
 	void DrawEnd(void);
 

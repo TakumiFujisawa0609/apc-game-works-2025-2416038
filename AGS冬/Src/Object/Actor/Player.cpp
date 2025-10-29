@@ -23,6 +23,15 @@ void Player::Update(void)
 	case STATE::IDLE:
 		UpdateIdle();
 		break;
+	case STATE::RUN:
+		UpdateRun();
+		break;
+	case STATE::JUMP:
+		UpdateJump();
+		break;
+	case STATE::FALL:
+		UpdateFall();
+		break;
 	case STATE::DEAD:
 		UpdateDead();
 		break;
@@ -44,6 +53,15 @@ void Player::Draw(void)
 	case STATE::IDLE:
 		DrawIdle();
 		break;
+	case STATE::RUN:
+		DrawRun();
+		break;
+	case STATE::JUMP:
+		DrawJump();
+		break;
+	case STATE::FALL:
+		DrawFall();
+		break;
 	case STATE::DEAD:
 		DrawDead();
 		break;
@@ -61,7 +79,13 @@ void Player::Draw(void)
 		AsoUtility::Rad2DegF(angles_.y),
 		AsoUtility::Rad2DegF(angles_.z)
 	);*/
-
+	DrawFormatString(
+		0, 0, 0xffffff,
+		"キャラ座標　 ：(% .1f, % .1f, % .1f)",
+		pos_.x,
+		pos_.y,
+		pos_.z
+	);
 	//DrawFormatString(0,0,0xffffff,"JumpState:%d",jumpState_);
 }
 
@@ -78,6 +102,15 @@ void Player::ChangeState(STATE state)
 	{
 	case STATE::IDLE:
 		ChangeIdle();
+		break;
+	case STATE::RUN:
+		ChanegeRun();
+		break;
+	case STATE::JUMP:
+		ChangeJump();
+		break;
+	case STATE::FALL:
+		ChabgeFall();
 		break;
 	case STATE::DEAD:
 		ChangeDead();
@@ -205,12 +238,12 @@ void Player::ProcessMove(void)
 		pos_ = VAdd(pos_, VScale(moveDir_, movePow));
 
 		// 歩行アニメーション再生
-		animationController_->Play(static_cast<int>(ANIM_TYPE::WALK), true);
+		animationController_->Play(static_cast<int>(ANIM_TYPE::RUN), true);
 	}
 	else
 	{
 		// 待機アニメーション
-		animationController_->Play(static_cast<int>(ANIM_TYPE::IDLE));
+		animationController_->Play(static_cast<int>(ANIM_TYPE::IDLE), true);
 	}
 
 
@@ -234,42 +267,51 @@ void Player::ProcessJump(void)
 	// --- ジャンプ開始処理 ---
 	if (isJumpPressed && jumpState_ == JumpState::Ground)
 	{
-		if (jumpState_ != JumpState::Ground) {
-			jumpPow_ -= GRAVITY_POW; pos_.y += jumpPow_;
+		jumpState_ = JumpState::Rising;
+		jumpPow_ = JUMP_POW;
 
-			// ジャンプアニメーション再生
-			animationController_->Play(static_cast<int>(ANIM_TYPE::JUMP), false);
-		}
+		// ジャンプアニメーション再生
+		animationController_->Play(static_cast<int>(ANIM_TYPE::JUMP), false);
+
 	}
 
 	// 重力(加速度を速度に加算していく)
-		if (jumpState_ != JumpState::Ground) {
-			jumpPow_ -= GRAVITY_POW; pos_.y += jumpPow_;
-		}
+	jumpPow_ -= GRAVITY_POW;
+	pos_.y += jumpPow_;
+		
 
 	// 落下中なら、空中にいると見なす
-	if (jumpPow_ < 0.0f)
+	if (jumpPow_ < 0.0f && jumpState_ != JumpState::Ground)
 	{
 		jumpState_ = JumpState::Falling;
+		animationController_->Play(static_cast<int>(ANIM_TYPE::FALL), true);
 	}
 }
 
 void Player::ChangeIdle(void)
 {
-	// アニメ再生
-	animationController_->Play(static_cast<int>(ANIM_TYPE::IDLE), true);
+
+}
+
+void Player::ChanegeRun(void)
+{
+
 }
 
 void Player::ChangeJump(void)
 {
-	// アニメ再生
-	animationController_->Play(static_cast<int>(ANIM_TYPE::JUMP));
+
+}
+
+void Player::ChabgeFall(void)
+{
+
 }
 
 void Player::ChangeDead(void)
 {
 	// アニメ再生
-	animationController_->Play(static_cast<int>(ANIM_TYPE::DEAD));
+	animationController_->Play(static_cast<int>(ANIM_TYPE::DEAD), false);
 
 	isRespawn_ = false;
 }
@@ -286,7 +328,15 @@ void Player::UpdateIdle(void)
 	ProcessJump();
 }
 
+void Player::UpdateRun(void)
+{
+}
+
 void Player::UpdateJump(void)
+{
+}
+
+void Player::UpdateFall(void)
 {
 }
 
@@ -302,7 +352,15 @@ void Player::DrawIdle(void)
 {
 }
 
+void Player::DrawRun(void)
+{
+}
+
 void Player::DrawJump(void)
+{
+}
+
+void Player::DrawFall(void)
 {
 }
 
@@ -317,7 +375,7 @@ void Player::DrawEnd(void)
 void Player::InitLoad(void)
 {
 	// モデル読み込み
-	modelId_ = MV1LoadModel("Data/Model/Player/Player.mv1");
+	modelId_ = MV1LoadModel("Data/Model/Player/Mouse.mv1");
 }
 
 void Player::InitTransform(void)
@@ -336,6 +394,16 @@ void Player::InitTransform(void)
 	startCapsulePos_ = { 0.0f,110,0.0f };
 	endCapsulePos_ = { 0.0f,15.0f,0.0f };
 	capsuleRadius_ = 20.0f;
+
+	// マテリアルをすべてエミッシブに設定
+	int materialNum = MV1GetMaterialNum(modelId_);
+	for (int i = 0; i < materialNum; ++i)
+	{
+		MV1SetMaterialDifColor(modelId_, i, GetColorF(1.0f, 1.0f, 1.0f, 1)); // 拡散反射
+		MV1SetMaterialSpcColor(modelId_, i, GetColorF(1.0f, 1.0f, 1.0f, 0.5f)); // 鏡面反射
+		MV1SetMaterialEmiColor(modelId_, i, GetColorF(1.0f, 1.0f, 1.0f, 0.1f)); // 自発光
+		MV1SetMaterialAmbColor(modelId_, i, GetColorF(1.0f, 1.0f, 1.0f, 0.5f)); // 環境光
+	}
 }
 
 void Player::InitAnimation(void)
@@ -346,8 +414,15 @@ void Player::InitAnimation(void)
 	animationController_ = new AnimationController(modelId_);
 
 	// 外部アニメーションを登録
-	animationController_->Add(static_cast<int>(ANIM_TYPE::IDLE), 30.0f, "Data/Model/Player/Idle.mv1");
-	animationController_->Add(static_cast<int>(ANIM_TYPE::WALK), 30.0f, "Data/Model/Player/Walk.mv1");
+	//animationController_->Add(static_cast<int>(ANIM_TYPE::IDLE), 30.0f, "Data/Model/Player/Idle.mv1");
+	//animationController_->Add(static_cast<int>(ANIM_TYPE::WALK), 30.0f, "Data/Model/Player/Walk.mv1");
+
+	 // FBX内部アニメを登録
+	animationController_->AddInFbx(static_cast<int>(ANIM_TYPE::IDLE), 60.0f, 2);
+	animationController_->AddInFbx(static_cast<int>(ANIM_TYPE::RUN), 60.0f, 4);
+	animationController_->AddInFbx(static_cast<int>(ANIM_TYPE::JUMP), 60.0f, 3);
+	animationController_->AddInFbx(static_cast<int>(ANIM_TYPE::FALL), 60.0f, 1);
+	animationController_->AddInFbx(static_cast<int>(ANIM_TYPE::DEAD), 60.0f, 0);
 
 	// 初期アニメーション再生
 	animationController_->Play(static_cast<int>(ANIM_TYPE::IDLE), true);
