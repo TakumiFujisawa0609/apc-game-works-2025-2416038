@@ -3,7 +3,7 @@
 #include "Manager/SceneManager.h"
 //#include "Manager/SoundManager.h"
 #include "Application.h"
-#include "Common/FpsControl.h"
+#include "Common/FpsController.h"
 
 
 Application* Application::instance_ = nullptr;
@@ -16,7 +16,7 @@ Application* Application::instance_ = nullptr;
 Application::Application(void)
 {
 	isError_ = false;
-	fps_ = nullptr;
+	fpsController_ = nullptr;
 
 }
 
@@ -45,13 +45,15 @@ Application* Application::GetInstance(void)
 void Application::Init(void)
 {
 	// アプリケーションの初期設定
-	SetWindowText("Aso");
+	SetWindowText("Aso冬");
 
 	// ウィンドウサイズ
 	SetGraphMode(SCREEN_SIZE_X, SCREEN_SIZE_Y, COLOR_BIT_DIPTH);
 	//ChangeWindowMode(false);
 	ChangeWindowMode(true);
 
+	// FPS制御初期化
+	fpsController_ = new FpsController(FRAME_RATE);
 
 	// DxLib初期化
 	SetUseDirect3DVersion(DX_DIRECT3D_11);
@@ -72,11 +74,7 @@ void Application::Init(void)
 	//// サウンド管理初期化
 	//SoundManager::CreateInstance();
 	//SoundManager::GetInstance();
-	//SoundManager::GetInstance()->Init();
-
-	// FPS初期化
-	fps_ = new FpsControl;
-	fps_->Init();
+	//SoundManager::GetInstance()->Init();;
 
 
 }
@@ -86,34 +84,37 @@ void Application::Run(void)
 	// ゲームループ
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_0) == 0)
 	{
-		// フレームレート更新
-		// 1/60秒経過していないなら再ループさせる
-		if (!fps_->UpdateFrameRate()) continue;
-
 		InputManager::GetInstance().Update();
 		SceneManager::GetInstance()->Update();
 
 		SceneManager::GetInstance()->Draw();
 
-		fps_->CalcFrameRate();	// フレームレート計算
-		fps_->DrawFrameRate();	// フレームレート描画
+#ifdef _DEBUG
 
+		// 平均FPS描画
+		fpsController_->Draw();
+
+#endif // _DEBUG
 
 		ScreenFlip();
+
+		// 理想FPS経過待ち
+		fpsController_->Wait();
 	}
 
 }
 
 void Application::Destroy(void)
 {
+	// FPS制御メモリ解放
+	delete fpsController_;
+
 	// シーン管理破棄
 	SceneManager::GetInstance()->Destroy();
 
 	//// サウンド管理破棄
 	//SoundManager::GetInstance()->DeleteInstance();
 
-	// フレームレート数
-	delete fps_;
 
 	if (DxLib_End() == -1)
 	{

@@ -20,14 +20,9 @@ void Player::Update(void)
 
 	switch (state_)
 	{
-	case STATE::IDLE:
-		UpdateIdle();
+	case STATE::STANBY:
+		UpdateStanby();
 		break;
-	case STATE::RUN:
-		UpdateRun();
-		break;
-	case STATE::JUMP:
-		UpdateJump();
 		break;
 	case STATE::FALL:
 		UpdateFall();
@@ -50,14 +45,8 @@ void Player::Draw(void)
 
 	switch (state_)
 	{
-	case STATE::IDLE:
-		DrawIdle();
-		break;
-	case STATE::RUN:
-		DrawRun();
-		break;
-	case STATE::JUMP:
-		DrawJump();
+	case STATE::STANBY:
+		DrawStanby();
 		break;
 	case STATE::FALL:
 		DrawFall();
@@ -100,14 +89,8 @@ void Player::ChangeState(STATE state)
 
 	switch (state_)
 	{
-	case STATE::IDLE:
-		ChangeIdle();
-		break;
-	case STATE::RUN:
-		ChanegeRun();
-		break;
-	case STATE::JUMP:
-		ChangeJump();
+	case STATE::STANBY:
+		ChangeStanby();
 		break;
 	case STATE::FALL:
 		ChabgeFall();
@@ -147,12 +130,13 @@ void Player::Respawn()
 
 		Damage(1);
 	}
+
 	MV1SetPosition(modelId_, pos_);
 }
 
 bool Player::IsStateEnd(void)
 {
-	return state_ == STATE::DEAD;
+	return state_ == STATE::END;
 }
 
 void Player::Damage(int damage)
@@ -176,15 +160,10 @@ int Player::GetHp(void)
 
 void Player::CollisionStage(VECTOR pos)
 {
-	//if (jumpState_ == JumpState::Rising) return; // 上昇中は無視
-
-	// 衝突判定に指定座標に押し戻す
+	// 衝突判定時に指定座標に押し戻す
 	pos_ = pos;
 	jumpPow_ = 0.0f;
 	jumpState_ = JumpState::Ground;
-
-	// モデル位置反映
-	//MV1SetPosition(modelId_, pos_);
 }
 
 void Player::ProcessMove(void)
@@ -238,12 +217,16 @@ void Player::ProcessMove(void)
 		pos_ = VAdd(pos_, VScale(moveDir_, movePow));
 
 		// 歩行アニメーション再生
-		animationController_->Play(static_cast<int>(ANIM_TYPE::RUN), true);
+		if (jumpState_ == JumpState::Ground) 
+		{
+			animationController_->Play(static_cast<int>(ANIM_TYPE::RUN), true);
+		}
 	}
 	else
 	{
-		// 待機アニメーション
-		animationController_->Play(static_cast<int>(ANIM_TYPE::IDLE), true);
+		// 地上のみアイドルアニメ
+		if (jumpState_ == JumpState::Ground)
+			animationController_->Play(static_cast<int>(ANIM_TYPE::IDLE), true);
 	}
 
 
@@ -275,6 +258,9 @@ void Player::ProcessJump(void)
 
 	}
 
+	// 空中でも移動可能
+	ProcessMove();
+
 	// 重力(加速度を速度に加算していく)
 	jumpPow_ -= GRAVITY_POW;
 	pos_.y += jumpPow_;
@@ -288,19 +274,8 @@ void Player::ProcessJump(void)
 	}
 }
 
-void Player::ChangeIdle(void)
+void Player::ChangeStanby(void)
 {
-
-}
-
-void Player::ChanegeRun(void)
-{
-
-}
-
-void Player::ChangeJump(void)
-{
-
 }
 
 void Player::ChabgeFall(void)
@@ -320,20 +295,12 @@ void Player::ChangeEnd(void)
 {
 }
 
-void Player::UpdateIdle(void)
+void Player::UpdateStanby(void)
 {
 	// 移動処理
 	ProcessMove();
 	// ジャンプ処理
 	ProcessJump();
-}
-
-void Player::UpdateRun(void)
-{
-}
-
-void Player::UpdateJump(void)
-{
 }
 
 void Player::UpdateFall(void)
@@ -342,21 +309,17 @@ void Player::UpdateFall(void)
 
 void Player::UpdateDead(void)
 {
+	// 撃破アニメーションが終わったら、END状態にする
+	if (animationController_->IsEnd()) {
+		ChangeState(STATE::END);
+	}
 }
 
 void Player::UpdateEnd(void)
 {
 }
 
-void Player::DrawIdle(void)
-{
-}
-
-void Player::DrawRun(void)
-{
-}
-
-void Player::DrawJump(void)
+void Player::DrawStanby(void)
 {
 }
 
@@ -408,7 +371,7 @@ void Player::InitTransform(void)
 
 void Player::InitAnimation(void)
 {
-	state_ = STATE::IDLE;
+	state_ = STATE::STANBY;
 
 	// モデルアニメーション制御の初期化
 	animationController_ = new AnimationController(modelId_);

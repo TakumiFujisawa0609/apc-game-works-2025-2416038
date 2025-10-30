@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-class FpsControl;
+class FpsController;
 
 class Application
 {
@@ -22,6 +22,9 @@ public:
 	static constexpr int SCREEN_SIZE_X = 1920;
 	static constexpr int SCREEN_SIZE_Y = 1080;
 	static constexpr int COLOR_BIT_DIPTH = 32;
+
+	// 固定FPS
+	static constexpr int FRAME_RATE = 60;
 
 	// 明示的にインステンスを生成する
 	static void CreateInstance(void);
@@ -60,6 +63,6 @@ private:
 	bool isError_;
 
 	// FPS
-	FpsControl* fps_;
+	FpsController* fpsController_;
 
 };

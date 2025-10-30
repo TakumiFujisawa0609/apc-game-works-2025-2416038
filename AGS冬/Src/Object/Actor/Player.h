@@ -9,9 +9,7 @@ public:
 	// èÛë‘
 	enum class STATE
 	{
-		IDLE,
-		RUN,
-		JUMP,
+		STANBY,
 		FALL,
 		DEAD,
 		END,
@@ -115,25 +113,19 @@ protected:
 	void ProcessJump(void);
 
 	// èÛë‘ëJà⁄
-	void ChangeIdle(void);
-	void ChanegeRun(void);
-	void ChangeJump(void);
+	void ChangeStanby(void);
 	void ChabgeFall(void);
 	void ChangeDead(void);
 	void ChangeEnd(void);
 
 	// èÛë‘ï çXêV
-	void UpdateIdle(void);
-	void UpdateRun(void);
-	void UpdateJump(void);
+	void UpdateStanby(void);
 	void UpdateFall(void);
 	void UpdateDead(void);
 	void UpdateEnd(void);
 
 	// èÛë‘ï ï`âÊ
-	void DrawIdle(void);
-	void DrawRun(void);
-	void DrawJump(void);
+	void DrawStanby(void);
 	void DrawFall(void);
 	void DrawDead(void);
 	void DrawEnd(void);

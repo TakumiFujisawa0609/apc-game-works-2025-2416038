@@ -147,7 +147,7 @@
     <ClInclude Include="Src\Object\Gimmick\GimmickBase.h" />
     <ClInclude Include="Src\UI\HpManager.h" />
     <ClInclude Include="Src\Utility\CollisionShape.h" />
-    <ClInclude Include="Src\Common\FpsControl.h" />
+    <ClInclude Include="Src\Common\FpsController.h" />
     <ClInclude Include="Src\Manager\StageManager.h" />
     <ClInclude Include="Src\Object\Stage\Panel.h" />
     <ClInclude Include="Src\Object\Actor\ActorBase.h" />
@@ -179,7 +179,7 @@
     <ClCompile Include="Src\Object\Gimmick\GimmickBase.cpp" />
     <ClCompile Include="Src\UI\HpManager.cpp" />
     <ClCompile Include="Src\Utility\CollisionShape.cpp" />
-    <ClCompile Include="Src\Common\FpsControl.cpp" />
+    <ClCompile Include="Src\Common\FpsController.cpp" />
     <ClCompile Include="Src\Manager\StageManager.cpp" />
     <ClCompile Include="Src\Object\Stage\Panel.cpp" />
     <ClCompile Include="Src\Object\Actor\ActorBase.cpp" />
