@@ -29,9 +29,10 @@ private:
 	Player* player_;
 	StageManager* stageManager_;
 
-	// 衝突判定(床)
+	// プレイヤーと床
 	void PlayerAndFloorCollision();
 
-	// 
+	// プレイヤーとレーザー
+	void PlayerAndLaser();
 };
 

@@ -23,7 +23,6 @@ void Player::Update(void)
 	case STATE::STANBY:
 		UpdateStanby();
 		break;
-		break;
 	case STATE::FALL:
 		UpdateFall();
 		break;
@@ -196,7 +195,7 @@ void Player::ProcessMove(void)
 	}
 
 	// WASDでカメラを移動させる
-	const float movePow = 8.0f;
+	const float movePow = 5.0f;
 
 	if (!AsoUtility::EqualsVZero(dir))
 	{
@@ -260,7 +259,7 @@ void Player::ProcessJump(void)
 
 	// 空中でも移動可能
 	ProcessMove();
-
+	
 	// 重力(加速度を速度に加算していく)
 	jumpPow_ -= GRAVITY_POW;
 	pos_.y += jumpPow_;

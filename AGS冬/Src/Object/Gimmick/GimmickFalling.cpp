@@ -8,7 +8,7 @@ void GimmickFalling::Init() {
 
     GimmickBase::Init();
 
-    modelId_ = MV1LoadModel("Data/Model/Gimmick/FallingObject.mv1");
+    modelId_ = MV1LoadModel("Data/Model/Gimmick/100kg.mv1");
 
     // 3x3 ÉpÉlÉãç¿ïWÇ Gimmick ì‡Ç≈çÏÇÈ
     panels_.clear();
@@ -26,7 +26,7 @@ void GimmickFalling::Init() {
     waveActive_ = false;
     waveInfos_.clear();
 
-    scl_ = { 650.0f, 550.0f, 650.0f };
+    scl_ = { 1.45f, 1.45f, 1.45f };
 
     SetupWave();
 }
@@ -79,8 +79,8 @@ void GimmickFalling::Update() {
         // óéâ∫
         if (info.isFalling) {
             info.fallY -= 15.0f;
-            if (info.fallY <= 260.0f) {
-                info.fallY = 260.0f;
+            if (info.fallY <= 0.0f) {
+                info.fallY = 0.0f;
                 info.isFalling = false;
             }
             MV1SetScale(info.modelHandle, scl_);

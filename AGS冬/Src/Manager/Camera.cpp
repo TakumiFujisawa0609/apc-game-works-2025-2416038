@@ -99,6 +99,7 @@ void Camera::DrawDebug(void)
 
 void Camera::SetBeforeDrawFollow(void)
 {
+
 	auto& ins = InputManager::GetInstance();
 	if (GetJoypadNum() == 0)
 	{

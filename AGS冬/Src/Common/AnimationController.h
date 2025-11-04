@@ -61,4 +61,12 @@ private:
 	// アニメーション追加の共通処理
 	void Add(int type, float speed, Animation& animation);
 
+	// 前アニメ（ブレンド用）
+	Animation prevAnim_;
+
+	// アニメーション切り替えブレンド用
+	bool isBlending_ = false;
+	float blendTime_ = 0.0f;      // ブレンド中の経過時間
+	float blendDuration_ = 0.3f;  // ブレンドにかける時間(秒)
+	int prevAttachNo_ = -1;       // 前アニメ
 };

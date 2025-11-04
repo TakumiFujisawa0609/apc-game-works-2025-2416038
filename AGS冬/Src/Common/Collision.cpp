@@ -29,7 +29,7 @@ void Collision::Draw()
 
 	// 前フレーム位置 → 現在位置 にレイを伸ばす
 	VECTOR startPos = VAdd(pPos, { 0,100.0f, 0 });
-	VECTOR endPos = VAdd(pPos, { 0, -10.0f, 0 });
+	VECTOR endPos = VAdd(pPos, { 0, 0.0f, 0 });
 
 	DrawLine3D(startPos, endPos, GetColor(255, 0, 0));
 }
@@ -45,7 +45,7 @@ void Collision::PlayerAndFloorCollision()
 
 	// 前フレーム位置 → 現在位置 にレイを伸ばす
 	VECTOR startPos = VAdd(pPos, { 0,100.0f, 0 });
-	VECTOR endPos = VAdd(pPos, { 0, -10.0f, 0 });
+	VECTOR endPos = VAdd(pPos, { 0, 0.0f, 0 });
 
 	// ステージ全体に対してチェック
 	const auto& stages = stageManager_->GetStages();
@@ -65,9 +65,6 @@ void Collision::PlayerAndFloorCollision()
 				// 当たった位置
 				VECTOR hitPos = res.HitPosition;
 
-				//// 少し上に押し戻す
-				//hitPos.y += 1.0f;
-
 				// プレイヤーに衝突情報を渡す
 				player_->CollisionStage(hitPos);
 
@@ -75,4 +72,12 @@ void Collision::PlayerAndFloorCollision()
 			}
 		}
 	}
+}
+
+void Collision::PlayerAndLaser()
+{
+	// 座標を所得
+	VECTOR pPos = player_->GetPos();
+
+
 }
