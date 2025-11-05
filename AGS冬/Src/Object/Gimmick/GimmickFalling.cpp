@@ -123,8 +123,6 @@ void GimmickFalling::Draw() {
             DrawCone3D(top, bottom, radius, 32, col, col, TRUE);
         }
 		MV1DrawModel(info.modelHandle);
-
-		DrawFormatString(0, 500, 0xffffff, "pos(%.f, %.f, %.f)", info.panelPos.x, info.fallY, info.panelPos.z);
     }
  /*   for (auto& info : waveInfos_) {
         if (info.isWarning && info.warningTimer == 1.0f)
@@ -144,7 +142,10 @@ void GimmickFalling::Release() {
     MV1DeleteModel(modelId_);
 }
 
-GimmickType GimmickFalling::GetType() const { return GimmickType::FALLING; }
+GimmickType GimmickFalling::GetType() const 
+{
+    return GimmickType::FALLING; 
+}
 
 void GimmickFalling::InitLoad()
 {

@@ -49,7 +49,7 @@ void HpManager::Draw(void)
 			img = imgHeart_;
 		}
 		// プレイヤーのＨＰ残量に応じて、ハート画像を切り替える
-		DrawRotaGraph(START_X + HP_ICON_WIDTH * i, START_Y, 0.7, 0.0, img, true);
+		DrawRotaGraph(START_X + HP_ICON_WIDTH * i, START_Y, 1.0, 0.0, img, true);
 	}
 }
 void HpManager::Release(void)

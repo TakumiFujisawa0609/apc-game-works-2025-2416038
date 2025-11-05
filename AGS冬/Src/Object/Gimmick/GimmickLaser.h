@@ -13,6 +13,7 @@ public:
 		int timer;      // 経過時間
 		bool fired;     // 発射中か
 		int modelHandle; // モデルハンドル
+		VECTOR worldPos;
 	};
 
 	GimmickLaser(void);
@@ -24,6 +25,8 @@ public:
 	void Release() override;
 
 	GimmickType GetType() const override;
+
+	VECTOR GetPos() const;
 
 private:
 

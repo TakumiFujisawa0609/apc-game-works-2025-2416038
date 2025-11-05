@@ -7,9 +7,9 @@ public:
 	// ＨＰ描画の開始座標(X)
 	static constexpr int START_X = 50;
 	// ＨＰ描画の開始座標(Y)
-	static constexpr int START_Y = 60;
+	static constexpr int START_Y = 100;
 	// ＨＰアイコンの描画幅
-	static constexpr int HP_ICON_WIDTH = 80;
+	static constexpr int HP_ICON_WIDTH = 110;
 
 	// コンストラクタ
 	HpManager(Player* player);

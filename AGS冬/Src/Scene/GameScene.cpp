@@ -152,16 +152,14 @@ void GameScene::Draw(void)
 
 	hpManager_->Draw();
 
-	if (GetJoypadNum() == 0)
-	{
-		DrawFormatString(300, 150, 0xffffff,"ESCでポーズ");
-	}
-	else
-	{
-		DrawFormatString(280, 150, 0xffffff,"STARTボタンでポーズ");
-	}
-
-	DrawFormatString(300, 300, 0xffffff, "ギミック未実装");
+	//if (GetJoypadNum() == 0)
+	//{
+	//	DrawFormatString(300, 150, 0xffffff,"ESCでポーズ");
+	//}
+	//else
+	//{
+	//	DrawFormatString(280, 150, 0xffffff,"STARTボタンでポーズ");
+	//}
 
 	// グリッド線
 	//grid_->Draw();
@@ -170,10 +168,10 @@ void GameScene::Draw(void)
 	float remaining = 60.0f - elapsed;
 	if (remaining < 0) remaining = 0;
 
-	SetFontSize(30);
-	DrawFormatString(0, 5, GetColor(255, 255, 255),
+	SetFontSize(50);
+	DrawFormatString(0, 15, GetColor(255, 255, 255),
 		"クリアまで : %.1f", remaining);
-
+	SetFontSize(30);
 	if (isPaused_)
 	{
 		DrawPauseMenu();

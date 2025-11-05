@@ -39,7 +39,7 @@ void GimmickLaser::Update()
         l.direction = GetRand(3);
         l.timer = 0;
         l.fired = true;
-        l.pos = 1000.0f;    // スタート位置
+        l.pos = 1200.0f;    // スタート位置
 
         // 個別モデルを作成（複製）
         l.modelHandle = MV1DuplicateModel(modelId_);
@@ -78,17 +78,21 @@ void GimmickLaser::Update()
         case 3: pos = VGet(300.0f, 40.0f, l.pos);  rotY = DX_PI_F; break; // 手前→奥
         }
 
+        // ワールド座標を保存！
+        l.worldPos = pos;
+
         MV1SetPosition(l.modelHandle, pos);
         MV1SetRotationXYZ(l.modelHandle, VGet(0, rotY, 0));
 
         // モデルを元のサイズで固定
-        MV1SetScale(l.modelHandle, VGet(2.8f, 1.0f, 1.0f));
+        MV1SetScale(l.modelHandle, VGet(3.0f, 1.0f, 1.0f));
 
         // 消滅条件
-        if (l.pos < -1000.0f)
+        if (l.pos < -1200.0f)
         {
             MV1DeleteModel(l.modelHandle);
             l.fired = false;
+            activeCount_--;
         }
     }
 
@@ -105,6 +109,10 @@ void GimmickLaser::Draw()
     {
         if (!l.fired) continue;
         MV1DrawModel(l.modelHandle);
+
+        DrawFormatString(0, 300, 0xffffff,
+            "Laser座標　 ：(% .1f, % .1f, % .1f)",
+            l.worldPos.x, l.worldPos.y, l.worldPos.z);
     }
 }
 
@@ -125,6 +133,15 @@ void GimmickLaser::Release()
 GimmickType GimmickLaser::GetType() const
 {
     return GimmickType::LASER;
+}
+
+VECTOR GimmickLaser::GetPos() const
+{
+    
+    for (auto& l : lasers_)
+    {
+        return l.worldPos;
+    }
 }
 
 void GimmickLaser::InitLoad(void)

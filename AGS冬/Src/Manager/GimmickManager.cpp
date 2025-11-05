@@ -53,7 +53,7 @@ void GimmickManager::Draw()
         }
         
 		SetFontSize(50);
-        DrawFormatString(540, 50, GetColor(255, 255, 0), "”­“®’† : %s", gimmickName);
+        DrawFormatString(640, 80, GetColor(255, 255, 0), "”­“®’† : %s", gimmickName);
         SetFontSize(16);
     }
 }

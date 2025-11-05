@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Object\Gimmick\GimmickQuiz.h" />
     <ClInclude Include="Src\Object\Gimmick\GimmickFalling.h" />
     <ClInclude Include="Src\Common\Collision.h" />
     <ClInclude Include="Src\Manager\SoundManager.h" />
@@ -177,6 +178,7 @@
     <ClCompile Include="Src\Object\Gimmick\GimmickLaser.cpp" />
     <ClCompile Include="Src\Manager\GimmickManager.cpp" />
     <ClCompile Include="Src\Object\Gimmick\GimmickBase.cpp" />
+    <ClCompile Include="Src\Object\Gimmick\GimmickQuiz.cpp" />
     <ClCompile Include="Src\UI\HpManager.cpp" />
     <ClCompile Include="Src\Utility\CollisionShape.cpp" />
     <ClCompile Include="Src\Common\FpsController.cpp" />
