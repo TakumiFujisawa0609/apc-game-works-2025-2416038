@@ -259,27 +259,14 @@ void Player::ProcessJump(void)
 
 	// 空中でも移動可能
 	ProcessMove();
-	// --- 重力処理 ---
-	if (jumpState_ != JumpState::Ground)
+
+	jumpPow_ -= GRAVITY_POW;
+	pos_.y += jumpPow_;
+
+	if (jumpPow_ < 0.0f && jumpState_ != JumpState::Ground)
 	{
-		jumpPow_ -= GRAVITY_POW;
-		pos_.y += jumpPow_;
-
-		// ★ 地面衝突チェック ★
-		const float groundY = 0.0f; // ステージの高さをここに
-		if (pos_.y <= groundY)
-		{
-			pos_.y = groundY;
-			jumpPow_ = 0.0f;
-			jumpState_ = JumpState::Ground;
-			animationController_->Play(static_cast<int>(ANIM_TYPE::IDLE), true);
-		}
-
-		if (jumpPow_ < 0.0f && jumpState_ != JumpState::Ground)
-		{
-			jumpState_ = JumpState::Falling;
-			animationController_->Play(static_cast<int>(ANIM_TYPE::FALL), true);
-		}
+		jumpState_ = JumpState::Falling;
+		animationController_->Play(static_cast<int>(ANIM_TYPE::FALL), true);
 	}
 }
 

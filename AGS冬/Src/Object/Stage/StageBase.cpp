@@ -12,8 +12,6 @@ void StageBase::Init(int baseModel)
 {
 	// モデル読み込み
 	modelId_ = MV1DuplicateModel(baseModel);
-    // 衝突判定情報の構築
-    MV1SetupCollInfo(modelId_, -1);
 
 	//img_ = LoadGraph("Data/Image/タイトルなし.png");
 	InitTransform();
@@ -70,8 +68,11 @@ void StageBase::Draw(void)
 
 void StageBase::Release(void)
 {
+    // モデルのコリジョン情報を破棄
+    MV1TerminateCollInfo(modelId_, -1);
 	// モデル解放
 	MV1DeleteModel(modelId_);
+
 
 	DeleteGraph(img_);
 }

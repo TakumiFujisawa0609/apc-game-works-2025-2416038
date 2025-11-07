@@ -1,5 +1,6 @@
 #include "../Object/Actor/Player.h"
 #include "../Object/Stage/StageBase.h"
+#include "../Manager/GimmickManager.h"
 #include "../Manager/StageManager.h"
 #include "Collision.h"
 
@@ -11,10 +12,11 @@ Collision::~Collision()
 {
 }
 
-void Collision::Init(Player* player, StageManager* stageManager)
+void Collision::Init(Player* player, StageManager* stageManager, GimmickManager* gimmickManager)
 {
 	player_ = player;
 	stageManager_ = stageManager;
+	gimmickManager_ = gimmickManager;
 }
 
 void Collision::Update()
@@ -55,6 +57,8 @@ void Collision::PlayerAndFloorCollision()
 		{
 			// ステージのモデルを取得
 			int modelId = stage->GetModelId();
+			// モデルのコリジョン情報を構築
+			MV1SetupCollInfo(modelId, -1);
 
 			// 線分とモデルの衝突判定
 			MV1_COLL_RESULT_POLY res =
@@ -78,6 +82,7 @@ void Collision::PlayerAndLaser()
 {
 	// 座標を所得
 	VECTOR pPos = player_->GetPos();
-
+	// レーザー座標
+	VECTOR lazerPos = gimmickManager_->GetLaserPos();
 
 }

@@ -2,6 +2,7 @@
 #include <DxLib.h>
 class Player;
 class StageManager;
+class GimmickManager;
 
 class Collision
 {
@@ -17,17 +18,16 @@ public:
 	Collision();
 	~Collision();
 
-	void Init(Player* player, StageManager* stageManager);
+	void Init(Player* player, StageManager* stageManager, GimmickManager* gimmickManager);
 	void Update();
 	void Draw();
 	void Release();
-
-
 
 private:
 
 	Player* player_;
 	StageManager* stageManager_;
+	GimmickManager* gimmickManager_;
 
 	// ƒvƒŒƒCƒ„[‚Æ°
 	void PlayerAndFloorCollision();

@@ -21,10 +21,10 @@ GameScene::~GameScene(void)
 
 void GameScene::Init(void)
 {
-	// ステージ
+	gimmickManager_ = new GimmickManager();
 	stageManager_ = new StageManager();
 	player_ = new Player();
-	gimmickManager_ = new GimmickManager();
+	
 	grid_ = new Grid();
 	hpManager_ = new HpManager(player_);
 	collision_ = new Collision();
@@ -39,9 +39,10 @@ void GameScene::Init(void)
 	//	actor->Load();
 	//}
 
+	gimmickManager_->Init();
 	stageManager_->Init();
 	player_->Init();
-	gimmickManager_->Init();
+
 
 	// カメラ
 	camera_ = SceneManager::GetInstance()->GetCamera();
@@ -51,7 +52,7 @@ void GameScene::Init(void)
 	grid_->Init();
 
 	hpManager_->Init();
-	collision_->Init(player_, stageManager_);
+	collision_->Init(player_, stageManager_, gimmickManager_);
 
 	// ゲームおーば判定
 	isGameOver_ = false;
@@ -105,6 +106,7 @@ void GameScene::Update(void)
 		return;
 	}
 
+	gimmickManager_->Update();
 	stageManager_->Update();
 	player_->Update();
 
@@ -122,7 +124,6 @@ void GameScene::Update(void)
 	//	}
 	//}
 
-	gimmickManager_->Update();
 
 	collision_->Update();
 
@@ -137,6 +138,7 @@ void GameScene::Update(void)
 
 void GameScene::Draw(void)
 {
+	gimmickManager_->Draw();
 	stageManager_->Draw();
 	player_->Draw();
 
@@ -147,7 +149,7 @@ void GameScene::Draw(void)
 	//	actor->Draw();
 	//}
 
-	gimmickManager_->Draw();
+
 	collision_->Draw();
 
 	hpManager_->Draw();
@@ -220,6 +222,9 @@ void GameScene::Draw(void)
 
 void GameScene::Release(void)
 {
+	gimmickManager_->Release();
+	delete gimmickManager_;
+
 	stageManager_->Release();
 	delete stageManager_;
 
@@ -233,9 +238,6 @@ void GameScene::Release(void)
 	//	actor->Release();
 	//	delete actor;
 	//}
-
-	gimmickManager_->Release();
-	delete gimmickManager_;
 
 	collision_->Release();
 	delete collision_;

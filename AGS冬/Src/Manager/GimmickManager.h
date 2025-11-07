@@ -1,6 +1,8 @@
 #pragma once
+#include <map>
 #include <vector>
 #include <DxLib.h>
+#include "../Object/Gimmick/GimmickBase.h"
 class GimmickBase;
 
 class GimmickManager
@@ -20,6 +22,12 @@ public:
     void Update();
     void Draw();
     void Release();
+
+    //const std::map<GimmickBase::TYPE, std::vector<GimmickBase*>>& GetGimmicks();
+
+    VECTOR GetLaserPos();
+    std::vector<VECTOR> GetFallingPos();
+
 private:
 
     std::vector<GimmickBase*> gimmicks_;

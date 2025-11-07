@@ -31,7 +31,8 @@ void GimmickFalling::Init() {
     SetupWave();
 }
 
-void GimmickFalling::SetupWave() {
+void GimmickFalling::SetupWave() 
+{
     waveInfos_.clear();
     std::vector<int> usedIndices;
 
@@ -79,8 +80,8 @@ void GimmickFalling::Update() {
         // 落下
         if (info.isFalling) {
             info.fallY -= 15.0f;
-            if (info.fallY <= 0.0f) {
-                info.fallY = 0.0f;
+            if (info.fallY <= -10.0f) {
+                info.fallY = -10.0f;
                 info.isFalling = false;
             }
             MV1SetScale(info.modelHandle, scl_);
@@ -145,6 +146,20 @@ void GimmickFalling::Release() {
 GimmickType GimmickFalling::GetType() const 
 {
     return GimmickType::FALLING; 
+}
+
+std::vector<VECTOR> GimmickFalling::GetPositions() const
+{
+    std::vector<VECTOR> positions;
+
+    for (auto info : waveInfos_) {
+        // 落下中またはまだ残っているオブジェクトを対象にする
+        if (info.isFalling || (!info.isWarning && info.alpha > 0)) {
+            positions.push_back(VGet(info.panelPos.x, info.fallY, info.panelPos.z));
+        }
+    }
+
+    return positions;
 }
 
 void GimmickFalling::InitLoad()

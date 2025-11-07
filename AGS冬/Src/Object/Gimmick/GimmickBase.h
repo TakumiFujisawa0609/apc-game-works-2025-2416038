@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include <DxLib.h>
 
 enum class GimmickType {
@@ -14,6 +15,7 @@ class GimmickBase
 public:
 	GimmickBase(void);
 	virtual ~GimmickBase(void);
+
 	virtual void Init(void);
 	virtual void Update(void);
 	virtual void Draw(void);
@@ -22,6 +24,10 @@ public:
 	bool IsActive();
 
 	virtual GimmickType GetType() const;
+
+	virtual VECTOR GetPos() const;
+
+	virtual std::vector<VECTOR> GetPositions() const;
 
 protected:
 

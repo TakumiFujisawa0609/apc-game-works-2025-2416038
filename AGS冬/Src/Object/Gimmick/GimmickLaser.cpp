@@ -10,6 +10,8 @@ void GimmickLaser::Init()
     spawnTimer_ = 0;
     activeCount_ = 0;
 
+    worldPos_ = { 0,0,0 };
+
     // モデルロード（共通レーザーモデル）
     modelId_ = MV1LoadModel("Data/Model/Gimmick/Laser.mv1");
 
@@ -31,7 +33,7 @@ void GimmickLaser::Update()
     spawnTimer_++;
 
     // 4秒(240F)ごとに1本追加、最大4本
-    if (spawnTimer_ >= 240 && activeCount_ < 4)
+    if (spawnTimer_ >= 240 && activeCount_ <= 4)
     {
         spawnTimer_ = 0;
 
@@ -47,8 +49,6 @@ void GimmickLaser::Update()
         lasers_.push_back(l);
         activeCount_++;
     }
-     
-    bool allEnd = true;
 
     for (auto& l : lasers_)
     {
@@ -79,12 +79,12 @@ void GimmickLaser::Update()
         }
 
         // ワールド座標を保存！
-        l.worldPos = pos;
+        worldPos_ = pos;
 
         MV1SetPosition(l.modelHandle, pos);
         MV1SetRotationXYZ(l.modelHandle, VGet(0, rotY, 0));
 
-        // モデルを元のサイズで固定
+        // サイズ
         MV1SetScale(l.modelHandle, VGet(3.0f, 1.0f, 1.0f));
 
         // 消滅条件
@@ -92,12 +92,11 @@ void GimmickLaser::Update()
         {
             MV1DeleteModel(l.modelHandle);
             l.fired = false;
-            activeCount_--;
         }
     }
 
-    // 全部消えたら終了
-    if (activeCount_ >= 4 && allEnd)
+    // 4本打ったら終了
+    if (activeCount_ == 5)
         isActive_ = false;
 }
 
@@ -109,10 +108,6 @@ void GimmickLaser::Draw()
     {
         if (!l.fired) continue;
         MV1DrawModel(l.modelHandle);
-
-        DrawFormatString(0, 300, 0xffffff,
-            "Laser座標　 ：(% .1f, % .1f, % .1f)",
-            l.worldPos.x, l.worldPos.y, l.worldPos.z);
     }
 }
 
@@ -137,12 +132,9 @@ GimmickType GimmickLaser::GetType() const
 
 VECTOR GimmickLaser::GetPos() const
 {
-    
-    for (auto& l : lasers_)
-    {
-        return l.worldPos;
-    }
+    return worldPos_;
 }
+
 
 void GimmickLaser::InitLoad(void)
 {

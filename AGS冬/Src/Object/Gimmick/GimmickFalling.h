@@ -30,7 +30,9 @@ public:
 
     GimmickType GetType() const override;
 
-private:
+    std::vector<VECTOR> GetPositions() const override;
+
+protected:
 
     void SetupWave();  // 1ウェーブの初期化
 

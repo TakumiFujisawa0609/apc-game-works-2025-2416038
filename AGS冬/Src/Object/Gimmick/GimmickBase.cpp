@@ -36,6 +36,16 @@ GimmickType GimmickBase::GetType() const
 	return GimmickType::NONE;
 }
 
+VECTOR GimmickBase::GetPos() const
+{
+	return VGet(0.0f, -400.0f, 0.0f);
+}
+
+std::vector<VECTOR> GimmickBase::GetPositions() const
+{
+	return { VGet(0.0f, -400.0f, 0.0f) };
+}
+
 void GimmickBase::InitTransformPost(void)
 {
 	

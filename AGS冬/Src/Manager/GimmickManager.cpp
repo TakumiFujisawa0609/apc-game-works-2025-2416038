@@ -1,5 +1,6 @@
 #include "../Object/Gimmick/GimmickLaser.h"
 #include "../Object/Gimmick/GimmickFalling.h"
+#include "../Object/Gimmick/GimmickBase.h"
 #include "GimmickManager.h"
 
 GimmickManager::GimmickManager()
@@ -51,10 +52,24 @@ void GimmickManager::Draw()
         case GimmickType::QUIZ:   gimmickName = "クイズ"; break;
         default: break;
         }
-        
+            
 		SetFontSize(50);
         DrawFormatString(640, 80, GetColor(255, 255, 0), "発動中 : %s", gimmickName);
         SetFontSize(16);
+
+        DrawFormatString(0, 300, 0xffffff,
+            "Laser座標　 ：(% .1f, % .1f, % .1f)",
+            GetLaserPos().x, GetLaserPos().y, GetLaserPos().z);
+
+        // --- 落下物座標（複数ある）---
+        auto fallingPositions = GetFallingPos();
+        int yOffset = 340;
+        for (size_t i = 0; i < fallingPositions.size(); ++i) {
+            const auto& p = fallingPositions[i];
+            DrawFormatString(0, yOffset, GetColor(0, 255, 0),
+                "落下物[%zu] ：(% .1f, % .1f, % .1f)", i, p.x, p.y, p.z);
+            yOffset += 20;
+        }
     }
 }
 
@@ -66,4 +81,19 @@ void GimmickManager::Release()
     }
 
     gimmicks_.clear();
+}
+
+//const std::map<GimmickBase::TYPE, std::vector<GimmickBase*>>& GimmickManager::GetGimmicks()
+//{
+//    return currentGimmick_;
+//}
+
+VECTOR GimmickManager::GetLaserPos()
+{
+    return currentGimmick_->GetPos();
+}
+
+std::vector<VECTOR> GimmickManager::GetFallingPos()
+{
+    return currentGimmick_->GetPositions();
 }

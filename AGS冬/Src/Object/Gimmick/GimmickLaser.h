@@ -13,7 +13,6 @@ public:
 		int timer;      // 経過時間
 		bool fired;     // 発射中か
 		int modelHandle; // モデルハンドル
-		VECTOR worldPos;
 	};
 
 	GimmickLaser(void);
@@ -26,13 +25,15 @@ public:
 
 	GimmickType GetType() const override;
 
-	VECTOR GetPos() const;
+	VECTOR GetPos() const override;
 
 private:
 
 	std::vector<LaserInfo> lasers_;
 
 	int modelId_;
+
+	VECTOR worldPos_;
 
 	int spawnTimer_ = 0; // 次のレーザー生成用タイマー
 	int activeCount_ = 0; // 今何本目か
