@@ -41,6 +41,11 @@ VECTOR GimmickBase::GetPos() const
 	return VGet(0.0f, -400.0f, 0.0f);
 }
 
+int GimmickBase::modelId() const
+{
+	return modelId_;
+}
+
 std::vector<VECTOR> GimmickBase::GetPositions() const
 {
 	return { VGet(0.0f, -400.0f, 0.0f) };

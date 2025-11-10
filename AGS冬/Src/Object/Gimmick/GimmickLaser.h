@@ -31,8 +31,6 @@ private:
 
 	std::vector<LaserInfo> lasers_;
 
-	int modelId_;
-
 	VECTOR worldPos_;
 
 	int spawnTimer_ = 0; // 次のレーザー生成用タイマー

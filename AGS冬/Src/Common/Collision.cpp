@@ -45,7 +45,7 @@ void Collision::PlayerAndFloorCollision()
 	// 座標を所得
 	VECTOR pPos = player_->GetPos();
 
-	// 前フレーム位置 → 現在位置 にレイを伸ばす
+	// レイを伸ばす
 	VECTOR startPos = VAdd(pPos, { 0,100.0f, 0 });
 	VECTOR endPos = VAdd(pPos, { 0, 0.0f, 0 });
 

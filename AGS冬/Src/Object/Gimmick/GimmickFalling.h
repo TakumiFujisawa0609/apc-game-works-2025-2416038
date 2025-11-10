@@ -39,7 +39,6 @@ protected:
     std::vector<VECTOR> panels_;    // 9パネルの座標
     std::vector<WaveInfo> waveInfos_;  // 現在ウェーブの情報
 
-    int modelId_;          // 落下物モデル
     int currentWave_;      // 現在ウェーブ番号
     float waveTimer_;      // ウェーブ内タイマー
     bool waveActive_;      // ウェーブ進行中か

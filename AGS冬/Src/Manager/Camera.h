@@ -17,8 +17,8 @@ public:
 	static constexpr VECTOR FOLLOW_TARGET_LOCAL_POS = { 0.0f, 0.0f, 0.0f };
 
 	// カメラのクリップ範囲
-	static constexpr float VIEW_NEAR = 50.0f;
-	static constexpr float VIEW_FAR = 30000.0f;
+	static constexpr float VIEW_NEAR = 20.0f;
+	static constexpr float VIEW_FAR = 3000.0f;
 	// カメラモード
 	enum class MODE
 	{

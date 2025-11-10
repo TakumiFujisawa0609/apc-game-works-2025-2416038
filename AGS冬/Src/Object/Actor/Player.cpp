@@ -263,6 +263,11 @@ void Player::ProcessJump(void)
 	jumpPow_ -= GRAVITY_POW;
 	pos_.y += jumpPow_;
 
+	if (pos_.y < -1.0f)
+	{
+		jumpState_ = JumpState::Falling;
+	}
+
 	if (jumpPow_ < 0.0f && jumpState_ != JumpState::Ground)
 	{
 		jumpState_ = JumpState::Falling;

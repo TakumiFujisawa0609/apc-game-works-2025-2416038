@@ -27,9 +27,13 @@ public:
 
 	virtual VECTOR GetPos() const;
 
+	virtual int modelId() const;
+
 	virtual std::vector<VECTOR> GetPositions() const;
 
 protected:
+	
+	int modelId_;
 
 	bool isActive_ = false;  // åªç›î≠ìÆíÜÇ©Ç«Ç§Ç©
 

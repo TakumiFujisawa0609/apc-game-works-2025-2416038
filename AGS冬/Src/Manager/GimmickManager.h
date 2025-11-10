@@ -23,7 +23,7 @@ public:
     void Draw();
     void Release();
 
-    //const std::map<GimmickBase::TYPE, std::vector<GimmickBase*>>& GetGimmicks();
+    const std::map<GimmickBase::TYPE, std::vector<GimmickBase*>>& GetGimmicks();
 
     VECTOR GetLaserPos();
     std::vector<VECTOR> GetFallingPos();

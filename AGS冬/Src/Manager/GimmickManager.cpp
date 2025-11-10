@@ -83,10 +83,10 @@ void GimmickManager::Release()
     gimmicks_.clear();
 }
 
-//const std::map<GimmickBase::TYPE, std::vector<GimmickBase*>>& GimmickManager::GetGimmicks()
-//{
-//    return currentGimmick_;
-//}
+const std::map<GimmickBase::TYPE, std::vector<GimmickBase*>>& GimmickManager::GetGimmicks()
+{
+    return currentGimmick_;
+}
 
 VECTOR GimmickManager::GetLaserPos()
 {

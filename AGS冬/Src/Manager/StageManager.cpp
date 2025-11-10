@@ -13,7 +13,7 @@ void StageManager::Init(void)
 {
 	// ステージモデルの読み込み
 	stageModelIds_.emplace_back(
-		MV1LoadModel("Data/Model/Stage/Panel.mv1"));
+		MV1LoadModel("Data/Model/Stage/asiba.mv1"));
 
 	for (int z = 0; z < DIVISIONS; z++)
 	{
