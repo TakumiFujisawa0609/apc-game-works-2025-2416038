@@ -143,9 +143,9 @@ void GimmickFalling::Release() {
     MV1DeleteModel(modelId_);
 }
 
-GimmickType GimmickFalling::GetType() const 
+TYPE GimmickFalling::GetType() const
 {
-    return GimmickType::FALLING; 
+    return TYPE::FALLING;
 }
 
 std::vector<VECTOR> GimmickFalling::GetPositions() const

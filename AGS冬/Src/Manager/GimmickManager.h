@@ -23,10 +23,12 @@ public:
     void Draw();
     void Release();
 
-    const std::map<GimmickBase::TYPE, std::vector<GimmickBase*>>& GetGimmicks();
+    int GetModelId() const;
 
     VECTOR GetLaserPos();
     std::vector<VECTOR> GetFallingPos();
+
+    GimmickBase& GetGimmicks();
 
 private:
 

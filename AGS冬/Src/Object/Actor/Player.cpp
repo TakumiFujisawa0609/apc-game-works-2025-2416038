@@ -23,6 +23,9 @@ void Player::Update(void)
 	case STATE::STANBY:
 		UpdateStanby();
 		break;
+	case STATE::DAMAGE:
+		UpdateDamage();
+		break;
 	case STATE::FALL:
 		UpdateFall();
 		break;
@@ -33,19 +36,21 @@ void Player::Update(void)
 		UpdateEnd();
 		break;
 	}
-
+	auto& ins = InputManager::GetInstance();
+	if (ins.IsTrgDown(KEY_INPUT_SPACE)) Damage(1);
 	// リスポーン処理
 	Respawn();
 }
 
 void Player::Draw(void)
 {
-	ActorBase::Draw();
-
 	switch (state_)
 	{
 	case STATE::STANBY:
 		DrawStanby();
+		break;
+	case STATE::DAMAGE:
+		DrawDamage();
 		break;
 	case STATE::FALL:
 		DrawFall();
@@ -75,6 +80,8 @@ void Player::Draw(void)
 		pos_.z
 	);
 	//DrawFormatString(0,0,0xffffff,"JumpState:%d",jumpState_);
+
+	ActorBase::Draw();
 }
 
 void Player::Release(void)
@@ -91,6 +98,9 @@ void Player::ChangeState(STATE state)
 	case STATE::STANBY:
 		ChangeStanby();
 		break;
+	case STATE::DAMAGE:
+		ChangeDamage();
+		break;
 	case STATE::FALL:
 		ChabgeFall();
 		break;
@@ -105,7 +115,9 @@ void Player::ChangeState(STATE state)
 
 bool Player::IsInvincible(void)
 {
-	return false;
+	return state_ == STATE::DAMAGE
+		|| state_ == STATE::DEAD
+		|| state_ == STATE::END;
 }
 
 void Player::Respawn()
@@ -141,6 +153,7 @@ bool Player::IsStateEnd(void)
 void Player::Damage(int damage)
 {
 	hp_ -= damage;
+	ChangeState(STATE::DAMAGE);
 	if (hp_ < 0)
 	{
 		hp_ = 0;
@@ -279,6 +292,10 @@ void Player::ChangeStanby(void)
 {
 }
 
+void Player::ChangeDamage(void)
+{
+}
+
 void Player::ChabgeFall(void)
 {
 
@@ -304,6 +321,22 @@ void Player::UpdateStanby(void)
 	ProcessJump();
 }
 
+void Player::UpdateDamage(void)
+{
+	// ノックバックカウントを進める
+	cntDamage_++;
+
+	if (cntDamage_ >= 180)
+	{
+		ChangeState(STATE::STANBY);
+	}
+
+	// 移動処理
+	ProcessMove();
+	// ジャンプ処理
+	ProcessJump();
+}
+
 void Player::UpdateFall(void)
 {
 }
@@ -322,6 +355,19 @@ void Player::UpdateEnd(void)
 
 void Player::DrawStanby(void)
 {
+}
+
+void Player::DrawDamage(void)
+{
+	// 点滅処理
+	if ((cntDamage_ / TERM_BLINK) % 2 == 0)
+	{
+		MV1SetMaterialDifColor(modelId_, -1, COLOR_DIF_BLINK);  // 明るくする
+	}
+	else
+	{
+		MV1SetMaterialDifColor(modelId_, -1, COLOR_DIF_DEFAULT);  // 通常色
+	}
 }
 
 void Player::DrawFall(void)

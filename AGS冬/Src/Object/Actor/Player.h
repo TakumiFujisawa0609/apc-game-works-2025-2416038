@@ -10,6 +10,7 @@ public:
 	enum class STATE
 	{
 		STANBY,
+		DAMAGE,
 		FALL,
 		DEAD,
 		END,
@@ -114,18 +115,21 @@ protected:
 
 	// ó‘Ô‘JˆÚ
 	void ChangeStanby(void);
+	void ChangeDamage(void);
 	void ChabgeFall(void);
 	void ChangeDead(void);
 	void ChangeEnd(void);
 
 	// ó‘Ô•ÊXV
 	void UpdateStanby(void);
+	void UpdateDamage(void);
 	void UpdateFall(void);
 	void UpdateDead(void);
 	void UpdateEnd(void);
 
 	// ó‘Ô•Ê•`‰æ
 	void DrawStanby(void);
+	void DrawDamage(void);
 	void DrawFall(void);
 	void DrawDead(void);
 	void DrawEnd(void);

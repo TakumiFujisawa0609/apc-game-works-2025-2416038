@@ -47,9 +47,9 @@ void GimmickManager::Draw()
         const char* gimmickName = "None";
         switch (currentGimmick_->GetType())
         {
-        case GimmickType::LASER: gimmickName = "レーザー"; break;
-        case GimmickType::FALLING:  gimmickName = "落下物"; break;
-        case GimmickType::QUIZ:   gimmickName = "クイズ"; break;
+        case TYPE::LASER: gimmickName = "レーザー"; break;
+        case TYPE::FALLING:  gimmickName = "落下物"; break;
+        case TYPE::QUIZ:   gimmickName = "クイズ"; break;
         default: break;
         }
             
@@ -83,9 +83,13 @@ void GimmickManager::Release()
     gimmicks_.clear();
 }
 
-const std::map<GimmickBase::TYPE, std::vector<GimmickBase*>>& GimmickManager::GetGimmicks()
+int GimmickManager::GetModelId() const
 {
-    return currentGimmick_;
+    // currentGimmick_が有効なギミックを指しているかチェック！
+    if (currentGimmick_ == nullptr || currentGimmick_->GetType() != TYPE::LASER) {
+        return 0; // NULLならクラッシュを避け、無効なIDを返す
+    }
+    return currentGimmick_->GetModelId();
 }
 
 VECTOR GimmickManager::GetLaserPos()
@@ -97,3 +101,8 @@ std::vector<VECTOR> GimmickManager::GetFallingPos()
 {
     return currentGimmick_->GetPositions();
 }
+
+//GimmickBase& GimmickManager::GetGimmicks()
+//{
+//    return currentGimmick_;
+//}

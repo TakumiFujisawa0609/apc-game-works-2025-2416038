@@ -125,9 +125,9 @@ void GimmickLaser::Release()
     MV1DeleteModel(modelId_);
 }
 
-GimmickType GimmickLaser::GetType() const
+TYPE GimmickLaser::GetType() const
 {
-    return GimmickType::LASER;
+    return TYPE::LASER;
 }
 
 VECTOR GimmickLaser::GetPos() const

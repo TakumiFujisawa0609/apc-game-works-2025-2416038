@@ -31,9 +31,9 @@ bool GimmickBase::IsActive()
 	return isActive_;
 }
 
-GimmickType GimmickBase::GetType() const
+TYPE GimmickBase::GetType() const
 {
-	return GimmickType::NONE;
+	return TYPE::NONE;
 }
 
 VECTOR GimmickBase::GetPos() const
@@ -41,7 +41,7 @@ VECTOR GimmickBase::GetPos() const
 	return VGet(0.0f, -400.0f, 0.0f);
 }
 
-int GimmickBase::modelId() const
+int GimmickBase::GetModelId() const
 {
 	return modelId_;
 }

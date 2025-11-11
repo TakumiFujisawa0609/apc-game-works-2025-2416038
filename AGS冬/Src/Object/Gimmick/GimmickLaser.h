@@ -23,7 +23,7 @@ public:
 	void Draw() override;
 	void Release() override;
 
-	GimmickType GetType() const override;
+	TYPE GetType() const override;
 
 	VECTOR GetPos() const override;
 

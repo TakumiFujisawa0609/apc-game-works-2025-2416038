@@ -54,6 +54,8 @@ protected:
 	float halfW_;
 	float halfH_;
 
+	int cntDamage_ = 0;
+
 	// リソースロード
 	virtual void InitLoad(void) = 0;
 	// 大きさ、回転、座標の初期化

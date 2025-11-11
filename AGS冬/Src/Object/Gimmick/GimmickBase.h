@@ -2,7 +2,7 @@
 #include <vector>
 #include <DxLib.h>
 
-enum class GimmickType {
+enum class TYPE {
 	NONE,
 	LASER,	 // ÉåÅ[ÉUÅ[
 	FALLING, // óéâ∫ï®
@@ -23,11 +23,11 @@ public:
 
 	bool IsActive();
 
-	virtual GimmickType GetType() const;
+	virtual TYPE GetType() const;
 
 	virtual VECTOR GetPos() const;
 
-	virtual int modelId() const;
+	virtual int GetModelId() const;
 
 	virtual std::vector<VECTOR> GetPositions() const;
 
