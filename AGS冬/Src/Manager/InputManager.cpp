@@ -42,7 +42,7 @@ void InputManager::Init(void)
 	InputManager::GetInstance().Add(KEY_INPUT_S);
 	InputManager::GetInstance().Add(KEY_INPUT_D);
 
-
+	InputManager::GetInstance().Add(KEY_INPUT_1);
 
 	InputManager::MouseInfo info;
 
@@ -273,31 +273,31 @@ InputManager::JOYPAD_IN_STATE InputManager::GetJPadInputState(JOYPAD_NO no)
 		//   A
 
 		idx = static_cast<int>(JOYPAD_BTN::Y);
-		ret.ButtonsNew[idx] = d.Buttons[3];// Y
+		ret.ButtonsNew[idx] = d.ButtonsButtons[3];// Y
 
 		idx = static_cast<int>(JOYPAD_BTN::X);
-		ret.ButtonsNew[idx] = d.Buttons[2];// X
+		ret.ButtonsNew[idx] = d.ButtonsButtons[2];// X
 
 		idx = static_cast<int>(JOYPAD_BTN::B);
-		ret.ButtonsNew[idx] = d.Buttons[1];// B
+		ret.ButtonsNew[idx] = d.ButtonsButtons[1];// B
 
 		idx = static_cast<int>(JOYPAD_BTN::A);
-		ret.ButtonsNew[idx] = d.Buttons[0];// A
+		ret.ButtonsNew[idx] = d.ButtonsButtons[0];// A
 
 		//idx = static_cast<int>(JOYPAD_BTN::TOP);
 		//ret.ButtonsNew[idx] = d.ButtonsButtons[4];// Å™
 
 		idx = static_cast<int>(JOYPAD_BTN::LEFT);
-		ret.ButtonsNew[idx] = d.Buttons[5];// Å©
+		ret.ButtonsNew[idx] = d.ButtonsButtons[5];// Å©
 
 		idx = static_cast<int>(JOYPAD_BTN::RIGHT);
-		ret.ButtonsNew[idx] = d.Buttons[6];// Å®
+		ret.ButtonsNew[idx] = d.ButtonsButtons[6];// Å®
 
 		//idx = static_cast<int>(JOYPAD_BTN::DOWN);
 		//ret.ButtonsNew[idx] = d.ButtonsButtons[7];// Å´
 
 		idx = static_cast<int>(JOYPAD_BTN::START);
-		ret.ButtonsNew[idx] = d.Buttons[7];// START
+		ret.ButtonsNew[idx] = d.ButtonsButtons[7];// START
 
 		idx = static_cast<int>(JOYPAD_BTN::R_TRIGGER);
 		ret.ButtonsNew[idx] = x.RightTrigger;// R_TRIGGER
@@ -328,16 +328,16 @@ InputManager::JOYPAD_IN_STATE InputManager::GetJPadInputState(JOYPAD_NO no)
 		//   Å~
 
 		idx = static_cast<int>(JOYPAD_BTN::TOP);
-		ret.ButtonsNew[idx] = d.Buttons[3];// Å¢
+		ret.ButtonsNew[idx] = d.ButtonsButtons[3];// Å¢
 
 		idx = static_cast<int>(JOYPAD_BTN::LEFT);
-		ret.ButtonsNew[idx] = d.Buttons[0];// Å†
+		ret.ButtonsNew[idx] = d.ButtonsButtons[0];// Å†
 
 		idx = static_cast<int>(JOYPAD_BTN::RIGHT);
-		ret.ButtonsNew[idx] = d.Buttons[2];// ÅZ
+		ret.ButtonsNew[idx] = d.ButtonsButtons[2];// ÅZ
 
 		idx = static_cast<int>(JOYPAD_BTN::DOWN);
-		ret.ButtonsNew[idx] = d.Buttons[1];// Å~
+		ret.ButtonsNew[idx] = d.ButtonsButtons[1];// Å~
 
 		// ç∂ÉXÉeÉBÉbÉN
 		ret.AKeyLX = d.X;

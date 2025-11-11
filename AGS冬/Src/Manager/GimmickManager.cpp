@@ -102,6 +102,31 @@ std::vector<VECTOR> GimmickManager::GetFallingPos()
     return currentGimmick_->GetPositions();
 }
 
+std::vector<int> GimmickManager::GetLaserModelIds() const
+{
+    std::vector<int> ids;
+
+    if (currentGimmick_ && currentGimmick_->GetType() == TYPE::LASER) {
+        const auto* laser = dynamic_cast<GimmickLaser*>(currentGimmick_);
+        if (laser) {
+            ids = laser->GetActiveLaserModels();
+        }
+    }
+    return ids;
+}
+
+std::vector<int> GimmickManager::GetFallingObjectModelIds() const
+{
+    std::vector<int> ids;
+
+    if (currentGimmick_ && currentGimmick_->GetType() == TYPE::FALLING) {
+        const auto* falling = dynamic_cast<GimmickFalling*>(currentGimmick_);
+        if (falling) return falling->GetActiveModelIds();
+    }
+
+    return ids;
+}
+
 //GimmickBase& GimmickManager::GetGimmicks()
 //{
 //    return currentGimmick_;

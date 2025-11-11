@@ -27,6 +27,8 @@ public:
 
 	VECTOR GetPos() const override;
 
+	std::vector<int> GetActiveLaserModels() const;
+
 private:
 
 	std::vector<LaserInfo> lasers_;

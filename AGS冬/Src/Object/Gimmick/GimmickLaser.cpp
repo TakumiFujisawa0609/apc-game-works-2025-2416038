@@ -135,6 +135,17 @@ VECTOR GimmickLaser::GetPos() const
     return worldPos_;
 }
 
+std::vector<int> GimmickLaser::GetActiveLaserModels() const
+{
+    std::vector<int> handles;
+    for (const auto& l : lasers_) {
+        if (l.fired) {
+            handles.push_back(l.modelHandle);
+        }
+    }
+    return handles;
+}
+
 
 void GimmickLaser::InitLoad(void)
 {

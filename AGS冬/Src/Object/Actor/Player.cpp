@@ -16,6 +16,19 @@ Player::~Player(void)
 
 void Player::Update(void)
 {
+	// --- 演出専用の更新（点滅など） ---
+	if (state_ == STATE::DAMAGE)
+	{
+		cntDamage_++;
+	}
+	
+	// --- ヒットストップ中は移動や入力を止める ---
+	if (hitStopTimer_ > 0)
+	{
+		hitStopTimer_--;
+		return;
+	}
+
 	ActorBase::Update();
 
 	switch (state_)
@@ -35,9 +48,12 @@ void Player::Update(void)
 	case STATE::END:
 		UpdateEnd();
 		break;
+	case STATE::VICTORY:
+		UpdateVictory();
+		break;
 	}
 	auto& ins = InputManager::GetInstance();
-	if (ins.IsTrgDown(KEY_INPUT_SPACE)) Damage(1);
+	if (ins.IsTrgDown(KEY_INPUT_1)) Damage(1);
 	// リスポーン処理
 	Respawn();
 }
@@ -61,6 +77,9 @@ void Player::Draw(void)
 	case STATE::END:
 		DrawEnd();
 		break;
+	case STATE::VICTORY:
+		DrawVictory();
+		break;
 	}
 
 	VECTOR p = VAdd(pos_, VGet(0.0f, 80.0f, 0.0f));
@@ -79,7 +98,7 @@ void Player::Draw(void)
 		pos_.y,
 		pos_.z
 	);
-	//DrawFormatString(0,0,0xffffff,"JumpState:%d",jumpState_);
+	//DrawFormatString(500,0,0xffffff,"state:%d",state_);
 
 	ActorBase::Draw();
 }
@@ -109,6 +128,9 @@ void Player::ChangeState(STATE state)
 		break;
 	case STATE::END:
 		ChangeEnd();
+		break;
+	case STATE::VICTORY:
+		ChangeVictory();
 		break;
 	}
 }
@@ -145,6 +167,11 @@ void Player::Respawn()
 	MV1SetPosition(modelId_, pos_);
 }
 
+bool Player::IsStateDead(void)
+{
+	return state_ == STATE::DEAD;
+}
+
 bool Player::IsStateEnd(void)
 {
 	return state_ == STATE::END;
@@ -153,7 +180,13 @@ bool Player::IsStateEnd(void)
 void Player::Damage(int damage)
 {
 	hp_ -= damage;
+
+	cntDamage_ = 0;	// ダメージカウンター初期化
+
+	hitStopTimer_ = 50;	// プレイヤーだけヒットストップ開始
+
 	ChangeState(STATE::DAMAGE);
+
 	if (hp_ < 0)
 	{
 		hp_ = 0;
@@ -313,6 +346,12 @@ void Player::ChangeEnd(void)
 {
 }
 
+void Player::ChangeVictory(void)
+{
+	// 勝利アニメーション
+	animationController_->Play(static_cast<int>(ANIM_TYPE::VICTORY), true);
+}
+
 void Player::UpdateStanby(void)
 {
 	// 移動処理
@@ -323,10 +362,7 @@ void Player::UpdateStanby(void)
 
 void Player::UpdateDamage(void)
 {
-	// ノックバックカウントを進める
-	cntDamage_++;
-
-	if (cntDamage_ >= 180)
+	if (cntDamage_ >= 120)
 	{
 		ChangeState(STATE::STANBY);
 	}
@@ -353,21 +389,29 @@ void Player::UpdateEnd(void)
 {
 }
 
+void Player::UpdateVictory(void)
+{
+}
+
 void Player::DrawStanby(void)
 {
 }
 
 void Player::DrawDamage(void)
 {
-	// 点滅処理
-	if ((cntDamage_ / TERM_BLINK) % 2 == 0)
+	// 点滅周期：5フレームごとに切り替え
+	bool visible = ((cntDamage_ / 11) % 2 == 0);
+	float alpha = visible ? 1.0f : 0.3f; // 半透明時は0.3
+
+	int materialNum = MV1GetMaterialNum(modelId_);
+	for (int i = 0; i < materialNum; ++i)
 	{
-		MV1SetMaterialDifColor(modelId_, -1, COLOR_DIF_BLINK);  // 明るくする
+		// 現在のマテリアル色を取得して、αだけ変更
+		COLOR_F dif = MV1GetMaterialDifColor(modelId_, i);
+		dif.a = alpha;
+		MV1SetMaterialDifColor(modelId_, i, dif);
 	}
-	else
-	{
-		MV1SetMaterialDifColor(modelId_, -1, COLOR_DIF_DEFAULT);  // 通常色
-	}
+
 }
 
 void Player::DrawFall(void)
@@ -379,6 +423,10 @@ void Player::DrawDead(void)
 }
 
 void Player::DrawEnd(void)
+{
+}
+
+void Player::DrawVictory(void)
 {
 }
 
@@ -433,6 +481,8 @@ void Player::InitAnimation(void)
 	animationController_->AddInFbx(static_cast<int>(ANIM_TYPE::JUMP), 60.0f, 3);
 	animationController_->AddInFbx(static_cast<int>(ANIM_TYPE::FALL), 60.0f, 1);
 	animationController_->AddInFbx(static_cast<int>(ANIM_TYPE::DEAD), 60.0f, 0);
+
+	animationController_->Add(static_cast<int>(ANIM_TYPE::VICTORY), 60.0f, "Data/Model/Player/victory.mv1");
 
 	// 初期アニメーション再生
 	animationController_->Play(static_cast<int>(ANIM_TYPE::IDLE), true);

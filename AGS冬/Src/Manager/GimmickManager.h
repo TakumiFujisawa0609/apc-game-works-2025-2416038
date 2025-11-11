@@ -30,6 +30,9 @@ public:
 
     GimmickBase& GetGimmicks();
 
+    std::vector<int> GetLaserModelIds() const;
+    std::vector<int> GetFallingObjectModelIds() const;
+
 private:
 
     std::vector<GimmickBase*> gimmicks_;

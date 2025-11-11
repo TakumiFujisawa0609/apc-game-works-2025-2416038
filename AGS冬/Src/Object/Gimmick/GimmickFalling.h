@@ -15,6 +15,7 @@ public:
         float warningTimer;  // 警告アニメ用タイマー
         bool isWarning;      // 警告中か
         bool isFalling;      // 落下中か
+        bool hasLanded;     // 地面に到達したかどうか
         float fallY;         // 現在の落下高さ
         int modelHandle;     // 個別落下物モデル
         int alpha;           // フェードアウト用
@@ -32,6 +33,9 @@ public:
 
     std::vector<VECTOR> GetPositions() const override;
 
+    bool HasLanded() const; // 地面に到達したか
+    // モデルIDs
+    std::vector<int> GetActiveModelIds() const;
 protected:
 
     void SetupWave();  // 1ウェーブの初期化

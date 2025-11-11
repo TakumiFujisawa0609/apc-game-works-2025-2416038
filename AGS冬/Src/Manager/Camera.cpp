@@ -27,7 +27,11 @@ void Camera::Init(void)
 
 void Camera::Update(void)
 {
-
+	// ズーム補間
+	if (fabs(zoomDistance_ - zoomTarget_) > 0.001f)
+	{
+		zoomDistance_ += (zoomTarget_ - zoomDistance_) * zoomSpeed_;
+	}
 }
 
 void Camera::SetBeforeDraw(void)
@@ -126,6 +130,9 @@ void Camera::SetBeforeDrawFollow(void)
 	// 相対座標を回転させて、回転後の相対座標を取得する
 	VECTOR cameraLocalRotPos = VTransform(FOLLOW_CAMERA_LOCAL_POS, mat);
 
+	// ズームを適用
+	cameraLocalRotPos = VScale(cameraLocalRotPos, zoomDistance_);
+
 	// 相対座標からワールド座標に直して、カメラ座標とする
 	pos_ = VAdd(followPos, cameraLocalRotPos);
 
@@ -208,6 +215,13 @@ void Camera::MoveXYZDirectionPad(void)
 	// 上下の角度制限
 	if (angles_.x > DX_PI_F / 6.0f) { angles_.x = DX_PI_F / 6.0f; }
 	if (angles_.x < -DX_PI_F / 6.0f) { angles_.x = -DX_PI_F / 6.0f; }
+}
+
+void Camera::SetZoomTarget(float zoom)
+{
+	zoomDistance_ = zoom;
+	if (zoomDistance_ < 0.1f) zoomDistance_ = 0.1f; // 最小値制限
+	if (zoomDistance_ > 5.0f) zoomDistance_ = 5.0f; // 最大値制限
 }
 
 void Camera::Release(void)

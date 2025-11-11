@@ -73,6 +73,9 @@ public:
 
 	void MoveXYZDirectionPad(void);
 
+	// ズームを設定する
+	void SetZoomTarget(float zoom);
+
 private:
 
 	// 追従相手
@@ -89,5 +92,9 @@ private:
 
 	// 注視点の位置
 	VECTOR targetPos_;
+
+	float zoomDistance_ = 1.0f;    // 1.0fが標準、0.5fで半分の距離、2.0fで2倍遠く
+	float zoomTarget_ = 1.0f;      // ターゲットズーム距離
+	float zoomSpeed_ = 0.05f;      // ズーム速度
 
 };

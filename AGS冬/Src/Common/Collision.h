@@ -34,5 +34,8 @@ private:
 
 	// プレイヤーとレーザー
 	void PlayerAndLaser();
+
+	// プレイヤーと落下物
+	void PlayerAndFallingObjects();
 };
 

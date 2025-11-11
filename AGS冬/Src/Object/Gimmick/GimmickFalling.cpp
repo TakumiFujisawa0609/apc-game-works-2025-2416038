@@ -48,6 +48,7 @@ void GimmickFalling::SetupWave()
         info.warningTimer = 0.0f;
         info.isWarning = true;
         info.isFalling = false;
+        info.hasLanded = false;
         info.fallY = 1000.0f;
         info.modelHandle = -1;
         info.alpha = 255;
@@ -83,6 +84,7 @@ void GimmickFalling::Update() {
             if (info.fallY <= -10.0f) {
                 info.fallY = -10.0f;
                 info.isFalling = false;
+                info.hasLanded = true;
             }
             MV1SetScale(info.modelHandle, scl_);
             MV1SetPosition(info.modelHandle, VGet(info.panelPos.x, info.fallY, info.panelPos.z));
@@ -125,16 +127,7 @@ void GimmickFalling::Draw() {
         }
 		MV1DrawModel(info.modelHandle);
     }
- /*   for (auto& info : waveInfos_) {
-        if (info.isWarning && info.warningTimer == 1.0f)
-            printfDx("パネル(%.0f, %.0f) : 警告開始\n", info.panelPos.x, info.panelPos.z);
 
-        if (info.isFalling && info.fallY == 1000.0f)
-            printfDx("パネル(%.0f, %.0f) : 落下開始\n", info.panelPos.x, info.panelPos.z);
-
-        if (!info.isWarning && !info.isFalling && info.alpha == 250)
-            printfDx("パネル(%.0f, %.0f) : フェードアウト開始\n", info.panelPos.x, info.panelPos.z);
-    }*/
 }
 
 void GimmickFalling::Release() {
@@ -160,6 +153,29 @@ std::vector<VECTOR> GimmickFalling::GetPositions() const
     }
 
     return positions;
+}
+
+bool GimmickFalling::HasLanded() const
+{
+    for (const auto& info : waveInfos_) {
+        if (info.hasLanded)
+            return true;
+    }
+    return false;
+}
+
+std::vector<int> GimmickFalling::GetActiveModelIds() const
+{
+    std::vector<int> ids;
+
+    for (const auto& info : waveInfos_) {
+        // モデルが有効（生成済みで、地面についてない）なら追加
+        if (info.modelHandle >= 0 && info.hasLanded == false) {
+            ids.push_back(info.modelHandle);
+        }
+    }
+
+    return ids;
 }
 
 void GimmickFalling::InitLoad()

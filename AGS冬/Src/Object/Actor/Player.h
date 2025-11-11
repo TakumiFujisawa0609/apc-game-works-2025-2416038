@@ -14,6 +14,7 @@ public:
 		FALL,
 		DEAD,
 		END,
+		VICTORY,
 		MAX,
 	};
 
@@ -31,6 +32,7 @@ public:
 		IDLE,
 		JUMP,
 		RUN,
+		VICTORY,
 		MAX,
 	};
 
@@ -46,7 +48,7 @@ public:
 	static constexpr float RESPAWN_LEN = -3500.0f;
 
 	// リスポーン位置
-	static constexpr VECTOR RESPAWN_POS = { 0.0f, 550.0f, 0.0f };
+	static constexpr VECTOR RESPAWN_POS = { 300.0f, 550.0f, 300.0f };
 
 	// 標準の拡散光色
 	static constexpr COLOR_F COLOR_DIF_DEFAULT = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -75,6 +77,8 @@ public:
 
 	// リスポーン処理
 	void Respawn();
+
+	bool IsStateDead(void);
 
 	// 終了遷移
 	bool IsStateEnd(void);
@@ -119,6 +123,7 @@ protected:
 	void ChabgeFall(void);
 	void ChangeDead(void);
 	void ChangeEnd(void);
+	void ChangeVictory(void);
 
 	// 状態別更新
 	void UpdateStanby(void);
@@ -126,6 +131,7 @@ protected:
 	void UpdateFall(void);
 	void UpdateDead(void);
 	void UpdateEnd(void);
+	void UpdateVictory(void);
 
 	// 状態別描画
 	void DrawStanby(void);
@@ -133,6 +139,7 @@ protected:
 	void DrawFall(void);
 	void DrawDead(void);
 	void DrawEnd(void);
+	void DrawVictory(void);
 
 	bool isJump_;
 	float jumpPow_;

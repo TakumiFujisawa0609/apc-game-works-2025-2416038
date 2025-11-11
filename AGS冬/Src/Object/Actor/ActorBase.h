@@ -56,6 +56,8 @@ protected:
 
 	int cntDamage_ = 0;
 
+	int hitStopTimer_ = 0;  // ヒットストップ中フレーム数
+
 	// リソースロード
 	virtual void InitLoad(void) = 0;
 	// 大きさ、回転、座標の初期化

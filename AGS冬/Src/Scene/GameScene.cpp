@@ -63,13 +63,27 @@ void GameScene::Init(void)
 
 void GameScene::Update(void)
 {
+	if (player_->IsStateDead() || isClear_)
+	{
+		// カメラをズームさせる
+		SceneManager::GetInstance()->GetCamera()->SetZoomTarget(0.5f); // プレイヤーに近づく
+	}
+
 	// ゲームオーバー判定
 	if (player_->IsStateEnd()) {
-		isGameOver_ = true;
+		isGameOver_ =  true;
+	}
+	
+	// === 経過時間チェック ===
+	if (timer_->IsOver(60.0f))  // ← 120秒経過でクリア
+	{
+		isClear_ = true;
+		player_->ChangeState(Player::STATE::VICTORY);
+
+		clearStartTime_ = timer_->GetElapsedSec();
 	}
 
 	auto& ins = InputManager::GetInstance();
-
 	if (isGameOver_ || isClear_)
 	{
 		timer_->Pause();
@@ -81,7 +95,12 @@ void GameScene::Update(void)
 		}
 	}
 
-	if (isClear_) return; // クリアしてたら更新止める
+	// クリア後もプレイヤーだけ更新
+	if (isClear_)
+	{
+		player_->Update();
+		return; // その他のの更新は止める
+	}
 
 	// --- ポーズ切り替え ---
 	if (!isGameOver_ && !isClear_)
@@ -126,14 +145,6 @@ void GameScene::Update(void)
 
 
 	collision_->Update();
-
-	// === 経過時間チェック ===
-	if (timer_->IsOver(60.0f))  // ← 120秒経過でクリア
-	{
-		isClear_ = true;
-		clearStartTime_ = timer_->GetElapsedSec();
-		return;
-	}
 }
 
 void GameScene::Draw(void)
@@ -182,10 +193,6 @@ void GameScene::Draw(void)
 	// --- クリア表示 ---
 	if (isClear_)
 	{
-		// 画面中央に半透明黒＋文字
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
-		DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		SetFontSize(39);
 		DrawFormatString(430, 240, GetColor(255, 255, 0), "CLEAR");
 
