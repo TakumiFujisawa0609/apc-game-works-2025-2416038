@@ -62,8 +62,6 @@ void ActorBase::Update(void)
 	//Move();
 	MV1SetPosition(modelId_, pos_);
 
-	// アニメーションの更新
-	animationController_->Update();
 }
 
 void ActorBase::Draw(void)

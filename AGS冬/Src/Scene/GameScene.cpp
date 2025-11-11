@@ -73,15 +73,6 @@ void GameScene::Update(void)
 	if (player_->IsStateEnd()) {
 		isGameOver_ =  true;
 	}
-	
-	// === 経過時間チェック ===
-	if (timer_->IsOver(60.0f))  // ← 120秒経過でクリア
-	{
-		isClear_ = true;
-		player_->ChangeState(Player::STATE::VICTORY);
-
-		clearStartTime_ = timer_->GetElapsedSec();
-	}
 
 	auto& ins = InputManager::GetInstance();
 	if (isGameOver_ || isClear_)
@@ -95,9 +86,19 @@ void GameScene::Update(void)
 		}
 	}
 
+	// === 経過時間チェック ===
+	if (timer_->IsOver(60.0f))  // ← 120秒経過でクリア
+	{
+		isClear_ = true;
+		player_->ChangeState(Player::STATE::VICTORY);
+
+		clearStartTime_ = timer_->GetElapsedSec();
+	}
+
 	// クリア後もプレイヤーだけ更新
 	if (isClear_)
 	{
+	
 		player_->Update();
 		return; // その他のの更新は止める
 	}

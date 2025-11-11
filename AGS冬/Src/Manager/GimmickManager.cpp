@@ -54,22 +54,22 @@ void GimmickManager::Draw()
         }
             
 		SetFontSize(50);
-        DrawFormatString(640, 80, GetColor(255, 255, 0), "発動中 : %s", gimmickName);
+        DrawFormatString(680, 80, GetColor(255, 255, 0), "発動中 : %s", gimmickName);
         SetFontSize(16);
 
-        DrawFormatString(0, 300, 0xffffff,
-            "Laser座標　 ：(% .1f, % .1f, % .1f)",
-            GetLaserPos().x, GetLaserPos().y, GetLaserPos().z);
+        //DrawFormatString(0, 300, 0xffffff,
+        //    "Laser座標　 ：(% .1f, % .1f, % .1f)",
+        //    GetLaserPos().x, GetLaserPos().y, GetLaserPos().z);
 
-        // --- 落下物座標（複数ある）---
-        auto fallingPositions = GetFallingPos();
-        int yOffset = 340;
-        for (size_t i = 0; i < fallingPositions.size(); ++i) {
-            const auto& p = fallingPositions[i];
-            DrawFormatString(0, yOffset, GetColor(0, 255, 0),
-                "落下物[%zu] ：(% .1f, % .1f, % .1f)", i, p.x, p.y, p.z);
-            yOffset += 20;
-        }
+        //// --- 落下物座標（複数ある）---
+        //auto fallingPositions = GetFallingPos();
+        //int yOffset = 340;
+        //for (size_t i = 0; i < fallingPositions.size(); ++i) {
+        //    const auto& p = fallingPositions[i];
+        //    DrawFormatString(0, yOffset, GetColor(0, 255, 0),
+        //        "落下物[%zu] ：(% .1f, % .1f, % .1f)", i, p.x, p.y, p.z);
+        //    yOffset += 20;
+        //}
     }
 }
 

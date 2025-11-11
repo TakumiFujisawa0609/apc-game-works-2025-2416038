@@ -37,7 +37,7 @@ void Collision::Draw()
 	VECTOR startPos = VAdd(pPos, { 0,100.0f, 0 });
 	VECTOR endPos = VAdd(pPos, { 0, 0.0f, 0 });
 
-	DrawLine3D(startPos, endPos, GetColor(255, 0, 0));
+	//DrawLine3D(startPos, endPos, GetColor(255, 0, 0));
 
 	VECTOR sPos = VAdd(pPos, { 0, 80, 0 });
 	VECTOR ePos = VAdd(pPos, { 0, 25, 0 });

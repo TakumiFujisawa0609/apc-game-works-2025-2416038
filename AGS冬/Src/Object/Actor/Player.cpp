@@ -52,6 +52,10 @@ void Player::Update(void)
 		UpdateVictory();
 		break;
 	}
+
+	// アニメーションの更新
+	animationController_->Update();
+
 	auto& ins = InputManager::GetInstance();
 	if (ins.IsTrgDown(KEY_INPUT_1)) Damage(1);
 	// リスポーン処理
@@ -91,13 +95,13 @@ void Player::Draw(void)
 		AsoUtility::Rad2DegF(angles_.y),
 		AsoUtility::Rad2DegF(angles_.z)
 	);*/
-	DrawFormatString(
-		600, 0, 0xffffff,
-		"キャラ座標　 ：(% .1f, % .1f, % .1f)",
-		pos_.x,
-		pos_.y,
-		pos_.z
-	);
+	//DrawFormatString(
+	//	600, 0, 0xffffff,
+	//	"キャラ座標　 ：(% .1f, % .1f, % .1f)",
+	//	pos_.x,
+	//	pos_.y,
+	//	pos_.z
+	//);
 	//DrawFormatString(500,0,0xffffff,"state:%d",state_);
 
 	ActorBase::Draw();
@@ -391,6 +395,7 @@ void Player::UpdateEnd(void)
 
 void Player::UpdateVictory(void)
 {
+
 }
 
 void Player::DrawStanby(void)
