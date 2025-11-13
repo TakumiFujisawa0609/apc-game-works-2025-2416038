@@ -246,6 +246,20 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 		break;
 	}
 
+	// 3D 設定を再初期化
+	Init3D();
+
+	// カメラの再初期化が必要ならここで follow 設定
+	camera_->Init();
+	// GameScene ならプレイヤーをカメラに設定
+	if (sceneId == SCENE_ID::GAME)
+	{
+		// プレイヤーが scene_->Init() 内で作られる想定
+		Player* player = dynamic_cast<GameScene*>(scene_)->GetPlayer();
+		camera_->SetFollow(player);
+		camera_->ChangeMode(Camera::MODE::FOLLOW);
+	}
+
 	// 各シーンの初期化
 	scene_->Init();
 

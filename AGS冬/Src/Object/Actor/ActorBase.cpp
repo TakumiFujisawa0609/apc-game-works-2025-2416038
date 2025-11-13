@@ -88,6 +88,11 @@ CollisionShape::AABB ActorBase::GetAABB() const
 	return box;
 }
 
+const VECTOR& ActorBase::GetRot() const
+{
+	return angles_;
+}
+
 void ActorBase::InitTransformPost(void)
 {
 	// ‘å‚«‚³‚ðƒ‚ƒfƒ‹‚É”½‰f

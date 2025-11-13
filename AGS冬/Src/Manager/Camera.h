@@ -76,6 +76,9 @@ public:
 	// ズームを設定する
 	void SetZoomTarget(float zoom);
 
+	// クリアカメラ
+	void SetVictoryView(const VECTOR& pos, const VECTOR& target);
+
 private:
 
 	// 追従相手

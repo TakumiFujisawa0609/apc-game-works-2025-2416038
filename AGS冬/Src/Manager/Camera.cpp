@@ -56,13 +56,35 @@ void Camera::SetBeforeDraw(void)
 
 void Camera::SetBeforeDrawFixedPoint(void)
 {
-	// カメラの設定(位置と角度による制御)
-	SetCameraPositionAndAngle(
-		pos_,
-		angles_.x,
-		angles_.y,
-		angles_.z
-	);
+	if (!follow_) return;
+
+	// プレイヤー座標と回転
+	VECTOR playerPos = follow_->GetPos();
+	float playerRotY = follow_->GetRot().y;
+
+	// プレイヤー正面方向のベクトル
+	VECTOR forward = VGet(sinf(playerRotY), 0.0f, cosf(playerRotY));
+
+	// カメラ位置：プレイヤーの正面の逆方向 + 高さ
+	float distance = 500.0f * zoomDistance_; // 距離調整
+	float height = 150.0f;                  // 高さ調整
+	VECTOR offset = VScale(forward, distance);
+	offset.y += height;
+	pos_ = VAdd(playerPos, offset);
+
+	// 注視点はプレイヤー
+	targetPos_ = playerPos;
+
+	// 上方向ベクトル
+	VECTOR up = VGet(0.0f, 1.0f, 0.0f);
+
+	// カメラ角度を自動計算
+	VECTOR dir = VSub(targetPos_, pos_);
+	angles_.y = atan2f(dir.x, dir.z);
+	angles_.x = -atan2f(dir.y, sqrtf(dir.x * dir.x + dir.z * dir.z));
+
+	// カメラ設定
+	SetCameraPositionAndTargetAndUpVec(pos_, targetPos_, up);
 }
 void Camera::SetBeforeDrawFree(void)
 {
@@ -222,6 +244,19 @@ void Camera::SetZoomTarget(float zoom)
 	zoomDistance_ = zoom;
 	if (zoomDistance_ < 0.1f) zoomDistance_ = 0.1f; // 最小値制限
 	if (zoomDistance_ > 5.0f) zoomDistance_ = 5.0f; // 最大値制限
+}
+
+void Camera::SetVictoryView(const VECTOR& pos, const VECTOR& target)
+{
+	// 固定カメラ用の設定
+	ChangeMode(MODE::FIXED_POINT);
+	pos_ = pos;
+	targetPos_ = target;
+
+	// 角度を自動で計算（注視点に向ける）
+	VECTOR dir = VSub(target, pos);
+	angles_.y = atan2f(dir.x, dir.z);
+	angles_.x = -atan2f(dir.y, sqrtf(dir.x * dir.x + dir.z * dir.z));
 }
 
 void Camera::Release(void)

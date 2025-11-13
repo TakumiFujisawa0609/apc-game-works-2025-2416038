@@ -27,7 +27,7 @@ public:
 	// ‰ğ•úˆ—
 	void Release(void) override;
 
-
+	Player* GetPlayer();
 private:
 
 	Camera* camera_;

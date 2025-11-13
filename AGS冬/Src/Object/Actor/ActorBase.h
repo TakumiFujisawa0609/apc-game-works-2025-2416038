@@ -26,6 +26,8 @@ public:
 
 	virtual CollisionShape::AABB GetAABB() const;
 
+	const VECTOR& GetRot() const;
+
 protected:
 
 	// アニメーション制御

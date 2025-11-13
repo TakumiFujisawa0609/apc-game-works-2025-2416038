@@ -232,7 +232,6 @@ void AnimationController::Update(void)
 //
 //	// ‰Â•Ï’·”z—ñ‚ðƒNƒŠƒA‚·‚é
 //	animations_.clear();
-
 }
 
 void AnimationController::Release(void)

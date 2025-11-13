@@ -57,7 +57,7 @@ void Player::Update(void)
 	animationController_->Update();
 
 	auto& ins = InputManager::GetInstance();
-	if (ins.IsTrgDown(KEY_INPUT_1)) Damage(1);
+//	if (ins.IsTrgDown(KEY_INPUT_1)) Damage(1);
 	// リスポーン処理
 	Respawn();
 }
@@ -95,13 +95,13 @@ void Player::Draw(void)
 		AsoUtility::Rad2DegF(angles_.y),
 		AsoUtility::Rad2DegF(angles_.z)
 	);*/
-	//DrawFormatString(
-	//	600, 0, 0xffffff,
-	//	"キャラ座標　 ：(% .1f, % .1f, % .1f)",
-	//	pos_.x,
-	//	pos_.y,
-	//	pos_.z
-	//);
+	/*DrawFormatString(
+		600, 0, 0xffffff,
+		"キャラ座標　 ：(% .1f, % .1f, % .1f)",
+		pos_.x,
+		pos_.y,
+		pos_.z
+	);*/
 	//DrawFormatString(500,0,0xffffff,"state:%d",state_);
 
 	ActorBase::Draw();
@@ -395,7 +395,13 @@ void Player::UpdateEnd(void)
 
 void Player::UpdateVictory(void)
 {
+	jumpPow_ -= GRAVITY_POW;
+	pos_.y += jumpPow_;
 
+	if (pos_.y <= 0)
+	{
+		pos_.y = 0;
+	}
 }
 
 void Player::DrawStanby(void)
@@ -487,7 +493,7 @@ void Player::InitAnimation(void)
 	animationController_->AddInFbx(static_cast<int>(ANIM_TYPE::FALL), 60.0f, 1);
 	animationController_->AddInFbx(static_cast<int>(ANIM_TYPE::DEAD), 60.0f, 0);
 
-	animationController_->Add(static_cast<int>(ANIM_TYPE::VICTORY), 60.0f, "Data/Model/Player/victory.mv1");
+	animationController_->AddInFbx(static_cast<int>(ANIM_TYPE::VICTORY), 60.0f, 5);
 
 	// 初期アニメーション再生
 	animationController_->Play(static_cast<int>(ANIM_TYPE::IDLE), true);

@@ -63,11 +63,19 @@ void GameScene::Init(void)
 
 void GameScene::Update(void)
 {
-	if (player_->IsStateDead() || isClear_)
+	if (player_->IsStateDead())
 	{
 		// カメラをズームさせる
 		SceneManager::GetInstance()->GetCamera()->SetZoomTarget(0.5f); // プレイヤーに近づく
 	}
+	else if(isClear_)
+	{
+		// カメラをズームさせる
+		SceneManager::GetInstance()->GetCamera()->SetZoomTarget(0.5f); // プレイヤーに近づく
+
+		SceneManager::GetInstance()->GetCamera()->ChangeMode(Camera::MODE::FIXED_POINT);
+	}
+
 
 	// ゲームオーバー判定
 	if (player_->IsStateEnd()) {
@@ -87,7 +95,7 @@ void GameScene::Update(void)
 	}
 
 	// === 経過時間チェック ===
-	if (timer_->IsOver(60.0f))  // ← 120秒経過でクリア
+	if (!isClear_ && timer_->IsOver(80.0f))  // ← 120秒経過でクリア
 	{
 		isClear_ = true;
 		player_->ChangeState(Player::STATE::VICTORY);
@@ -98,7 +106,6 @@ void GameScene::Update(void)
 	// クリア後もプレイヤーだけ更新
 	if (isClear_)
 	{
-	
 		player_->Update();
 		return; // その他のの更新は止める
 	}
@@ -150,8 +157,9 @@ void GameScene::Update(void)
 
 void GameScene::Draw(void)
 {
-	gimmickManager_->Draw();
+	
 	stageManager_->Draw();
+	gimmickManager_->Draw();	
 	player_->Draw();
 
 	//// 全てのアクターを回す
@@ -161,8 +169,7 @@ void GameScene::Draw(void)
 	//	actor->Draw();
 	//}
 
-
-	collision_->Draw();
+	if (!isClear_ || !isGameOver_) collision_->Draw();
 
 	hpManager_->Draw();
 
@@ -179,7 +186,7 @@ void GameScene::Draw(void)
 	//grid_->Draw();
 
 	float elapsed = timer_->GetElapsedSec();
-	float remaining = 60.0f - elapsed;
+	float remaining = 80.0f - elapsed;
 	if (remaining < 0) remaining = 0;
 
 	SetFontSize(50);
@@ -194,16 +201,16 @@ void GameScene::Draw(void)
 	// --- クリア表示 ---
 	if (isClear_)
 	{
-		SetFontSize(39);
-		DrawFormatString(430, 240, GetColor(255, 255, 0), "CLEAR");
+		SetFontSize(45);
+		DrawFormatString(300, 240, GetColor(255, 255, 0), "CLEAR");
 
 		if (GetJoypadNum() == 0)
 		{
-			DrawFormatString(560, 480, GetColor(255, 255, 0), "Enterでタイトルへ→");
+			DrawFormatString(310, 480, GetColor(255, 255, 0), "Enterでタイトルへ");
 		}
 		else
 		{
-			DrawFormatString(620, 480, GetColor(255, 255, 0), "Bでタイトルへ→");
+			DrawFormatString(310, 480, GetColor(255, 255, 0), "Bでタイトルへ");
 		}
 	}
 	
@@ -253,6 +260,11 @@ void GameScene::Release(void)
 	hpManager_->Release();
 	delete hpManager_;
 
+}
+
+Player* GameScene::GetPlayer()
+{
+	return player_;
 }
 
 void GameScene::UpdatePauseMenu()
