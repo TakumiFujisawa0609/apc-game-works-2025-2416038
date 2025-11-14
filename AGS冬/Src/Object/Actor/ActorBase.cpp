@@ -48,9 +48,6 @@ void ActorBase::LoadEnd(void)
 
 void ActorBase::Update(void)
 {
-	// モデルのY軸回転
-	//angles_.y += 0.01f;
-
 	// プレイヤーの遅延回転処理
 	DelayRotate();
 
@@ -60,8 +57,8 @@ void ActorBase::Update(void)
 	// 回転行列をモデルに反映
 	MV1SetRotationMatrix(modelId_, mat);
 
+	// モデルに反映
 	MV1SetPosition(modelId_, pos_);
-
 }
 
 void ActorBase::Draw(void)
