@@ -71,9 +71,6 @@ protected:
 	// ‰Šú‰»Œã‚ÌŒÂ•Êˆ—
 	virtual void InitPost(void) = 0;
 
-	// ˆÚ“®ˆ—
-	virtual void Move(void);
-
 	// ’x‰„‰ñ“]ˆ—
 	void DelayRotate(void);
 };

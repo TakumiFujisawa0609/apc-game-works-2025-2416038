@@ -11,9 +11,11 @@ ActorBase::ActorBase(void)
 	endCapsulePos_ = { 0.0f,0.0f,0.0f };
 	capsuleRadius_ = 0.0f;
 }
+
 ActorBase::~ActorBase(void)
 {
 }
+
 void ActorBase::Init(void)
 {
 	// リソースロード
@@ -58,8 +60,6 @@ void ActorBase::Update(void)
 	// 回転行列をモデルに反映
 	MV1SetRotationMatrix(modelId_, mat);
 
-	// プレイヤーの移動処理
-	//Move();
 	MV1SetPosition(modelId_, pos_);
 
 }
@@ -112,9 +112,6 @@ void ActorBase::InitTransformPost(void)
 	MV1SetPosition(modelId_, pos_);
 }
 
-void ActorBase::Move(void)
-{
-}
 
 void ActorBase::DelayRotate(void)
 {
