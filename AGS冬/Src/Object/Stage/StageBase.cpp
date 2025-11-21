@@ -1,4 +1,5 @@
 #include "StageBase.h"
+#include "../../Utility/AsoUtility.h"
 
 StageBase::StageBase(void)
 {
@@ -12,6 +13,11 @@ void StageBase::Init(int baseModel)
 {
 	// モデル読み込み
 	modelId_ = MV1DuplicateModel(baseModel);
+
+	screenModelId_ = MV1LoadModel("Data/Model/screen.mv1");
+	MV1SetScale(screenModelId_, { 9.0f, 9.0f, 9.0f });
+	MV1SetRotationXYZ(screenModelId_, { -AsoUtility::Deg2RadF(18), 0.0f, 0.0f});
+	MV1SetPosition(screenModelId_, { 300.0f, 220.0f, 2600.0f });
 
 	//img_ = LoadGraph("Data/Image/タイトルなし.png");
 	InitTransform();
@@ -30,6 +36,7 @@ void StageBase::Draw(void)
 
 	// ステージ描画
 	MV1DrawModel(modelId_);
+	MV1DrawModel(screenModelId_);
 
     //// モデルの上に少し浮かせて描く
     //const float lineY = pos_.y + 38.0f;
@@ -73,6 +80,7 @@ void StageBase::Release(void)
 	// モデル解放
 	MV1DeleteModel(modelId_);
 
+	MV1DeleteModel(screenModelId_);
 
 	DeleteGraph(img_);
 }

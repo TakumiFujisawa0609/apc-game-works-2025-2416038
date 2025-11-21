@@ -38,4 +38,6 @@ protected:
 
 	// 大きさ、回転、座標のモデル設定
 	void InitTransformPost(void);
+
+	int screenModelId_;
 };

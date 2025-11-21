@@ -39,6 +39,9 @@ protected:
 
 	VECTOR scl_;
 
+	// 画像
+	int gimmickImg_;
+
 	// リソースロード
 	virtual void InitLoad(void) = 0;
 	// 大きさ、回転、座標の初期化

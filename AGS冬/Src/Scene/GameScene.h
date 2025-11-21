@@ -53,5 +53,7 @@ private:
 	bool isClear_;
 	float clearStartTime_;
 
+	// スポットライト
+	void SpotLight();
 };
 

@@ -74,6 +74,11 @@ void GimmickFalling::Update() {
                 info.isFalling = true;
                 info.modelHandle = MV1DuplicateModel(modelId_);
 
+                int r = GetRand(3);            // 0,1,2,3 ‚Ì‚Ç‚ê‚©
+                float rotY = (float)r * DX_PI_F * 0.5f;
+                info.rotY = rotY;              // WaveInfo ‚É rotY ‚ð’Ç‰Á‚·‚é•K—v‚ ‚è
+
+                MV1SetRotationXYZ(info.modelHandle, VGet(0.0f, rotY, 0.0f));
                 MV1SetPosition(info.modelHandle, VGet(info.panelPos.x, info.fallY, info.panelPos.z));
             }
         }

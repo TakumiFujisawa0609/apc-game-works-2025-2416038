@@ -89,7 +89,6 @@ void SceneManager::Init3D(void)
 
 	// Zバッファを有効にする
 	SetUseZBuffer3D(true);
-
 	// Zバッファへの書き込みを有効にする
 	SetWriteZBuffer3D(true);
 
@@ -100,7 +99,7 @@ void SceneManager::Init3D(void)
 	SetUseLighting(true);
 
 	// 正面から斜め下に向かったライト
-	ChangeLightTypeDir({ 0.00f, 1.00f, 1.0f });
+	//ChangeLightTypeDir({ 0.00f, 1.00f, 1.0f });
 
 }
 

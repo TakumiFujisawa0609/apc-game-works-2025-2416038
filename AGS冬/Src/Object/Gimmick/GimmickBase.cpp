@@ -11,6 +11,8 @@ GimmickBase::~GimmickBase(void)
 void GimmickBase::Init(void)
 {
 	isActive_ = true;
+
+	InitLoad();
 }
 
 void GimmickBase::Update(void)

@@ -9,6 +9,7 @@
 #include "../UI/HpManager.h"
 #include "../Common/Timer.h"
 #include "../Common/Collision.h"
+#include "../Utility/AsoUtility.h"
 #include "GameScene.h"
 
 
@@ -173,6 +174,8 @@ void GameScene::Draw(void)
 
 	hpManager_->Draw();
 
+	//SpotLight();
+
 	//if (GetJoypadNum() == 0)
 	//{
 	//	DrawFormatString(300, 150, 0xffffff,"ESCでポーズ");
@@ -324,4 +327,24 @@ void GameScene::DrawPauseMenu()
 	}
 
 	DrawFormatString(950, 400, GetColor(255, 255, 255), "PAUSE MENU");
+}
+
+void GameScene::SpotLight()
+{
+	// 下方向
+	VECTOR forward = AsoUtility::DIR_D;
+	// 位置
+	VECTOR pos = { 300.0f, 1500.0f, 300.0f };
+
+	// スポットライト
+	ChangeLightTypeSpot(
+		pos,
+		forward,
+		85.0f * DX_PI_F / 180.0f,  // 外側角度
+		85.0f * DX_PI_F / 180.0f,  // 光の減衰が始まる位置
+		3000.0f,					  // レンジ
+		0.0f, 0.001f, 0.0f			  // 減衰係数
+	);
+
+	SetLightPosition(pos);
 }

@@ -18,7 +18,7 @@ public:
 
 	// カメラのクリップ範囲
 	static constexpr float VIEW_NEAR = 20.0f;
-	static constexpr float VIEW_FAR = 3000.0f;
+	static constexpr float VIEW_FAR = 10000.0f;
 	// カメラモード
 	enum class MODE
 	{

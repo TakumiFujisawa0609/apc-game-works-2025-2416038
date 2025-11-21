@@ -109,6 +109,17 @@ void GimmickLaser::Draw()
         if (!l.fired) continue;
         MV1DrawModel(l.modelHandle);
     }
+
+  //  // 3Dビルボード
+  //  DrawBillboard3D(
+  //      { 300.0f, 800.0f, 2600.0f }, // 座標
+  //      0.5, 0.5f, // x,yの中心座標
+  //      1300.0f,   // サイズ
+		//0.0f,     // 回転角度
+  //      gimmickImg_, // 画像ハンドル
+		//true,       // 透過処理
+		//false, false    // x,yの反転
+  //  );
 }
 
 void GimmickLaser::Release()
@@ -149,6 +160,7 @@ std::vector<int> GimmickLaser::GetActiveLaserModels() const
 
 void GimmickLaser::InitLoad(void)
 {
+    gimmickImg_ = LoadGraph("Data/Image/Gimmick/lazer.png");
 }
 
 void GimmickLaser::InitTransform(void)

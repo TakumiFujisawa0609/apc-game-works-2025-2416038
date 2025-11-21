@@ -19,6 +19,7 @@ public:
         float fallY;         // 現在の落下高さ
         int modelHandle;     // 個別落下物モデル
         int alpha;           // フェードアウト用
+        float rotY;
     };
 
     GimmickFalling();

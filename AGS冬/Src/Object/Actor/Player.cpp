@@ -102,7 +102,7 @@ void Player::Draw(void)
 		pos_.y,
 		pos_.z
 	);*/
-	DrawFormatString(500,0,0xffffff,"state:%d",state_);
+	//DrawFormatString(500,0,0xffffff,"state:%d",state_);
 
 	ActorBase::Draw();
 }
