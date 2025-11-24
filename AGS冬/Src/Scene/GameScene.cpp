@@ -29,7 +29,6 @@ void GameScene::Init(void)
 	grid_ = new Grid();
 	hpManager_ = new HpManager(player_);
 	collision_ = new Collision();
-	timer_ = new Timer();
 
 	//// アクター配列に入れる
 	//allActor_.push_back(player_);
@@ -60,6 +59,8 @@ void GameScene::Init(void)
 
 	isClear_ = false;
 	clearStartTime_ = 0.0f;
+
+	timer_ = new Timer();
 }
 
 void GameScene::Update(void)
@@ -96,7 +97,7 @@ void GameScene::Update(void)
 	}
 
 	// === 経過時間チェック ===
-	if (!isClear_ && timer_->IsOver(80.0f))  // ← 120秒経過でクリア
+	if (!isClear_ && timer_->IsOver(180.0f))  // ← 180秒経過でクリア
 	{
 		isClear_ = true;
 		player_->ChangeState(Player::STATE::VICTORY);
@@ -189,7 +190,7 @@ void GameScene::Draw(void)
 	//grid_->Draw();
 
 	float elapsed = timer_->GetElapsedSec();
-	float remaining = 80.0f - elapsed;
+	float remaining = 180.0f - elapsed;
 	if (remaining < 0) remaining = 0;
 
 	SetFontSize(50);

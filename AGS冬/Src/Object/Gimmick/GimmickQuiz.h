@@ -18,5 +18,9 @@ class GimmickQuiz : GimmickBase
 
 private:
 
+	void UpdateWave1(void) override;
+	void UpdateWave2(void) override;
+	void UpdateWave3(void) override;
+
 };
 

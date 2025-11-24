@@ -51,4 +51,8 @@ protected:
     void InitLoad() override;
     void InitTransform() override;
     void InitPost() override;
+
+    void UpdateWave1(void) override;
+    void UpdateWave2(void) override;
+    void UpdateWave3(void) override;
 };

@@ -13,6 +13,7 @@ public:
 		int timer;      // 経過時間
 		bool fired;     // 発射中か
 		int modelHandle; // モデルハンドル
+		float height;   // 高さ
 	};
 
 	GimmickLaser(void);
@@ -41,4 +42,9 @@ private:
 	void InitLoad(void) override;
 	void InitTransform(void) override;
 	void InitPost(void) override;
+
+
+	void UpdateWave1(void) override;
+	void UpdateWave2(void) override;
+	void UpdateWave3(void) override;
 };

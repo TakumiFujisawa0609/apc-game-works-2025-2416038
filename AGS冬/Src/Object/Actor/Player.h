@@ -39,7 +39,7 @@ public:
 	// 重力
 	static constexpr float GRAVITY_POW = 0.6f;
 	// ジャンプ力
-	static constexpr float JUMP_POW = 20.0f;
+	static constexpr float JUMP_POW = 15.0f;
 
 	// 地面衝突用線分の長さ
 	static constexpr float COLLISION_LEN = 10.0f;

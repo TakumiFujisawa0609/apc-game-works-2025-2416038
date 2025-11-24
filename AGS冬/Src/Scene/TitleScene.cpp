@@ -85,7 +85,7 @@ void TitleScene::UpdateMenu(void)
         switch (cursorIndex_)
         {
         case 0: // GAME START
-            SceneManager::GetInstance()->ChangeScene(SceneManager::SCENE_ID::GAME);
+            SceneManager::GetInstance()->ChangeScene(SceneManager::SCENE_ID::TUTORIAL);
             break;
 
         case 1: // OPTION

@@ -39,5 +39,8 @@ private:
     GimmickBase* currentGimmick_;
 
     int timer_;
+
+    float firstDelayTimer_;
+    float firstDelayDuration_;
 };
 

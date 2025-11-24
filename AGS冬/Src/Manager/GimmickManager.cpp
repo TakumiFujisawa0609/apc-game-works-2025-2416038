@@ -18,23 +18,38 @@ void GimmickManager::Init()
 
     timer_ = 0;
     currentGimmick_ = nullptr;
+
+    // 最初のギミック待ち用タイマー
+    firstDelayTimer_ = 0;
+    firstDelayDuration_ = 200;
 }
 
 void GimmickManager::Update()
 {
+    // --- ギミックが無いなら新しいのを開始 ---
+    if (currentGimmick_ == nullptr)
+    {
+        firstDelayTimer_++;
+
+        if (firstDelayTimer_ >= firstDelayDuration_)
+        {
+            int index = GetRand((int)gimmicks_.size() - 1);
+            currentGimmick_ = gimmicks_[index];
+            currentGimmick_->Init();
+        }
+        return;
+    }
+
     if (currentGimmick_ && currentGimmick_->IsActive()) {
         currentGimmick_->Update();
         return;
     }
 
-    // 一定時間ごとに新しいギミックを発動
-    timer_++;
-    if (timer_ > 300) {
-        timer_ = 0;
-        int index = GetRand((int)gimmicks_.size() - 1);
-        currentGimmick_ = gimmicks_[index];
-        currentGimmick_->Init();
-    }
+    // ギミックが終了したら次を開始
+     int index = GetRand((int)gimmicks_.size() - 1);
+     currentGimmick_ = gimmicks_[index];
+     currentGimmick_->Init();
+
 }
 
 void GimmickManager::Draw()

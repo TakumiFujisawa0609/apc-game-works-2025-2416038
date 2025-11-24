@@ -2,6 +2,7 @@
 #include <DxLib.h>
 #include "../Common/Fader.h"
 #include "../Scene/TitleScene.h"
+#include "../Scene/TutorialScene.h"
 #include "../Scene/GameScene.h"
 #include "Camera.h"
 #include "SceneManager.h"
@@ -239,6 +240,9 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 	{
 	case SCENE_ID::TITLE:
 		scene_ = new TitleScene();
+		break;
+	case SCENE_ID::TUTORIAL:
+		scene_ = new Tutorial();
 		break;
 	case SCENE_ID::GAME:
 		scene_ = new GameScene();

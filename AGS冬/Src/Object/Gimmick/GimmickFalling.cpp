@@ -195,3 +195,15 @@ void GimmickFalling::InitTransform()
 void GimmickFalling::InitPost()
 {
 }
+
+void GimmickFalling::UpdateWave1(void)
+{
+}
+
+void GimmickFalling::UpdateWave2(void)
+{
+}
+
+void GimmickFalling::UpdateWave3(void)
+{
+}
