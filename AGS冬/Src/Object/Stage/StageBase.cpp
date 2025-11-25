@@ -14,10 +14,11 @@ void StageBase::Init(int baseModel)
 	// モデル読み込み
 	modelId_ = MV1DuplicateModel(baseModel);
 
-	screenModelId_ = MV1LoadModel("Data/Model/screen.mv1");
+	screenModelId_ = MV1LoadModel("Data/Model/monita.mv1");
 	MV1SetScale(screenModelId_, { 9.0f, 9.0f, 9.0f });
 	MV1SetRotationXYZ(screenModelId_, { -AsoUtility::Deg2RadF(18), 0.0f, 0.0f});
-	MV1SetPosition(screenModelId_, { 300.0f, 220.0f, 2600.0f });
+
+	MV1SetPosition(screenModelId_, { 300.0f, 220.0f, 2500.0f });
 
 	//img_ = LoadGraph("Data/Image/タイトルなし.png");
 	InitTransform();

@@ -69,7 +69,7 @@ void GimmickFalling::Update() {
         // Œx
         if (info.isWarning) {
             info.warningTimer += 1.0f;
-            if (info.warningTimer >= 180.0f) { // 3.0•b‚Å—Ž‰º
+            if (info.warningTimer >= 120.0f) { // 2.0•b‚Å—Ž‰º
                 info.isWarning = false;
                 info.isFalling = true;
                 info.modelHandle = MV1DuplicateModel(modelId_);
@@ -122,7 +122,7 @@ void GimmickFalling::Draw() {
     for (auto& info : waveInfos_) {
         // ŒxƒR[ƒ“
         if (info.isWarning) {
-            float t = info.warningTimer / 180.0f;
+            float t = info.warningTimer / 120.0f;
             if (t > 1.0f) t = 1.0f;
             float radius = 290.0f * t;
             int col = GetColor(255, 0, 0);

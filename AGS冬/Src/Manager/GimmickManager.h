@@ -38,6 +38,10 @@ private:
     std::vector<GimmickBase*> gimmicks_;
     GimmickBase* currentGimmick_;
 
+    // ‰æ‘œ
+    int img100kg_;
+    int imgLazer_;
+
     int timer_;
 
     float firstDelayTimer_;

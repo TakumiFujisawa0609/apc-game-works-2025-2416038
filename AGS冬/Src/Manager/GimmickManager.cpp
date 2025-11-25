@@ -16,6 +16,9 @@ void GimmickManager::Init()
     gimmicks_.push_back(new GimmickLaser());
     gimmicks_.push_back(new GimmickFalling());
 
+	img100kg_ = LoadGraph("Data/Image/100kg.png");
+	imgLazer_ = LoadGraph("Data/Image/lazer.png");
+
     timer_ = 0;
     currentGimmick_ = nullptr;
 
@@ -62,15 +65,34 @@ void GimmickManager::Draw()
         const char* gimmickName = "None";
         switch (currentGimmick_->GetType())
         {
-        case TYPE::LASER: gimmickName = "レーザー"; break;
-        case TYPE::FALLING:  gimmickName = "落下物"; break;
-        case TYPE::QUIZ:   gimmickName = "クイズ"; break;
+        case TYPE::LASER: 
+            gimmickName = "レーザー";
+			DrawModiBillboard3D({ 300.0f, 600.0f, 2200.0f },
+				-300.0f,330.0f, // 左上
+				300.0f, 330.0f,  // 右上
+				300.0f, -330.0f, // 右下
+				-300.0f, -330.0f,// 左下
+                imgLazer_, TRUE);
+            break;
+        case TYPE::FALLING:
+            gimmickName = "落下物";
+            DrawModiBillboard3D({ 300.0f, 600.0f, 2200.0f },
+                -300.0f, 330.0f, // 左上
+                300.0f, 330.0f,  // 右上
+                300.0f, -330.0f, // 右下
+                -300.0f, -330.0f,// 左下
+                img100kg_, TRUE);
+            break;
+        case TYPE::QUIZ: 
+            gimmickName = "クイズ";
+            break;
         default: break;
         }
             
 		SetFontSize(50);
-        DrawFormatString(680, 80, GetColor(255, 255, 0), "発動中 : %s", gimmickName);
+       // DrawFormatString(680, 80, GetColor(255, 255, 0), "発動中 : %s", gimmickName);
         SetFontSize(16);
+
 
         //DrawFormatString(0, 300, 0xffffff,
         //    "Laser座標　 ：(% .1f, % .1f, % .1f)",
