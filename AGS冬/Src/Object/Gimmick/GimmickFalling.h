@@ -25,7 +25,6 @@ public:
     GimmickFalling();
     ~GimmickFalling() override;
 
-    void Init() override;
     void Update() override;
     void Draw() override;
     void Release() override;

@@ -4,33 +4,6 @@
 GimmickFalling::GimmickFalling() {}
 GimmickFalling::~GimmickFalling() {}
 
-void GimmickFalling::Init() {
-
-    GimmickBase::Init();
-
-    modelId_ = MV1LoadModel("Data/Model/Gimmick/100kg.mv1");
-
-    // 3x3 パネル座標を Gimmick 内で作る
-    panels_.clear();
-    const float startX = -300.0f;
-    const float startZ = -300.0f;
-    const float step = 600.0f;
-    for (int z = 0; z < 3; ++z) {
-        for (int x = 0; x < 3; ++x) {
-            panels_.push_back(VGet(startX + x * step, 0.0f, startZ + z * step));
-        }
-    }
-
-    currentWave_ = 0;
-    waveTimer_ = 0.0f;
-    waveActive_ = false;
-    waveInfos_.clear();
-
-    scl_ = { 1.45f, 1.45f, 1.45f };
-
-    SetupWave();
-}
-
 void GimmickFalling::SetupWave() 
 {
     waveInfos_.clear();
@@ -194,6 +167,25 @@ void GimmickFalling::InitTransform()
 
 void GimmickFalling::InitPost()
 {
+    // 3x3 パネル座標を Gimmick 内で作る
+    panels_.clear();
+    const float startX = -300.0f;
+    const float startZ = -300.0f;
+    const float step = 600.0f;
+    for (int z = 0; z < 3; ++z) {
+        for (int x = 0; x < 3; ++x) {
+            panels_.push_back(VGet(startX + x * step, 0.0f, startZ + z * step));
+        }
+    }
+
+    currentWave_ = 0;
+    waveTimer_ = 0.0f;
+    waveActive_ = false;
+    waveInfos_.clear();
+
+    scl_ = { 1.45f, 1.45f, 1.45f };
+
+    SetupWave();
 }
 
 void GimmickFalling::UpdateWave1(void)

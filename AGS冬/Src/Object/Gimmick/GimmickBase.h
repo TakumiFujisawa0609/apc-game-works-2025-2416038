@@ -23,7 +23,7 @@ public:
 	GimmickBase(void);
 	virtual ~GimmickBase(void);
 
-	virtual void Init(void);
+	virtual void Init(int baseModel);
 	virtual void Update(void);
 	virtual void Draw(void);
 	virtual void Release(void);

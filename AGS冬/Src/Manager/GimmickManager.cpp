@@ -13,9 +13,29 @@ GimmickManager::~GimmickManager()
 
 void GimmickManager::Init()
 {
-    gimmicks_.push_back(new GimmickLaser());
-    gimmicks_.push_back(new GimmickFalling());
+	// ギミックモデルの読み込み
+	gimmickModelIds_.emplace_back(
+		MV1LoadModel("Data/Model/Gimmick/lazer.mv1")); // レーザー
+	gimmickModelIds_.emplace_back(
+		MV1LoadModel("Data/Model/Gimmick/100kg.mv1")); // 落下物
 
+    // 生成
+	GimmickBase* laser = new GimmickLaser();
+    // 初期化
+	laser->Init(gimmickModelIds_[static_cast<int>(TYPE::LASER)]);
+    // レーザーをギミックにを登録
+	gimmicks_.emplace_back(laser);
+
+	// 生成
+	GimmickBase* falling = new GimmickFalling();
+	// 初期化
+	falling->Init(gimmickModelIds_[static_cast<int>(TYPE::FALLING)]);
+	// 落下物をギミックに登録
+    gimmicks_.emplace_back(falling);
+
+
+    
+	// 画像読み込み
 	img100kg_ = LoadGraph("Data/Image/100kg.png");
 	imgLazer_ = LoadGraph("Data/Image/lazer.png");
 
@@ -29,6 +49,11 @@ void GimmickManager::Init()
 
 void GimmickManager::Update()
 {
+    // gimmicks_ が空なら一切処理できない
+    if (gimmicks_.empty()) {
+        return;
+    }
+
     // --- ギミックが無いなら新しいのを開始 ---
     if (currentGimmick_ == nullptr)
     {
@@ -38,21 +63,21 @@ void GimmickManager::Update()
         {
             int index = GetRand((int)gimmicks_.size() - 1);
             currentGimmick_ = gimmicks_[index];
-            currentGimmick_->Init();
+            currentGimmick_->Init(gimmickModelIds_[index]);
         }
         return;
     }
 
-    if (currentGimmick_ && currentGimmick_->IsActive()) {
+    // 現在のギミックがアクティブなら更新
+    if (currentGimmick_->IsActive()) {
         currentGimmick_->Update();
         return;
     }
 
-    // ギミックが終了したら次を開始
-     int index = GetRand((int)gimmicks_.size() - 1);
-     currentGimmick_ = gimmicks_[index];
-     currentGimmick_->Init();
-
+    // ギミックが終了したら次をランダム開始
+    int index = GetRand((int)gimmicks_.size() - 1);
+    currentGimmick_ = gimmicks_[index];
+    currentGimmick_->Init(gimmickModelIds_[index]);
 }
 
 void GimmickManager::Draw()

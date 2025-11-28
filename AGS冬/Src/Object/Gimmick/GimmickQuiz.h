@@ -9,7 +9,6 @@ class GimmickQuiz : GimmickBase
 	GimmickQuiz(void);
 	~GimmickQuiz(void) override;
 
-	void Init() override;
 	void Update() override;
 	void Draw() override;
 	void Release() override;

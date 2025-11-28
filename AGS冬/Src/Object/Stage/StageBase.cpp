@@ -1,5 +1,4 @@
 #include "StageBase.h"
-#include "../../Utility/AsoUtility.h"
 
 StageBase::StageBase(void)
 {
@@ -14,17 +13,7 @@ void StageBase::Init(int baseModel)
 	// モデル読み込み
 	modelId_ = MV1DuplicateModel(baseModel);
 
-	screenModelId_ = MV1LoadModel("Data/Model/monita.mv1");
-	MV1SetScale(screenModelId_, { 9.0f, 9.0f, 9.0f });
-	MV1SetRotationXYZ(screenModelId_, { -AsoUtility::Deg2RadF(18), 0.0f, 0.0f});
-
-	MV1SetPosition(screenModelId_, { 300.0f, 220.0f, 2500.0f });
-
-	//img_ = LoadGraph("Data/Image/タイトルなし.png");
-	InitTransform();
-
-	InitTransformPost();
-
+	//img_ = LoadGraph("Data/Image/タイトルなし.png")
 }
 
 void StageBase::Update(void)
@@ -37,41 +26,6 @@ void StageBase::Draw(void)
 
 	// ステージ描画
 	MV1DrawModel(modelId_);
-	MV1DrawModel(screenModelId_);
-
-    //// モデルの上に少し浮かせて描く
-    //const float lineY = pos_.y + 38.0f;
-
-    //// 範囲
-    //const float left = -800.0f;
-    //const float right = 800.0f;
-    //const float front = -800.0f; // 手前
-    //const float back = 800.0f; // 奥
-    //const int divisions = 3;
-
-    //unsigned int color = GetColor(255, 0, 0); // 赤線
-
-    //// 区切り間隔
-    //float stepX = (right - left) / divisions; // 約266.66
-    //float stepZ = (back - front) / divisions;
-
-    //// 横線（X方向に伸びる）
-    //for (int i = 0; i <= divisions; ++i)
-    //{
-    //    float z = front + stepZ * i;
-    //    VECTOR a = VGet(left, lineY, z);
-    //    VECTOR b = VGet(right, lineY, z);
-    //    DrawLine3D(a, b, color);  
-    //}
-
-    //// 縦線（Z方向に伸びる）
-    //for (int i = 0; i <= divisions; ++i)
-    //{
-    //    float x = left + stepX * i;
-    //    VECTOR a = VGet(x, lineY, front);
-    //    VECTOR b = VGet(x, lineY, back);
-    //    DrawLine3D(a, b, color);
-    //}
 }
 
 void StageBase::Release(void)
@@ -80,8 +34,6 @@ void StageBase::Release(void)
     MV1TerminateCollInfo(modelId_, -1);
 	// モデル解放
 	MV1DeleteModel(modelId_);
-
-	MV1DeleteModel(screenModelId_);
 
 	DeleteGraph(img_);
 }
@@ -92,14 +44,19 @@ void StageBase::SetPos(VECTOR pos)
 	MV1SetPosition(modelId_, pos_);
 }
 
+void StageBase::SetScales(VECTOR scales)
+{
+	scales_ = scales;
+	MV1SetScale(modelId_, scales_);
+}
+
+void StageBase::SetRot(VECTOR rot)
+{
+	rot_ = rot;
+	MV1SetRotationXYZ(modelId_, rot_);
+}
+
 int StageBase::GetModelId()
 {
 	return modelId_;
-}
-
-void StageBase::InitTransformPost(void)
-{
-	MV1SetPosition(modelId_, pos_);
-
-	MV1SetScale(modelId_, scales_);
 }

@@ -15,8 +15,6 @@ public:
 
 private:
 
-	void InitTransform(void);
-
 	void InitColor(void) override;
 };
 

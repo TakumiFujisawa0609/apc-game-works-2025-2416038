@@ -11,11 +11,14 @@ GimmickBase::~GimmickBase(void)
 {
 }
 
-void GimmickBase::Init(void)
+void GimmickBase::Init(int baseModel)
 {
-	isActive_ = true;
+	// ÉÇÉfÉãì«Ç›çûÇ›
+	modelId_ = MV1DuplicateModel(baseModel);
 
-	InitLoad();
+	InitPost();
+
+	isActive_ = true;
 }
 
 void GimmickBase::Update(void)

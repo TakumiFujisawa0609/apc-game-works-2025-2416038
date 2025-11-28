@@ -8,13 +8,6 @@ Panel::~Panel(void)
 {
 }
 
-void Panel::InitTransform(void)
-{
-	//pos_ = { 0.0f, 0.0f, 0.0f };
-
-	scales_ = { 1.0f, 1.0f, 1.0f };
-}
-
 void Panel::InitColor(void)
 {
 	// エミッシブカラー設定

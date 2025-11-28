@@ -3,29 +3,6 @@
 GimmickLaser::GimmickLaser(void) {}
 GimmickLaser::~GimmickLaser(void) {}
 
-void GimmickLaser::Init()
-{
-    GimmickBase::Init();
-    lasers_.clear();
-    spawnTimer_ = 0;
-    activeCount_ = 0;
-
-    worldPos_ = { 0,0,0 };
-
-    // モデルロード（共通レーザーモデル）
-    modelId_ = MV1LoadModel("Data/Model/Gimmick/Laser.mv1");
-
-    // マテリアルをすべてエミッシブに設定
-    int materialNum = MV1GetMaterialNum(modelId_);
-    for (int i = 0; i < materialNum; ++i)
-    {
-        MV1SetMaterialDifColor(modelId_, i, GetColorF(1, 1, 1, 1)); // 拡散反射
-        MV1SetMaterialSpcColor(modelId_, i, GetColorF(1, 1, 1, 1)); // 鏡面反射
-        MV1SetMaterialEmiColor(modelId_, i, GetColorF(1, 1, 1, 1)); // 自発光
-        MV1SetMaterialAmbColor(modelId_, i, GetColorF(1, 1, 1, 1)); // 環境光
-    }
-}
-
 void GimmickLaser::Update()
 {
 	GimmickBase::Update();
@@ -102,6 +79,21 @@ void GimmickLaser::InitTransform(void)
 
 void GimmickLaser::InitPost(void)
 {
+    lasers_.clear();
+    spawnTimer_ = 0;
+    activeCount_ = 0;
+
+    worldPos_ = { 0,0,0 };
+
+    // マテリアルをすべてエミッシブに設定
+    int materialNum = MV1GetMaterialNum(modelId_);
+    for (int i = 0; i < materialNum; ++i)
+    {
+        MV1SetMaterialDifColor(modelId_, i, GetColorF(1, 1, 1, 1)); // 拡散反射
+        MV1SetMaterialSpcColor(modelId_, i, GetColorF(1, 1, 1, 1)); // 鏡面反射
+        MV1SetMaterialEmiColor(modelId_, i, GetColorF(1, 1, 1, 1)); // 自発光
+        MV1SetMaterialAmbColor(modelId_, i, GetColorF(1, 1, 1, 1)); // 環境光
+    }
 }
 
 void GimmickLaser::UpdateWave1(void)

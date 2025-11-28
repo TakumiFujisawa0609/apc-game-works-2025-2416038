@@ -1,5 +1,6 @@
 #include "StageManager.h"
 #include "../Object/Stage/Panel.h"
+#include "../Object/Stage/Monitor.h"
 
 StageManager::StageManager(void)
 {
@@ -14,6 +15,10 @@ void StageManager::Init(void)
 	// ステージモデルの読み込み
 	stageModelIds_.emplace_back(
 		MV1LoadModel("Data/Model/Stage/asiba.mv1"));
+
+	// モニターモデルの読み込み
+	stageModelIds_.emplace_back(
+		MV1LoadModel("Data/Model/monita.mv1"));
 
 	for (int z = 0; z < DIVISIONS; z++)
 	{
@@ -40,6 +45,22 @@ void StageManager::Init(void)
 			stages_[StageBase::TYPE::PANEL].emplace_back(panel);
 		}
 	}
+
+	// モニターの生成
+	StageBase* monitor = new Monitor();
+
+	// 初期化
+	monitor->Init(
+		stageModelIds_[static_cast<int>(StageBase::TYPE::MONITOR)]);
+
+	// 位置・大きさ・回転設定
+	monitor->SetPos(POS_MONITOR);
+	monitor->SetScales(SCL_MONITOR);
+	monitor->SetRot(ROT_MONITOR);
+
+	// ステージを登録
+	stages_[StageBase::TYPE::MONITOR].emplace_back(monitor);
+
 }
 
 void StageManager::Update(void)

@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Object\Stage\Monitor.h" />
     <ClInclude Include="Src\Object\Gimmick\GimmickQuiz.h" />
     <ClInclude Include="Src\Object\Gimmick\GimmickFalling.h" />
     <ClInclude Include="Src\Common\Collision.h" />
@@ -173,6 +174,7 @@
     <ClInclude Include="Src\Scene\TutorialScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Object\Stage\Monitor.cpp" />
     <ClCompile Include="Src\Object\Gimmick\GimmickFalling.cpp" />
     <ClCompile Include="Src\Common\Collision.cpp" />
     <ClCompile Include="Src\Manager\SoundManager.cpp" />

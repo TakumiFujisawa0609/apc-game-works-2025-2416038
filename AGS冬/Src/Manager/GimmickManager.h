@@ -38,6 +38,9 @@ private:
     std::vector<GimmickBase*> gimmicks_;
     GimmickBase* currentGimmick_;
 
+    // ギミックモデルのハンドルID
+	std::vector<int> gimmickModelIds_;
+
     // 画像
     int img100kg_;
     int imgLazer_;
