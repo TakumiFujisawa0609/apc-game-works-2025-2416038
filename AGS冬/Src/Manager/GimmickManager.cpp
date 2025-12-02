@@ -15,21 +15,19 @@ void GimmickManager::Init()
 {
 	// ギミックモデルの読み込み
 	gimmickModelIds_.emplace_back(
-		MV1LoadModel("Data/Model/Gimmick/lazer.mv1")); // レーザー
+		MV1LoadModel("Data/Model/Gimmick/Laser.mv1")); // レーザー
 	gimmickModelIds_.emplace_back(
 		MV1LoadModel("Data/Model/Gimmick/100kg.mv1")); // 落下物
 
     // 生成
-	GimmickBase* laser = new GimmickLaser();
-    // 初期化
-	laser->Init(gimmickModelIds_[static_cast<int>(TYPE::LASER)]);
+	GimmickBase* lazer = new GimmickLaser();
+    //lazer->Init(gimmickModelIds_[static_cast<int>(TYPE::LASER)]);
     // レーザーをギミックにを登録
-	gimmicks_.emplace_back(laser);
+	gimmicks_.emplace_back(lazer);
 
 	// 生成
 	GimmickBase* falling = new GimmickFalling();
-	// 初期化
-	falling->Init(gimmickModelIds_[static_cast<int>(TYPE::FALLING)]);
+    //falling->Init(gimmickModelIds_[static_cast<int>(TYPE::FALLING)]);
 	// 落下物をギミックに登録
     gimmicks_.emplace_back(falling);
 
@@ -50,9 +48,7 @@ void GimmickManager::Init()
 void GimmickManager::Update()
 {
     // gimmicks_ が空なら一切処理できない
-    if (gimmicks_.empty()) {
-        return;
-    }
+    if (gimmicks_.empty()) return;
 
     // --- ギミックが無いなら新しいのを開始 ---
     if (currentGimmick_ == nullptr)
@@ -148,7 +144,7 @@ void GimmickManager::Release()
 int GimmickManager::GetModelId() const
 {
     // currentGimmick_が有効なギミックを指しているかチェック！
-    if (currentGimmick_ == nullptr || currentGimmick_->GetType() != TYPE::LASER) {
+    if (!currentGimmick_ || currentGimmick_->GetType() != TYPE::LASER) {
         return 0; // NULLならクラッシュを避け、無効なIDを返す
     }
     return currentGimmick_->GetModelId();
@@ -156,11 +152,17 @@ int GimmickManager::GetModelId() const
 
 VECTOR GimmickManager::GetLaserPos()
 {
+    if (!currentGimmick_ || currentGimmick_->GetType() != TYPE::LASER)
+        return VGet(0, 1000, 0);
+
     return currentGimmick_->GetPos();
 }
 
 std::vector<VECTOR> GimmickManager::GetFallingPos()
 {
+    if (!currentGimmick_ || currentGimmick_->GetType() != TYPE::FALLING)
+        return {};
+
     return currentGimmick_->GetPositions();
 }
 
