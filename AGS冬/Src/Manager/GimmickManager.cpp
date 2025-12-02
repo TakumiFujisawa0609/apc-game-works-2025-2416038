@@ -1,6 +1,7 @@
 #include "../Object/Gimmick/GimmickLaser.h"
 #include "../Object/Gimmick/GimmickFalling.h"
 #include "../Object/Gimmick/GimmickBase.h"
+#include "../Manager/SceneManager.h"
 #include "GimmickManager.h"
 
 GimmickManager::GimmickManager()
@@ -43,10 +44,21 @@ void GimmickManager::Init()
     // 最初のギミック待ち用タイマー
     firstDelayTimer_ = 0;
     firstDelayDuration_ = 200;
+
+	// ウェーブ・ウェーブタイマー初期化
+    ChangeWave(WAVE::WAVE1);
+    waveTimer_ = 0.0f;
+
 }
 
 void GimmickManager::Update()
 {
+	// ウェーブタイマー更新
+    waveTimer_ += SceneManager::GetInstance()->GetDeltaTime();
+    // 60秒経過ごとにウェーブ（難易度）変更
+    if (waveTimer_ >= 60) ChangeWave(WAVE::WAVE2);
+    else if (waveTimer_ >= 120) ChangeWave(WAVE::WAVE3);
+
     // gimmicks_ が空なら一切処理できない
     if (gimmicks_.empty()) return;
 
@@ -57,6 +69,7 @@ void GimmickManager::Update()
 
         if (firstDelayTimer_ >= firstDelayDuration_)
         {
+			// ランダムでギミック選択
             int index = GetRand((int)gimmicks_.size() - 1);
             currentGimmick_ = gimmicks_[index];
             currentGimmick_->Init(gimmickModelIds_[index]);
@@ -66,11 +79,22 @@ void GimmickManager::Update()
 
     // 現在のギミックがアクティブなら更新
     if (currentGimmick_->IsActive()) {
-        currentGimmick_->Update();
+        switch (wave_)
+        {
+        case WAVE::WAVE1:
+            currentGimmick_->UpdateWave1();
+            break;
+        case WAVE::WAVE2:
+            currentGimmick_->UpdateWave2();
+            break;
+        case WAVE::WAVE3:
+            currentGimmick_->UpdateWave3();
+            break;
+        }
         return;
     }
 
-    // ギミックが終了したら次をランダム開始
+    // ギミックが終了したら次のギミックをランダム選択
     int index = GetRand((int)gimmicks_.size() - 1);
     currentGimmick_ = gimmicks_[index];
     currentGimmick_->Init(gimmickModelIds_[index]);
@@ -109,6 +133,23 @@ void GimmickManager::Draw()
             break;
         default: break;
         }
+
+        // 現在のギミックがアクティブなら更新
+        if (currentGimmick_->IsActive()) {
+            switch (wave_)
+            {
+            case WAVE::WAVE1:
+                currentGimmick_->DrawWave1();
+                break;
+            case WAVE::WAVE2:
+                currentGimmick_->DrawWave2();
+                break;
+            case WAVE::WAVE3:
+                currentGimmick_->DrawWave3();
+                break;
+            }
+        }
+
             
 		SetFontSize(50);
        // DrawFormatString(680, 80, GetColor(255, 255, 0), "発動中 : %s", gimmickName);
@@ -189,6 +230,21 @@ std::vector<int> GimmickManager::GetFallingObjectModelIds() const
     }
 
     return ids;
+}
+
+void GimmickManager::ChangeWave(WAVE wave)
+{
+    wave_ = wave;
+
+    switch (wave_)
+    {
+    case WAVE::WAVE1:
+        break;
+    case WAVE::WAVE2:
+        break;
+    case WAVE::WAVE3:
+        break;
+    }
 }
 
 //GimmickBase& GimmickManager::GetGimmicks()

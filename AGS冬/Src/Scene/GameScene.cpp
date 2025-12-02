@@ -106,7 +106,7 @@ void GameScene::Update(void)
 	}
 
 	// クリア後もプレイヤーだけ更新
-	if (isClear_)
+	if (isClear_ || isGameOver_)
 	{
 		player_->Update();
 		return; // その他のの更新は止める

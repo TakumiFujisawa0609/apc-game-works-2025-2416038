@@ -25,8 +25,6 @@ public:
     GimmickFalling();
     ~GimmickFalling() override;
 
-    void Update() override;
-    void Draw() override;
     void Release() override;
 
     TYPE GetType() const override;
@@ -54,4 +52,8 @@ protected:
     void UpdateWave1(void) override;
     void UpdateWave2(void) override;
     void UpdateWave3(void) override;
+
+    void DrawWave1(void) override;
+    void DrawWave2(void) override;
+    void DrawWave3(void) override;
 };

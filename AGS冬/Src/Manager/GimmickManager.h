@@ -13,6 +13,14 @@ class GimmickManager
         float timer;     // 警告時間
     };
 
+    enum class WAVE
+    {
+        WAVE1,
+        WAVE2,
+        WAVE3,
+    };
+
+
 public:
 
     GimmickManager();
@@ -35,11 +43,16 @@ public:
 
 private:
 
+    WAVE wave_;
+
     std::vector<GimmickBase*> gimmicks_;
     GimmickBase* currentGimmick_;
 
     // ギミックモデルのハンドルID
 	std::vector<int> gimmickModelIds_;
+
+    // ウェーブタイマー
+    float waveTimer_;
 
     // 画像
     int img100kg_;
@@ -49,5 +62,8 @@ private:
 
     float firstDelayTimer_;
     float firstDelayDuration_;
+
+    // 難易度（ウェーブ）変更
+    void ChangeWave(WAVE wave);
 };
 

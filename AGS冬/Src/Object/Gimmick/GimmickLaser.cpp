@@ -3,10 +3,10 @@
 GimmickLaser::GimmickLaser(void) {}
 GimmickLaser::~GimmickLaser(void) {}
 
-void GimmickLaser::Update()
-{
-	GimmickBase::Update();
-}
+//void GimmickLaser::Update()
+//{
+//	GimmickBase::Update();
+//}
 
 void GimmickLaser::Draw()
 {
@@ -79,6 +79,7 @@ void GimmickLaser::InitTransform(void)
 
 void GimmickLaser::InitPost(void)
 {
+    isActive_ = true;
     lasers_.clear();
     spawnTimer_ = 0;
     activeCount_ = 0;
@@ -103,7 +104,7 @@ void GimmickLaser::UpdateWave1(void)
     spawnTimer_++;
 
     // 4秒(240F)ごとに1本追加、最大4本
-    if (spawnTimer_ >= 120 && activeCount_ <= 8)
+    if (spawnTimer_ >= 240 && activeCount_ <= 4)
     {
         spawnTimer_ = 0;
 
@@ -169,7 +170,7 @@ void GimmickLaser::UpdateWave1(void)
     }
 
     // 4本打ったら終了
-    if (activeCount_ == 8)
+    if (activeCount_ == 4)
         isActive_ = false;
 }
 

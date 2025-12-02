@@ -10,13 +10,6 @@ enum class TYPE {
 	MAX
 };
 
-enum class WAVE
-{
-	WAVE1,
-	WAVE2,
-	WAVE3,
-};
-
 class GimmickBase
 {
 public:
@@ -38,9 +31,15 @@ public:
 
 	virtual std::vector<VECTOR> GetPositions() const;
 
-protected:
+	virtual void UpdateWave1(void) = 0;
+	virtual void UpdateWave2(void) = 0;
+	virtual void UpdateWave3(void) = 0;
 
-	WAVE wave_;
+	virtual void DrawWave1(void);
+	virtual void DrawWave2(void);
+	virtual void DrawWave3(void);
+
+protected:
 	
 	int modelId_;
 
@@ -51,9 +50,6 @@ protected:
 	// 画像
 	int gimmickImg_;
 
-
-	float waveTimer_;
-
 	// リソースロード
 	virtual void InitLoad(void) = 0;
 	// 大きさ、回転、座標の初期化
@@ -63,10 +59,4 @@ protected:
 
 	// 初期化後の個別処理
 	virtual void InitPost(void) = 0;
-
-	virtual void ChangeWave(WAVE wave);
-
-	virtual void UpdateWave1(void) = 0;
-	virtual void UpdateWave2(void) = 0;
-	virtual void UpdateWave3(void) = 0;
 };

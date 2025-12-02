@@ -19,7 +19,7 @@ public:
 	GimmickLaser(void);
 	~GimmickLaser(void) override;
 
-	void Update() override;
+	//void Update() override;
 	void Draw() override;
 	void Release() override;
 

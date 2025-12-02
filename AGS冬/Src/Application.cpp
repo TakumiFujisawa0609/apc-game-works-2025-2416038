@@ -1,7 +1,7 @@
 #include <DxLib.h>
 #include "Manager/InputManager.h"
 #include "Manager/SceneManager.h"
-//#include "Manager/SoundManager.h"
+#include "Manager/SoundManager.h"
 #include "Application.h"
 #include "Common/FpsController.h"
 
@@ -72,9 +72,9 @@ void Application::Init(void)
 	SceneManager::CreateInstance();
 
 	//// サウンド管理初期化
-	//SoundManager::CreateInstance();
-	//SoundManager::GetInstance();
-	//SoundManager::GetInstance()->Init();;
+	SoundManager::CreateInstance();
+	SoundManager::GetInstance();
+	SoundManager::GetInstance()->Init();;
 
 
 }
@@ -112,8 +112,8 @@ void Application::Destroy(void)
 	// シーン管理破棄
 	SceneManager::GetInstance()->Destroy();
 
-	//// サウンド管理破棄
-	//SoundManager::GetInstance()->DeleteInstance();
+	// サウンド管理破棄
+	SoundManager::GetInstance()->DeleteInstance();
 
 
 	if (DxLib_End() == -1)
