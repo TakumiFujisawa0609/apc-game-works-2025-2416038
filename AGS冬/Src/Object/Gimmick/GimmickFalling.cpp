@@ -25,6 +25,7 @@ void GimmickFalling::SetupWave()
         info.fallY = 1000.0f;
         info.modelHandle = -1;
         info.alpha = 255;
+        info.landTimer = 0.0f;
         waveInfos_.push_back(info);
     }
 
@@ -143,18 +144,30 @@ void GimmickFalling::UpdateWave1(void)
                 info.fallY = -10.0f;
                 info.isFalling = false;
                 info.hasLanded = true;
+                info.landTimer = 0.0f;   // ← 着地した瞬間にリセット
             }
             MV1SetScale(info.modelHandle, scl_);
             MV1SetPosition(info.modelHandle, VGet(info.panelPos.x, info.fallY, info.panelPos.z));
         }
 
         // フェードアウト
-        if (!info.isWarning && !info.isFalling && info.modelHandle >= 0) {
-            info.alpha -= 5;
-            if (info.alpha <= 0) {
-                MV1DeleteModel(info.modelHandle);
-                info.modelHandle = -1;
-                info.alpha = 0;
+        if (info.hasLanded && info.modelHandle >= 0) {
+
+            // 着地後の待機時間
+            info.landTimer += 2.0f;
+
+            // 60フレーム（1秒）経過してから透過開始
+            if (info.landTimer >= 60.0f) {
+                info.alpha -= 5;
+                // ---- ここでフェードアウトさせる ----
+                float rate = info.alpha / 255.0f;
+                MV1SetOpacityRate(info.modelHandle, rate);
+
+                // 完全に消えたら削除
+                if (info.alpha == 0) {
+                    MV1DeleteModel(info.modelHandle);
+                    info.modelHandle = -1;
+                }
             }
         }
 
@@ -200,18 +213,30 @@ void GimmickFalling::UpdateWave2(void)
                 info.fallY = -10.0f;
                 info.isFalling = false;
                 info.hasLanded = true;
+                info.landTimer = 0.0f;   // ← 着地した瞬間にリセット
             }
             MV1SetScale(info.modelHandle, scl_);
             MV1SetPosition(info.modelHandle, VGet(info.panelPos.x, info.fallY, info.panelPos.z));
         }
 
         // フェードアウト
-        if (!info.isWarning && !info.isFalling && info.modelHandle >= 0) {
-            info.alpha -= 5;
-            if (info.alpha <= 0) {
-                MV1DeleteModel(info.modelHandle);
-                info.modelHandle = -1;
-                info.alpha = 0;
+        if (info.hasLanded && info.modelHandle >= 0) {
+
+            // 着地後の待機時間
+            info.landTimer += 2.0f;
+
+            // 60フレーム（1秒）経過してから透過開始
+            if (info.landTimer >= 60.0f) {
+                info.alpha -= 5;
+                // ---- ここでフェードアウトさせる ----
+                float rate = info.alpha / 255.0f;
+                MV1SetOpacityRate(info.modelHandle, rate);
+
+                // 完全に消えたら削除
+                if (info.alpha == 0) {
+                    MV1DeleteModel(info.modelHandle);
+                    info.modelHandle = -1;
+                }
             }
         }
 
@@ -257,18 +282,30 @@ void GimmickFalling::UpdateWave3(void)
                 info.fallY = -10.0f;
                 info.isFalling = false;
                 info.hasLanded = true;
+                info.landTimer = 0.0f;   // ← 着地した瞬間にリセット
             }
             MV1SetScale(info.modelHandle, scl_);
             MV1SetPosition(info.modelHandle, VGet(info.panelPos.x, info.fallY, info.panelPos.z));
         }
 
         // フェードアウト
-        if (!info.isWarning && !info.isFalling && info.modelHandle >= 0) {
-            info.alpha -= 5;
-            if (info.alpha <= 0) {
-                MV1DeleteModel(info.modelHandle);
-                info.modelHandle = -1;
-                info.alpha = 0;
+        if (info.hasLanded && info.modelHandle >= 0) {
+
+            // 着地後の待機時間
+            info.landTimer += 2.0f;
+
+            // 60フレーム（1秒）経過してから透過開始
+            if (info.landTimer >= 60.0f) {
+                info.alpha -= 5;
+                // ---- ここでフェードアウトさせる ----
+                float rate = info.alpha / 255.0f;
+                MV1SetOpacityRate(info.modelHandle, rate);
+
+                // 完全に消えたら削除
+                if (info.alpha == 0) {
+                    MV1DeleteModel(info.modelHandle);
+                    info.modelHandle = -1;
+                }
             }
         }
 

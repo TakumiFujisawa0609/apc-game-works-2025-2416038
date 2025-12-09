@@ -135,9 +135,9 @@ void GameScene::Update(void)
 		return;
 	}
 
-	gimmickManager_->Update();
 	stageManager_->Update();
 	player_->Update();
+	gimmickManager_->Update();
 
 	//// 全てのアクターを回す
 	//for (auto actor : allActor_)
@@ -161,8 +161,8 @@ void GameScene::Draw(void)
 {
 	
 	stageManager_->Draw();
-	gimmickManager_->Draw();	
 	player_->Draw();
+	gimmickManager_->Draw();
 
 	//// 全てのアクターを回す
 	//for (auto actor : allActor_)

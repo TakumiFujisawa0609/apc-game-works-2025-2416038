@@ -77,17 +77,14 @@ const VECTOR& ActorBase::GetPos(void) const
 	return pos_;
 }
 
-CollisionShape::AABB ActorBase::GetAABB() const
-{
-	CollisionShape::AABB box;
-	box.min = VGet(pos_.x - halfW_, pos_.y, pos_.z - halfW_);
-	box.max = VGet(pos_.x + halfW_, pos_.y + halfH_, pos_.z + halfW_);
-	return box;
-}
-
 const VECTOR& ActorBase::GetRot() const
 {
 	return angles_;
+}
+
+void ActorBase::SetPos(VECTOR& pos)
+{
+	pos_ = pos;
 }
 
 void ActorBase::InitTransformPost(void)

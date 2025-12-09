@@ -2,6 +2,7 @@
 #include "../Object/Stage/StageBase.h"
 #include "../Manager/GimmickManager.h"
 #include "../Manager/StageManager.h"
+#include "../Utility/AsoUtility.h"
 #include "Collision.h"
 
 Collision::Collision()
@@ -73,19 +74,21 @@ void Collision::PlayerAndFloorCollision()
 			MV1SetupCollInfo(modelId, -1);
 
 			// 線分とモデルの衝突判定
-			MV1_COLL_RESULT_POLY res =
-				MV1CollCheck_Line(modelId, -1, startPos, endPos);
+			MV1_COLL_RESULT_POLY_DIM hits =
+				MV1CollCheck_LineDim(modelId, -1, startPos, endPos);
 
-			if (res.HitFlag)
+			// ヒットしたポリゴンの数回す
+			for(int i = 0; i < hits.HitNum; i++)
 			{
-				// 当たった位置
-				VECTOR hitPos = res.HitPosition;
+				// ヒットしたポリゴン
+				auto hit = hits.Dim[i];
+				
+				// プレイヤーに衝突位置を渡す
+				player_->CollisionStage(hit.HitPosition);
 
-				// プレイヤーに衝突情報を渡す
-				player_->CollisionStage(hitPos);
-
-				return;
 			}
+			// 検出した地面ポリゴン情報の後始末
+			MV1CollResultPolyDimTerminate(hits);
 		}
 	}
 }

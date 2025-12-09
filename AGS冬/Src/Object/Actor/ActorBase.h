@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include <DxLib.h>
-#include "../../Utility/CollisionShape.h"
 class AnimationController;
 
 class ActorBase
@@ -24,9 +23,10 @@ public:
 	// À•W‚ğæ“¾
 	const VECTOR& GetPos(void) const;
 
-	virtual CollisionShape::AABB GetAABB() const;
-
 	const VECTOR& GetRot() const;
+
+	// À•W‚ğİ’è
+	void SetPos(VECTOR& pos);
 
 protected:
 

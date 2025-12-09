@@ -93,7 +93,6 @@ public:
 	const VECTOR& GetEndCapsulePos(void) const { return endCapsulePos_; }
 	const float& GetCapsuleRadius(void) const { return capsuleRadius_; }
 
-
 	void CollisionStage(VECTOR pos);
 
 protected:

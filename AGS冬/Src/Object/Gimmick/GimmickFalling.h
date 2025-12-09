@@ -20,6 +20,7 @@ public:
         int modelHandle;     // 個別落下物モデル
         int alpha;           // フェードアウト用
         float rotY;
+        float landTimer;   // 着地してからの時間
     };
 
     GimmickFalling();
