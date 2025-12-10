@@ -53,7 +53,13 @@ private:
 	bool isClear_;
 	float clearStartTime_;
 
+	// 画像
+	int timeBoxImg_; // 時間の枠
+
 	// スポットライト
 	void SpotLight();
+
+	// 時間描画
+	void DrawTime();
 };
 

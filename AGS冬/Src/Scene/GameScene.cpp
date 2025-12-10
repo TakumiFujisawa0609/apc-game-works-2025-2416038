@@ -22,9 +22,9 @@ GameScene::~GameScene(void)
 
 void GameScene::Init(void)
 {
-	gimmickManager_ = new GimmickManager();
 	stageManager_ = new StageManager();
 	player_ = new Player();
+	gimmickManager_ = new GimmickManager();
 	
 	grid_ = new Grid();
 	hpManager_ = new HpManager(player_);
@@ -39,9 +39,9 @@ void GameScene::Init(void)
 	//	actor->Load();
 	//}
 
-	gimmickManager_->Init();
 	stageManager_->Init();
 	player_->Init();
+	gimmickManager_->Init();
 
 
 	// カメラ
@@ -61,6 +61,9 @@ void GameScene::Init(void)
 	clearStartTime_ = 0.0f;
 
 	timer_ = new Timer();
+
+	// 画像ロード
+	timeBoxImg_ = LoadGraph("Data/Image/TimeBox.png"); // 時間の枠
 }
 
 void GameScene::Update(void)
@@ -79,16 +82,14 @@ void GameScene::Update(void)
 	}
 
 
+	// 死んだかクリアかするとタイマーストップ
+	if (player_->IsStateDead() || isClear_) timer_->Pause();
 	// ゲームオーバー判定
-	if (player_->IsStateEnd()) {
-		isGameOver_ =  true;
-	}
+	if (player_->IsStateEnd()) isGameOver_ = true;
 
 	auto& ins = InputManager::GetInstance();
 	if (isGameOver_ || isClear_)
 	{
-		timer_->Pause();
-
 		if (ins.IsTrgDown(KEY_INPUT_RETURN) ||
 			ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::B))
 		{
@@ -109,7 +110,7 @@ void GameScene::Update(void)
 	if (isClear_ || isGameOver_)
 	{
 		player_->Update();
-		return; // その他のの更新は止める
+		return; // その他の更新は止める
 	}
 
 	// --- ポーズ切り替え ---
@@ -173,7 +174,8 @@ void GameScene::Draw(void)
 
 	if (!isClear_ || !isGameOver_) collision_->Draw();
 
-	hpManager_->Draw();
+	// hp表示
+	//hpManager_->Draw();
 
 	//SpotLight();
 
@@ -189,13 +191,9 @@ void GameScene::Draw(void)
 	// グリッド線
 	//grid_->Draw();
 
-	float elapsed = timer_->GetElapsedSec();
-	float remaining = 180.0f - elapsed;
-	if (remaining < 0) remaining = 0;
+	// 制限時間描画
+	DrawTime();
 
-	SetFontSize(50);
-	DrawFormatString(0, 15, GetColor(255, 255, 255),
-		"クリアまで : %.1f", remaining);
 	SetFontSize(30);
 	if (isPaused_)
 	{
@@ -264,6 +262,8 @@ void GameScene::Release(void)
 	hpManager_->Release();
 	delete hpManager_;
 
+	// 画像の解放
+	DeleteGraph(timeBoxImg_);
 }
 
 Player* GameScene::GetPlayer()
@@ -348,4 +348,26 @@ void GameScene::SpotLight()
 	);
 
 	SetLightPosition(pos);
+}
+
+void GameScene::DrawTime()
+{
+	DrawGraph(0, 0, timeBoxImg_, true);
+
+	float elapsed = timer_->GetElapsedSec();
+	float remaining = 180.0f - elapsed;
+	if (remaining < 0) remaining = 0;
+
+	// 分と秒に変換
+	int minutes = (int)remaining / 60;
+	int seconds = (int)remaining % 60;
+
+	SetFontSize(63);
+	DrawFormatString(
+		180, 60,
+		GetColor(255, 255, 255),
+		"%d:%02d",
+		minutes,
+		seconds
+	);
 }
