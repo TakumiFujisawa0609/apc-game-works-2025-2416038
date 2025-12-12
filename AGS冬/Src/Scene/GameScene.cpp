@@ -25,7 +25,7 @@ void GameScene::Init(void)
 	stageManager_ = new StageManager();
 	player_ = new Player();
 	gimmickManager_ = new GimmickManager();
-	
+
 	grid_ = new Grid();
 	hpManager_ = new HpManager(player_);
 	collision_ = new Collision();
@@ -64,8 +64,11 @@ void GameScene::Init(void)
 
 	// 画像ロード
 	timeBoxImg_ = LoadGraph("Data/Image/TimeBox.png"); // 時間の枠
-}
 
+	// フォントロード
+	funwariFontHandle_ = CreateFontToHandle("Showcard Gothic", 80, 2, DX_FONTTYPE_ANTIALIASING);
+	funwariFontHandle_2 = CreateFontToHandle("Showcard Gothic", 75, 2, DX_FONTTYPE_ANTIALIASING);
+}
 void GameScene::Update(void)
 {
 	if (player_->IsStateDead())
@@ -264,6 +267,9 @@ void GameScene::Release(void)
 
 	// 画像の解放
 	DeleteGraph(timeBoxImg_);
+
+	// 作成したフォントデータを削除する
+	DeleteFontToHandle(funwariFontHandle_);
 }
 
 Player* GameScene::GetPlayer()
@@ -363,11 +369,13 @@ void GameScene::DrawTime()
 	int seconds = (int)remaining % 60;
 
 	SetFontSize(63);
-	DrawFormatString(
-		180, 60,
+	DrawFormatStringToHandle(
+		175, 48,
 		GetColor(255, 255, 255),
-		"%d:%02d",
+		funwariFontHandle_,
+		"%d %02d",
 		minutes,
 		seconds
 	);
+	DrawStringToHandle(207, 42, ":", GetColor(255, 255, 255), funwariFontHandle_2);
 }

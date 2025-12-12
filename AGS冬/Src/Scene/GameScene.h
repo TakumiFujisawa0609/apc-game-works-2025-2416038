@@ -56,6 +56,10 @@ private:
 	// 画像
 	int timeBoxImg_; // 時間の枠
 
+	// フォント
+	int funwariFontHandle_;
+	int funwariFontHandle_2;
+
 	// スポットライト
 	void SpotLight();
 
