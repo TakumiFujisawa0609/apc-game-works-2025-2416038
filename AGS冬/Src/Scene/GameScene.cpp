@@ -64,6 +64,7 @@ void GameScene::Init(void)
 
 	// 画像ロード
 	timeBoxImg_ = LoadGraph("Data/Image/TimeBox.png"); // 時間の枠
+	timeImg_ = LoadGraph("Data/Image/時計.png");	// 時計
 
 	// フォントロード
 	funwariFontHandle_ = CreateFontToHandle("Showcard Gothic", 80, 2, DX_FONTTYPE_ANTIALIASING);
@@ -101,7 +102,7 @@ void GameScene::Update(void)
 	}
 
 	// === 経過時間チェック ===
-	if (!isClear_ && timer_->IsOver(180.0f))  // ← 180秒経過でクリア
+	if (!isClear_ && timer_->IsOver(5.0f))  // ← 180秒経過でクリア
 	{
 		isClear_ = true;
 		player_->ChangeState(Player::STATE::VICTORY);
@@ -178,7 +179,7 @@ void GameScene::Draw(void)
 	if (!isClear_ || !isGameOver_) collision_->Draw();
 
 	// hp表示
-	//hpManager_->Draw();
+	hpManager_->Draw();
 
 	//SpotLight();
 
@@ -206,7 +207,7 @@ void GameScene::Draw(void)
 	// --- クリア表示 ---
 	if (isClear_)
 	{
-		SetFontSize(45);
+		/*SetFontSize(45);
 		DrawFormatString(300, 240, GetColor(255, 255, 0), "CLEAR");
 
 		if (GetJoypadNum() == 0)
@@ -216,7 +217,7 @@ void GameScene::Draw(void)
 		else
 		{
 			DrawFormatString(310, 480, GetColor(255, 255, 0), "Bでタイトルへ");
-		}
+		}*/
 	}
 	
 
@@ -267,6 +268,7 @@ void GameScene::Release(void)
 
 	// 画像の解放
 	DeleteGraph(timeBoxImg_);
+	DeleteGraph(timeImg_);
 
 	// 作成したフォントデータを削除する
 	DeleteFontToHandle(funwariFontHandle_);
@@ -361,7 +363,7 @@ void GameScene::DrawTime()
 	DrawGraph(0, 0, timeBoxImg_, true);
 
 	float elapsed = timer_->GetElapsedSec();
-	float remaining = 180.0f - elapsed;
+	float remaining = 5.0f - elapsed;
 	if (remaining < 0) remaining = 0;
 
 	// 分と秒に変換
@@ -377,5 +379,8 @@ void GameScene::DrawTime()
 		minutes,
 		seconds
 	);
-	DrawStringToHandle(207, 42, ":", GetColor(255, 255, 255), funwariFontHandle_2);
+	//DrawStringToHandle(207, 42, ":", GetColor(255, 255, 255), funwariFontHandle_2);
+	DrawStringToHandle(217, 42, ":", GetColor(255, 255, 255), funwariFontHandle_2);
+	// 時計画像
+	DrawRotaGraph(120, 90, 0.06f, 0, timeImg_, true);
 }

@@ -1,5 +1,6 @@
 #include "../Manager/InputManager.h"
 #include "../Manager/SceneManager.h"
+#include "../Manager/Camera.h"
 #include "TitleScene.h"
 
 TitleScene::TitleScene(void)
@@ -14,19 +15,34 @@ TitleScene::~TitleScene(void)
 
 void TitleScene::Init(void)
 {
+    // カメラ
+    camera_ = SceneManager::GetInstance()->GetCamera();
+    camera_->ChangeMode(Camera::MODE::FIXED_POINT);
+
+    // テレビモデル読み込み
+	tvModelId_ = MV1LoadModel("Data/Model/Stage/TV_Space.mv1");
+
+    MV1SetPosition(tvModelId_, VGet(970.0f, 0.0f, 300.0f));
 }
 
 void TitleScene::Update(void)
 {
 	auto& ins = InputManager::GetInstance();
+    SetBackgroundColor(0, 0, 0);
 
+    if (InputManager::GetInstance().IsTrgDown(KEY_INPUT_SPACE))
+    {
+		SceneManager::GetInstance()->ChangeScene(SceneManager::SCENE_ID::GAME);
+    }
 	// メニュー更新
-	UpdateMenu();
+	//UpdateMenu();
 }
 
 void TitleScene::Draw(void)
 {
-	DrawFormatString(
+    MV1DrawModel(tvModelId_);
+
+	/*DrawFormatString(
 		300, 200, 0xffffff,
 		"Title Scene"
 	);
@@ -36,11 +52,12 @@ void TitleScene::Draw(void)
     {
         int color = (i == cursorIndex_) ? GetColor(255, 255, 0) : GetColor(255, 255, 255);
         DrawFormatString(800, 200 + i * 40, color, menu[i]);
-    }
+    }*/
 }
 
 void TitleScene::Release(void)
 {
+	MV1DeleteModel(tvModelId_);
 }
 
 void TitleScene::UpdateMenu(void)

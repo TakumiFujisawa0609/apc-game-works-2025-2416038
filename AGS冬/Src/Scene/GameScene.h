@@ -55,6 +55,7 @@ private:
 
 	// 画像
 	int timeBoxImg_; // 時間の枠
+	int timeImg_; // 時計
 
 	// フォント
 	int funwariFontHandle_;

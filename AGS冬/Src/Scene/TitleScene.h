@@ -1,5 +1,6 @@
 #pragma once
 #include "SceneBase.h"
+class Camera;
 
 class TitleScene : public SceneBase
 {
@@ -18,8 +19,12 @@ public:
 	void Release(void) override;
 
 private:
+	Camera* camera_;
 
 	void UpdateMenu(void);
 	int cursorIndex_;   // ← メニューカーソル位置
 	int moveDelay_;     // ← 押しっぱなし防止用タイマー
+
+	// テレビ
+	int tvModelId_ = 0;
 };

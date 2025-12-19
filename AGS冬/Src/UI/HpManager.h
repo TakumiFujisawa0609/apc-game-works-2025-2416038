@@ -5,9 +5,9 @@ class HpManager
 {
 public:
 	// ‚g‚o•`‰æ‚ÌŠJnÀ•W(X)
-	static constexpr int START_X = 50;
+	static constexpr int START_X = 100;
 	// ‚g‚o•`‰æ‚ÌŠJnÀ•W(Y)
-	static constexpr int START_Y = 100;
+	static constexpr int START_Y = 190;
 	// ‚g‚oƒAƒCƒRƒ“‚Ì•`‰æ•
 	static constexpr int HP_ICON_WIDTH = 110;
 
