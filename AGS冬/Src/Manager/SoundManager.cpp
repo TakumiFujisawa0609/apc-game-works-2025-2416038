@@ -42,7 +42,7 @@ void SoundManager::DeleteInstance(void)
 
 void SoundManager::Init(void)
 {
-	//voiceHundle_ = LoadSoundMem(VOICE_PATH);
+	walkHundle_ = LoadSoundMem(WALK_PATH);
 }
 
 void SoundManager::Update(void)
@@ -65,7 +65,24 @@ void SoundManager::PlayBgm1()
 	//ChangeVolumeSoundMem(BGM1_VOLUME, bgm1Hundle_);
 }
 
+void SoundManager::PlayWalk()
+{
+	// çƒê∂
+	if (CheckSoundMem(walkHundle_) == 0)
+	{
+		PlaySoundMem(walkHundle_, DX_PLAYTYPE_BACK, true);
+	}
+
+	// âπó í≤êÆ
+	ChangeVolumeSoundMem(WALK_VOLUME, walkHundle_);
+}
+
 void SoundManager::StopBgm1()
 {
 	//StopSoundMem(bgm2Hundle_);
+}
+
+void SoundManager::StopWalk()
+{
+	StopSoundMem(walkHundle_);
 }

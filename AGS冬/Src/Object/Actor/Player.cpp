@@ -2,6 +2,7 @@
 #include "../../Manager/InputManager.h"
 #include "../../Manager/Camera.h"
 #include "../../Manager/SceneManager.h"
+#include "../../Manager/SoundManager.h"
 #include "../../Common/AnimationController.h"
 #include "../../Utility/MatrixUtility.h"
 #include "Player.h"
@@ -269,10 +270,14 @@ void Player::ProcessMove(void)
 		if (jumpState_ == JumpState::Ground) 
 		{
 			animationController_->Play(static_cast<int>(ANIM_TYPE::RUN), true);
+			// 足音再生
+			SoundManager::GetInstance()->PlayWalk();
 		}
 	}
 	else
 	{
+		// 歩行音停止
+		SoundManager::GetInstance()->StopWalk();
 		// 地上のみアイドルアニメ
 		if (jumpState_ == JumpState::Ground)
 			animationController_->Play(static_cast<int>(ANIM_TYPE::IDLE), true);

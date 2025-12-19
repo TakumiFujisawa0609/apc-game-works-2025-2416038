@@ -30,15 +30,6 @@ void GameScene::Init(void)
 	hpManager_ = new HpManager(player_);
 	collision_ = new Collision();
 
-	//// アクター配列に入れる
-	//allActor_.push_back(player_);
-	//// 全てのアクターを読み込み
-	//for (auto actor : allActor_)
-	//{
-	//	// 読み込み
-	//	actor->Load();
-	//}
-
 	stageManager_->Init();
 	player_->Init();
 	gimmickManager_->Init();
@@ -68,7 +59,7 @@ void GameScene::Init(void)
 
 	// フォントロード
 	funwariFontHandle_ = CreateFontToHandle("Showcard Gothic", 80, 2, DX_FONTTYPE_ANTIALIASING);
-	funwariFontHandle_2 = CreateFontToHandle("Showcard Gothic", 75, 2, DX_FONTTYPE_ANTIALIASING);
+	funwariFontHandle_2 = CreateFontToHandle("Showcard Gothic", 65, 2, DX_FONTTYPE_ANTIALIASING);
 }
 void GameScene::Update(void)
 {
@@ -102,7 +93,7 @@ void GameScene::Update(void)
 	}
 
 	// === 経過時間チェック ===
-	if (!isClear_ && timer_->IsOver(5.0f))  // ← 180秒経過でクリア
+	if (!isClear_ && timer_->IsOver(180.0f))  // ← 180秒経過でクリア
 	{
 		isClear_ = true;
 		player_->ChangeState(Player::STATE::VICTORY);
@@ -144,21 +135,6 @@ void GameScene::Update(void)
 	player_->Update();
 	gimmickManager_->Update();
 
-	//// 全てのアクターを回す
-	//for (auto actor : allActor_)
-	//{
-	//	// 更新処理
-	//	actor->Update();
-
-	//	// 当たり判定を取るか？
-	//	if (actor)
-	//	{
-	//		// 当たり判定
-	//		FieldCollision(actor);
-	//	}
-	//}
-
-
 	collision_->Update();
 }
 
@@ -168,13 +144,6 @@ void GameScene::Draw(void)
 	stageManager_->Draw();
 	player_->Draw();
 	gimmickManager_->Draw();
-
-	//// 全てのアクターを回す
-	//for (auto actor : allActor_)
-	//{
-	//	// 更新処理
-	//	actor->Draw();
-	//}
 
 	if (!isClear_ || !isGameOver_) collision_->Draw();
 
@@ -363,7 +332,7 @@ void GameScene::DrawTime()
 	DrawGraph(0, 0, timeBoxImg_, true);
 
 	float elapsed = timer_->GetElapsedSec();
-	float remaining = 5.0f - elapsed;
+	float remaining = 180.0f - elapsed;
 	if (remaining < 0) remaining = 0;
 
 	// 分と秒に変換
@@ -375,12 +344,12 @@ void GameScene::DrawTime()
 		175, 48,
 		GetColor(255, 255, 255),
 		funwariFontHandle_,
-		"%d %02d",
+		"%d:%02d",
 		minutes,
 		seconds
 	);
-	//DrawStringToHandle(207, 42, ":", GetColor(255, 255, 255), funwariFontHandle_2);
-	DrawStringToHandle(217, 42, ":", GetColor(255, 255, 255), funwariFontHandle_2);
+	//DrawStringToHandle(208, 47, ":", GetColor(255, 255, 255), funwariFontHandle_2);
+
 	// 時計画像
 	DrawRotaGraph(120, 90, 0.06f, 0, timeImg_, true);
 }
