@@ -43,6 +43,7 @@ void SoundManager::DeleteInstance(void)
 void SoundManager::Init(void)
 {
 	walkHundle_ = LoadSoundMem(WALK_PATH);
+	fallingObjectHundle_ = LoadSoundMem(FALLING_OBJECT_PATH);
 }
 
 void SoundManager::Update(void)
@@ -77,6 +78,18 @@ void SoundManager::PlayWalk()
 	ChangeVolumeSoundMem(WALK_VOLUME, walkHundle_);
 }
 
+void SoundManager::PlayFallingObject()
+{
+	// çƒê∂
+	if (CheckSoundMem(fallingObjectHundle_) == 0)
+	{
+		PlaySoundMem(fallingObjectHundle_, DX_PLAYTYPE_BACK, true);
+	}
+
+	// âπó í≤êÆ
+	ChangeVolumeSoundMem(FALLING_OBJECT_VOLUME, fallingObjectHundle_);
+}
+
 void SoundManager::StopBgm1()
 {
 	//StopSoundMem(bgm2Hundle_);
@@ -85,4 +98,9 @@ void SoundManager::StopBgm1()
 void SoundManager::StopWalk()
 {
 	StopSoundMem(walkHundle_);
+}
+
+void SoundManager::StopFallingObject()
+{
+	StopSoundMem(fallingObjectHundle_);
 }

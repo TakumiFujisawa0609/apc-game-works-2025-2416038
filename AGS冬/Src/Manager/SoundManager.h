@@ -2,6 +2,8 @@
 #include <DxLib.h>
 
 #define WALK_PATH "Data/Sound/‘«‰¹.wav"
+#define FALLING_OBJECT_PATH "Data/Sound/—‰º•¨.wav"
+#define DAMAGE_PATH "Data/Sound/‘«‰¹.wav"
 
 class SoundManager
 {
@@ -9,6 +11,7 @@ public:
 
 	static constexpr int BGM_VOLUME = 153;		// BGM‚Ì‰¹—Êi‚O`‚Q‚T‚Tj
 	static constexpr int WALK_VOLUME = 200;		// •às‰¹‚Ì‰¹—Êi‚O`‚Q‚T‚Tj
+	static constexpr int FALLING_OBJECT_VOLUME = 200;		// •às‰¹‚Ì‰¹—Êi‚O`‚Q‚T‚Tj
 
 	// ƒCƒ“ƒXƒ^ƒ“ƒX‚Ì¶¬
 	static void CreateInstance(void);
@@ -24,11 +27,12 @@ public:
 	// ‰¹Œ¹Ä¶
 	void PlayBgm1();	// BGM
 	void PlayWalk();	// •às‰¹
-	
+	void PlayFallingObject(); // —‰º•¨‰¹
 
 	//‰¹Œ¹’â~
 	void StopBgm1();	// BGM
 	void StopWalk();	// •às‰¹
+	void StopFallingObject(); // —‰º•¨‰¹
 
 private:
 
@@ -43,5 +47,6 @@ private:
 
 	// ‰¹Œ¹ƒnƒ“ƒhƒ‹
 	int walkHundle_;
+	int fallingObjectHundle_;
 
 };

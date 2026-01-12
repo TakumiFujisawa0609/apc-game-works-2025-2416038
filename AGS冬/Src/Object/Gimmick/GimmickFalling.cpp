@@ -1,4 +1,5 @@
 #include <algorithm>
+#include "../../Manager/SoundManager.h"
 #include "GimmickFalling.h"
 
 GimmickFalling::GimmickFalling() {}
@@ -153,6 +154,7 @@ void GimmickFalling::UpdateWave1(void)
         // フェードアウト
         if (info.hasLanded && info.modelHandle >= 0) {
 
+            SoundManager::GetInstance()->PlayFallingObject();
             // 着地後の待機時間
             info.landTimer += 2.0f;
 
@@ -168,6 +170,8 @@ void GimmickFalling::UpdateWave1(void)
                     MV1DeleteModel(info.modelHandle);
                     info.modelHandle = -1;
                 }
+
+                SoundManager::GetInstance()->StopFallingObject();
             }
         }
 

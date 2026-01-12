@@ -309,6 +309,8 @@ void Player::ProcessJump(void)
 
 		// ジャンプアニメーション再生
 		animationController_->Play(static_cast<int>(ANIM_TYPE::JUMP), false);
+		// 歩行音停止
+		SoundManager::GetInstance()->StopWalk();
 
 	}
 
