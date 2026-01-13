@@ -73,7 +73,7 @@ void GameScene::Update(void)
 		// カメラをズームさせる
 		SceneManager::GetInstance()->GetCamera()->SetZoomTarget(0.5f); // プレイヤーに近づく
 
-		SceneManager::GetInstance()->GetCamera()->ChangeMode(Camera::MODE::FIXED_POINT);
+		SceneManager::GetInstance()->GetCamera()->ChangeMode(Camera::MODE::VECTORY);
 	}
 
 

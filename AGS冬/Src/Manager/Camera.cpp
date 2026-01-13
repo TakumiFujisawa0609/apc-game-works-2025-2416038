@@ -50,41 +50,43 @@ void Camera::SetBeforeDraw(void)
 	case Camera::MODE::FOLLOW:
 		SetBeforeDrawFollow();
 		break;
+	case Camera::MODE::VECTORY:
+		SetBeforeDrawVictory();
+		break;
 	}
-
 }
 
 void Camera::SetBeforeDrawFixedPoint(void)
 {
-	if (!follow_) return;
+	// カメラの回転行列を作成
+	MATRIX mat = MGetIdent();
+	mat = MMult(mat, MGetRotX(angles_.x));
+	mat = MMult(mat, MGetRotY(angles_.y));
+	//mat = MMult(mat, MGetRotZ(angles_.z));
 
-	// プレイヤー座標と回転
-	VECTOR playerPos = follow_->GetPos();
-	float playerRotY = follow_->GetRot().y;
+	// 注視点の移動
+	VECTOR followPos = VGet(970.0f, 0.0f, 300.0f);
+	VECTOR targetLocalRotPos = VTransform(FOLLOW_TARGET_LOCAL_POS, mat);
+	targetPos_ = VAdd(followPos, targetLocalRotPos);
+	// カメラの移動
+	// 相対座標を回転させて、回転後の相対座標を取得する
+	VECTOR cameraLocalRotPos = VTransform(FOLLOW_CAMERA_LOCAL_POS, mat);
 
-	// プレイヤー正面方向のベクトル
-	VECTOR forward = VGet(sinf(playerRotY), 0.0f, cosf(playerRotY));
+	// ズームを適用
+	cameraLocalRotPos = VScale(cameraLocalRotPos, zoomDistance_);
 
-	// カメラ位置：プレイヤーの正面の逆方向 + 高さ
-	float distance = 500.0f * zoomDistance_; // 距離調整
-	float height = 150.0f;                  // 高さ調整
-	VECTOR offset = VScale(forward, distance);
-	offset.y += height;
-	pos_ = VAdd(playerPos, offset);
+	// 相対座標からワールド座標に直して、カメラ座標とする
+	pos_ = VAdd(followPos, cameraLocalRotPos);
 
-	// 注視点はプレイヤー
-	targetPos_ = playerPos;
+	// カメラの上方向を計算
+	VECTOR up = VTransform(AsoUtility::DIR_U, mat);
 
-	// 上方向ベクトル
-	VECTOR up = VGet(0.0f, 1.0f, 0.0f);
-
-	// カメラ角度を自動計算
-	VECTOR dir = VSub(targetPos_, pos_);
-	angles_.y = atan2f(dir.x, dir.z);
-	angles_.x = -atan2f(dir.y, sqrtf(dir.x * dir.x + dir.z * dir.z));
-
-	// カメラ設定
-	SetCameraPositionAndTargetAndUpVec(pos_, targetPos_, up);
+	// カメラの設定(位置と注視点による制御)
+	SetCameraPositionAndTargetAndUpVec(
+		pos_,
+		targetPos_,
+		up
+	);
 }
 void Camera::SetBeforeDrawFree(void)
 {
@@ -169,6 +171,39 @@ void Camera::SetBeforeDrawFollow(void)
 	);
 }
 
+void Camera::SetBeforeDrawVictory(void)
+{
+	if (!follow_) return;
+
+	// プレイヤー座標と回転
+	VECTOR playerPos = follow_->GetPos();
+	float playerRotY = follow_->GetRot().y;
+
+	// プレイヤー正面方向のベクトル
+	VECTOR forward = VGet(sinf(playerRotY), 0.0f, cosf(playerRotY));
+
+	// カメラ位置：プレイヤーの正面の逆方向 + 高さ
+	float distance = 500.0f * zoomDistance_; // 距離調整
+	float height = 150.0f;                  // 高さ調整
+	VECTOR offset = VScale(forward, distance);
+	offset.y += height;
+	pos_ = VAdd(playerPos, offset);
+
+	// 注視点はプレイヤー
+	targetPos_ = playerPos;
+
+	// 上方向ベクトル
+	VECTOR up = VGet(0.0f, 1.0f, 0.0f);
+
+	// カメラ角度を自動計算
+	VECTOR dir = VSub(targetPos_, pos_);
+	angles_.y = atan2f(dir.x, dir.z);
+	angles_.x = -atan2f(dir.y, sqrtf(dir.x * dir.x + dir.z * dir.z));
+
+	// カメラ設定
+	SetCameraPositionAndTargetAndUpVec(pos_, targetPos_, up);
+}
+
 const VECTOR& Camera::GetTargetPos(void) const
 {
 	return targetPos_;
@@ -177,6 +212,9 @@ const VECTOR& Camera::GetTargetPos(void) const
 
 void Camera::ChangeMode(MODE mode)
 {
+	// カメラの初期設定
+	SetDefault();
+
 	// カメラモードの変更
 	mode_ = mode;
 	// 変更時の初期化処理
@@ -187,6 +225,8 @@ void Camera::ChangeMode(MODE mode)
 	case Camera::MODE::FREE:
 		break;
 	case Camera::MODE::FOLLOW:
+		break;
+	case Camera::MODE::VECTORY:
 		break;
 	}
 }
@@ -257,6 +297,15 @@ void Camera::SetVictoryView(const VECTOR& pos, const VECTOR& target)
 	VECTOR dir = VSub(target, pos);
 	angles_.y = atan2f(dir.x, dir.z);
 	angles_.x = -atan2f(dir.y, sqrtf(dir.x * dir.x + dir.z * dir.z));
+}
+
+void Camera::SetDefault(void)
+{
+	// カメラの初期設定
+	pos_ = DERFAULT_POS;
+
+	// カメラ角
+	angles_ = DERFAULT_ANGLES;
 }
 
 void Camera::Release(void)

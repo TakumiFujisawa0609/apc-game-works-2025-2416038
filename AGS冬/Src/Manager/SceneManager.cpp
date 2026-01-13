@@ -240,6 +240,7 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 	{
 	case SCENE_ID::TITLE:
 		scene_ = new TitleScene();
+		camera_->Init();
 		break;
 	case SCENE_ID::TUTORIAL:
 		scene_ = new Tutorial();
@@ -252,9 +253,6 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 	// 3D 設定を再初期化
 	Init3D();
 
-	// カメラの再初期化が必要ならここで follow 設定
-	camera_->Init();
-	// GameScene ならプレイヤーをカメラに設定
 	if (sceneId == SCENE_ID::GAME)
 	{
 		// プレイヤーが scene_->Init() 内で作られる想定

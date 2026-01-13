@@ -26,6 +26,7 @@ public:
 		FIXED_POINT, // 定点カメラ
 		FREE, // フリーモード
 		FOLLOW, // 追従モード
+		VECTORY, // クリアカメラ
 	};
 
 	// コンストラクタ
@@ -45,6 +46,7 @@ public:
 	void SetBeforeDrawFixedPoint(void);
 	void SetBeforeDrawFree(void);
 	void SetBeforeDrawFollow(void);
+	void SetBeforeDrawVictory(void);
 
 	// デバッグ用描画
 	void DrawDebug(void);
@@ -100,4 +102,6 @@ private:
 	float zoomTarget_ = 1.0f;      // ターゲットズーム距離
 	float zoomSpeed_ = 0.05f;      // ズーム速度
 
+	// カメラを初期位置に戻す
+	void SetDefault(void);
 };
