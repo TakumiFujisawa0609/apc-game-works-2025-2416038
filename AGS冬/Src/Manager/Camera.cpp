@@ -65,7 +65,7 @@ void Camera::SetBeforeDrawFixedPoint(void)
 	//mat = MMult(mat, MGetRotZ(angles_.z));
 
 	// ’‹“_‚ÌˆÚ“®
-	VECTOR followPos = VGet(970.0f, 0.0f, 300.0f);
+	VECTOR followPos = VGet(800.0f, 500.0f, 0.0f);
 	VECTOR targetLocalRotPos = VTransform(FOLLOW_TARGET_LOCAL_POS, mat);
 	targetPos_ = VAdd(followPos, targetLocalRotPos);
 	// ƒJƒƒ‰‚ÌˆÚ“®
