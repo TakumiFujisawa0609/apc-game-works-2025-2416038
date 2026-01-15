@@ -1,6 +1,7 @@
 #include "../Manager/InputManager.h"
 #include "../Manager/SceneManager.h"
 #include "../Manager/Camera.h"
+#include "../Utility/AsoUtility.h"
 #include "TitleScene.h"
 
 TitleScene::TitleScene(void)
@@ -20,44 +21,77 @@ void TitleScene::Init(void)
     camera_->ChangeMode(Camera::MODE::FIXED_POINT);
 
     // テレビモデル読み込み
-	tvModelId_ = MV1LoadModel("Data/Model/Stage/TV_Space.mv1");
+	tvModelId_ = MV1LoadModel("Data/Model/Stage/TV.mv1");
+    // 床
+	floorModelId_ = MV1LoadModel("Data/Model/Stage/floor.mv1");
 
-    MV1SetPosition(tvModelId_, VGet(970.0f, 0.0f, 300.0f));
+    MV1SetPosition(tvModelId_, VGet(670.0f, 0.0f, 600.0f));
+	MV1SetPosition(floorModelId_, VGet(670.0f, 0.0f, 600.0f));
+  
+    //マテリアルをすべてエミッシブに設定
+    int materialNum = MV1GetMaterialNum(floorModelId_);
+    for (int i = 0; i < materialNum; ++i)
+    {
+        MV1SetMaterialDifColor(floorModelId_, i, GetColorF(0.5f, 0.5f, 0.5f, 1)); // 拡散反射
+        MV1SetMaterialSpcColor(floorModelId_, i, GetColorF(0.5f, 0.5f, 0.5f, 1)); // 鏡面反射
+        MV1SetMaterialEmiColor(floorModelId_, i, GetColorF(0.4f, 0.4f, 0.4f, 1.0f)); // 自発光
+        MV1SetMaterialAmbColor(floorModelId_, i, GetColorF(1, 1, 1, 1)); // 環境光
+    }
+
+    // フォントロード
+    funwariFontHandle_ = CreateFontToHandle("Showcard Gothic", 80, 2, DX_FONTTYPE_ANTIALIASING);
 }
 
 void TitleScene::Update(void)
 {
-	auto& ins = InputManager::GetInstance();
     SetBackgroundColor(0, 0, 0);
 
-    if (InputManager::GetInstance().IsTrgDown(KEY_INPUT_SPACE))
-    {
-		SceneManager::GetInstance()->ChangeScene(SceneManager::SCENE_ID::GAME);
-    }
 	// メニュー更新
-	//UpdateMenu();
+	UpdateMenu();
+    
+    //if (CheckHitKey(KEY_INPUT_W)) { pointLightPos_.z += 30; }
+    //if (CheckHitKey(KEY_INPUT_A)) { pointLightPos_.x -= 30; }
+    //if (CheckHitKey(KEY_INPUT_S)) { pointLightPos_.z -= 30; }
+    //if (CheckHitKey(KEY_INPUT_D)) { pointLightPos_.x += 30; }
+    //if (CheckHitKey(KEY_INPUT_UP)) { pointLightPos_.y += 30; }
+    //if (CheckHitKey(KEY_INPUT_DOWN)) { pointLightPos_.y -= 30; }
 }
 
 void TitleScene::Draw(void)
 {
     MV1DrawModel(tvModelId_);
+	MV1DrawModel(floorModelId_);
 
-	/*DrawFormatString(
-		300, 200, 0xffffff,
-		"Title Scene"
-	);
-
-    const char* menu[] = { "GAME START", "OPTION", "EXIT" };
+    const char* menu[] = { "GAME START", "TUTORIAL", "EXIT" };
     for (int i = 0; i < 3; i++)
     {
         int color = (i == cursorIndex_) ? GetColor(255, 255, 0) : GetColor(255, 255, 255);
-        DrawFormatString(800, 200 + i * 40, color, menu[i]);
-    }*/
+;
+        DrawFormatStringToHandle(
+            1270, 270 + i * 200,
+            color,
+            funwariFontHandle_,
+            menu[i]
+        );
+    }
+
+    //ライト設定
+    ChangeLightTypePoint(
+        VGet(570, 490,-430),
+        1000.0f, 0.000f, 0.001f, 0.000f
+    );
+
+ //   // ライト座標
+ //   DrawFormatString(10, 10, GetColor(255, 255, 255),
+ //       "Light Pos X: %.1f Y: %.1f Z: %.1f",
+ //       pointLightPos_.x, pointLightPos_.y, pointLightPos_.z
+	//);
 }
 
 void TitleScene::Release(void)
 {
 	MV1DeleteModel(tvModelId_);
+	MV1DeleteModel(floorModelId_);
 }
 
 void TitleScene::UpdateMenu(void)
@@ -105,8 +139,8 @@ void TitleScene::UpdateMenu(void)
             SceneManager::GetInstance()->ChangeScene(SceneManager::SCENE_ID::TUTORIAL);
             break;
 
-        case 1: // OPTION
-            // SceneManager::GetInstance()->ChangeScene(SceneManager::SCENE_ID::OPTION);
+        case 1: // Tutprial
+            SceneManager::GetInstance()->ChangeScene(SceneManager::SCENE_ID::TUTORIAL);
             break;
 
         case 2: // EXIT

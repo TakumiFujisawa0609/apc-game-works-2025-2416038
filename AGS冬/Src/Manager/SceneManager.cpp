@@ -240,7 +240,6 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 	{
 	case SCENE_ID::TITLE:
 		scene_ = new TitleScene();
-		camera_->Init();
 		break;
 	case SCENE_ID::TUTORIAL:
 		scene_ = new Tutorial();

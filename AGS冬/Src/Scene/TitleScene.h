@@ -27,4 +27,11 @@ private:
 
 	// テレビ
 	int tvModelId_ = 0;
+	// 床
+	int floorModelId_ = 0;
+
+	// フォント
+	int funwariFontHandle_;
+
+	VECTOR pointLightPos_ = { 600.0f, 550.0f, 500.0f };
 };

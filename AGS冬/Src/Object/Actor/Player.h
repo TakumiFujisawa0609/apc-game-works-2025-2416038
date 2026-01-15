@@ -15,6 +15,7 @@ public:
 		DEAD,
 		END,
 		VICTORY,
+		TITLE,
 		MAX,
 	};
 
@@ -123,6 +124,7 @@ protected:
 	void ChangeDead(void);
 	void ChangeEnd(void);
 	void ChangeVictory(void);
+	void ChangeTitle(void);
 
 	// èÛë‘ï çXêV
 	void UpdateStanby(void);
@@ -131,6 +133,7 @@ protected:
 	void UpdateDead(void);
 	void UpdateEnd(void);
 	void UpdateVictory(void);
+	void UpdateTitle(void);
 
 	// èÛë‘ï ï`âÊ
 	void DrawStanby(void);
@@ -139,6 +142,7 @@ protected:
 	void DrawDead(void);
 	void DrawEnd(void);
 	void DrawVictory(void);
+	void DrawTitle(void);
 
 	bool isJump_;
 	float jumpPow_;

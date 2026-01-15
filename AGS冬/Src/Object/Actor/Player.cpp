@@ -52,6 +52,9 @@ void Player::Update(void)
 	case STATE::VICTORY:
 		UpdateVictory();
 		break;
+	case STATE::TITLE:
+		UpdateTitle();
+		break;
 	}
 
 	// アニメーションの更新
@@ -84,6 +87,9 @@ void Player::Draw(void)
 		break;
 	case STATE::VICTORY:
 		DrawVictory();
+		break;
+	case STATE::TITLE:
+		DrawTitle();
 		break;
 	}
 
@@ -136,6 +142,9 @@ void Player::ChangeState(STATE state)
 		break;
 	case STATE::VICTORY:
 		ChangeVictory();
+		break;
+	case STATE::TITLE:
+		ChangeTitle();
 		break;
 	}
 }
@@ -363,6 +372,10 @@ void Player::ChangeVictory(void)
 	animationController_->Play(static_cast<int>(ANIM_TYPE::VICTORY), true);
 }
 
+void Player::ChangeTitle(void)
+{
+}
+
 void Player::UpdateStanby(void)
 {
 	// 移動処理
@@ -411,6 +424,10 @@ void Player::UpdateVictory(void)
 	}
 }
 
+void Player::UpdateTitle(void)
+{
+}
+
 void Player::DrawStanby(void)
 {
 }
@@ -445,6 +462,10 @@ void Player::DrawEnd(void)
 }
 
 void Player::DrawVictory(void)
+{
+}
+
+void Player::DrawTitle(void)
 {
 }
 

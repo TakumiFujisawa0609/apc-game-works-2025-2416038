@@ -18,11 +18,13 @@ Camera::~Camera(void)
 
 void Camera::Init(void)
 {
-	// カメラの初期位置
-	pos_ = DERFAULT_POS;
+	//// カメラの初期位置
+	//pos_ = DERFAULT_POS;
 
-	// カメラの初期角度
-	angles_ = DERFAULT_ANGLES;
+	//// カメラの初期角度
+	//angles_ = DERFAULT_ANGLES;
+
+	SetDefault();
 }
 
 void Camera::Update(void)
@@ -70,7 +72,8 @@ void Camera::SetBeforeDrawFixedPoint(void)
 	targetPos_ = VAdd(followPos, targetLocalRotPos);
 	// カメラの移動
 	// 相対座標を回転させて、回転後の相対座標を取得する
-	VECTOR cameraLocalRotPos = VTransform(FOLLOW_CAMERA_LOCAL_POS, mat);
+								 // 追従対象から注視点への相対座標
+	VECTOR cameraLocalRotPos = VTransform(VGet(-550, 0, -900), mat);
 
 	// ズームを適用
 	cameraLocalRotPos = VScale(cameraLocalRotPos, zoomDistance_);
