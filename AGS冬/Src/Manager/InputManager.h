@@ -49,6 +49,8 @@ public:
 		R_TRIGGER,
 		L_TRIGGER,
 		START,
+		BACK,
+		RB,
 		MAX
 	};
 

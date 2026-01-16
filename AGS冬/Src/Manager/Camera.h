@@ -27,6 +27,8 @@ public:
 		FREE, // フリーモード
 		FOLLOW, // 追従モード
 		VECTORY, // クリアカメラ
+		TITLE_1, // タイトル画面用カメラ1
+		TITLE_2, // タイトル画面用カメラ2
 	};
 
 	// コンストラクタ
@@ -101,6 +103,16 @@ private:
 	float zoomDistance_ = 1.0f;    // 1.0fが標準、0.5fで半分の距離、2.0fで2倍遠く
 	float zoomTarget_ = 1.0f;      // ターゲットズーム距離
 	float zoomSpeed_ = 0.05f;      // ズーム速度
+
+	
+	VECTOR startPos_;
+	VECTOR startTarget_;
+	VECTOR goalPos_;
+	VECTOR goalTarget_;
+
+	float transitionTimer_ = 0.0f;
+	float transitionTime_ = 60.0f; // 60フレーム
+	bool isTransition_ = false;
 
 	// カメラを初期位置に戻す
 	void SetDefault(void);

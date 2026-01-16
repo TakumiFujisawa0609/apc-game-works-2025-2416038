@@ -71,7 +71,7 @@ void GameScene::Update(void)
 	else if(isClear_)
 	{
 		// カメラをズームさせる
-		SceneManager::GetInstance()->GetCamera()->SetZoomTarget(0.5f); // プレイヤーに近づく
+		SceneManager::GetInstance()->GetCamera()->SetZoomTarget(0.3f); // プレイヤーに近づく
 
 		SceneManager::GetInstance()->GetCamera()->ChangeMode(Camera::MODE::VECTORY);
 	}
@@ -86,7 +86,7 @@ void GameScene::Update(void)
 	if (isGameOver_ || isClear_)
 	{
 		if (ins.IsTrgDown(KEY_INPUT_RETURN) ||
-			ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::B))
+			ins.IsPadBtnTrgDown(InputManager::JOYPAD_NO::PAD1, InputManager::JOYPAD_BTN::A))
 		{
 			SceneManager::GetInstance()->ChangeScene(SceneManager::SCENE_ID::TITLE);
 		}
@@ -147,8 +147,11 @@ void GameScene::Draw(void)
 
 	if (!isClear_ || !isGameOver_) collision_->Draw();
 
-	// hp表示
-	hpManager_->Draw();
+	if (!isClear_)
+	{
+		DrawTime(); // 制限時間
+		hpManager_->Draw(); // HP
+	};
 
 	//SpotLight();
 
@@ -164,9 +167,6 @@ void GameScene::Draw(void)
 	// グリッド線
 	//grid_->Draw();
 
-	// 制限時間描画
-	DrawTime();
-
 	SetFontSize(30);
 	if (isPaused_)
 	{
@@ -176,17 +176,20 @@ void GameScene::Draw(void)
 	// --- クリア表示 ---
 	if (isClear_)
 	{
-		/*SetFontSize(45);
-		DrawFormatString(300, 240, GetColor(255, 255, 0), "CLEAR");
+		DrawFormatStringToHandle(
+			720, 46,
+			GetColor(255, 255, 255),
+			funwariFontHandle_,
+			"GAME CLEAR");
 
 		if (GetJoypadNum() == 0)
 		{
-			DrawFormatString(310, 480, GetColor(255, 255, 0), "Enterでタイトルへ");
+			DrawFormatString(1600, 1000, GetColor(255, 255, 0), "Enterでタイトルへ");
 		}
 		else
 		{
-			DrawFormatString(310, 480, GetColor(255, 255, 0), "Bでタイトルへ");
-		}*/
+			DrawFormatString(1630, 1000, GetColor(255, 255, 0), "Aでタイトルへ");
+		}
 	}
 	
 
@@ -196,16 +199,21 @@ void GameScene::Draw(void)
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
 		DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-		SetFontSize(39);
-		DrawFormatString(430, 240, GetColor(255, 255, 0), "GAME OVER");
+		SetFontSize(30);
+
+		DrawFormatStringToHandle(
+			725, 46,
+			GetColor(255, 255, 255),
+			funwariFontHandle_,
+			"GAME OVER");
 
 		if (GetJoypadNum() == 0)
 		{
-			DrawFormatString(560, 480, GetColor(255, 255, 0), "Enterでタイトルへ→");
+			DrawFormatString(1600, 1000, GetColor(255, 255, 0), "Enterでタイトルへ");
 		}
 		else
 		{
-			DrawFormatString(620, 480, GetColor(255, 255, 0), "Bでタイトルへ→");
+			DrawFormatString(1630, 1000, GetColor(255, 255, 0), "Aでタイトルへ");
 		}
 	}
 }
@@ -292,8 +300,7 @@ void GameScene::DrawPauseMenu()
 {
 	const char* menu[] = { "GAME", "OPTION", "TITLE" };
 
-	// 半透明背景
-	DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE);
+	// 画面中央に半透明黒
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
 	DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);

@@ -1,6 +1,7 @@
 #pragma once
 #include "SceneBase.h"
 class Camera;
+class Player;
 
 class TitleScene : public SceneBase
 {
@@ -20,6 +21,7 @@ public:
 
 private:
 	Camera* camera_;
+	Player* player_;
 
 	void UpdateMenu(void);
 	int cursorIndex_;   // ← メニューカーソル位置
@@ -34,4 +36,6 @@ private:
 	int funwariFontHandle_;
 
 	VECTOR pointLightPos_ = { 600.0f, 550.0f, 500.0f };
+
+	bool isGameStart_ = false;
 };

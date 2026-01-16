@@ -285,19 +285,43 @@ InputManager::JOYPAD_IN_STATE InputManager::GetJPadInputState(JOYPAD_NO no)
 		ret.ButtonsNew[idx] = d.ButtonsButtons[0];// A
 
 		//idx = static_cast<int>(JOYPAD_BTN::TOP);
-		//ret.ButtonsNew[idx] = d.ButtonsButtons[4];// Å™
+		//ret.ButtonsNew[idx] = d.ButtonsButtons[3];// TOP
 
-		idx = static_cast<int>(JOYPAD_BTN::LEFT);
-		ret.ButtonsNew[idx] = d.ButtonsButtons[5];// Å©
+		//idx = static_cast<int>(JOYPAD_BTN::BACK);
+		//ret.ButtonsNew[idx] = d.ButtonsButtons[5];// BACK
 
-		idx = static_cast<int>(JOYPAD_BTN::RIGHT);
-		ret.ButtonsNew[idx] = d.ButtonsButtons[6];// Å®
+		//idx = static_cast<int>(JOYPAD_BTN::RB);
+		//ret.ButtonsNew[idx] = d.ButtonsButtons[6];// RB
+
+		//idx = static_cast<int>(JOYPAD_BTN::LEFT);
+		//ret.ButtonsNew[idx] = d.ButtonsButtons[5];// BACK
 
 		//idx = static_cast<int>(JOYPAD_BTN::DOWN);
-		//ret.ButtonsNew[idx] = d.ButtonsButtons[7];// Å´
+		//ret.ButtonsNew[idx] = d.ButtonsButtons[1];// DOWN
 
 		idx = static_cast<int>(JOYPAD_BTN::START);
 		ret.ButtonsNew[idx] = d.ButtonsButtons[7];// START
+
+		////idx = static_cast<int>(JOYPAD_BTN::RIGHT);
+		////ret.ButtonsNew[idx] = d.ButtonsButtons[8];// PushLeftStick
+
+		////idx = static_cast<int>(JOYPAD_BTN::RIGHT);
+		////ret.ButtonsNew[idx] = d.ButtonsButtons[9];// PushRightStick
+
+		//idx = static_cast<int>(JOYPAD_BTN::RIGHT);
+		//ret.ButtonsNew[idx] = d.ButtonsButtons[10];// âΩÇ‡Ç»Çµ
+
+		idx = static_cast<int>(JOYPAD_BTN::TOP);
+		ret.ButtonsNew[(int)JOYPAD_BTN::TOP] = x.Buttons[XINPUT_BUTTON_DPAD_UP];
+
+		idx = static_cast<int>(JOYPAD_BTN::RIGHT);
+		ret.ButtonsNew[(int)JOYPAD_BTN::RIGHT] = x.Buttons[XINPUT_BUTTON_DPAD_RIGHT];
+
+		idx = static_cast<int>(JOYPAD_BTN::DOWN);
+		ret.ButtonsNew[(int)JOYPAD_BTN::DOWN] = x.Buttons[XINPUT_BUTTON_DPAD_DOWN];
+
+		idx = static_cast<int>(JOYPAD_BTN::LEFT);
+		ret.ButtonsNew[(int)JOYPAD_BTN::LEFT] = x.Buttons[XINPUT_BUTTON_DPAD_LEFT];
 
 		idx = static_cast<int>(JOYPAD_BTN::R_TRIGGER);
 		ret.ButtonsNew[idx] = x.RightTrigger;// R_TRIGGER
@@ -327,17 +351,17 @@ InputManager::JOYPAD_IN_STATE InputManager::GetJPadInputState(JOYPAD_NO no)
 		// Å†  ÅZ
 		//   Å~
 
-		idx = static_cast<int>(JOYPAD_BTN::TOP);
-		ret.ButtonsNew[idx] = d.ButtonsButtons[3];// Å¢
+		//idx = static_cast<int>(JOYPAD_BTN::TOP);
+		//ret.ButtonsNew[idx] = d.ButtonsButtons[3];// Å¢
 
-		idx = static_cast<int>(JOYPAD_BTN::LEFT);
-		ret.ButtonsNew[idx] = d.ButtonsButtons[0];// Å†
+		//idx = static_cast<int>(JOYPAD_BTN::LEFT);
+		//ret.ButtonsNew[idx] = d.ButtonsButtons[0];// Å†
 
-		idx = static_cast<int>(JOYPAD_BTN::RIGHT);
-		ret.ButtonsNew[idx] = d.ButtonsButtons[2];// ÅZ
+		//idx = static_cast<int>(JOYPAD_BTN::RIGHT);
+		//ret.ButtonsNew[idx] = d.ButtonsButtons[2];// ÅZ
 
-		idx = static_cast<int>(JOYPAD_BTN::DOWN);
-		ret.ButtonsNew[idx] = d.ButtonsButtons[1];// Å~
+		//idx = static_cast<int>(JOYPAD_BTN::DOWN);
+		//ret.ButtonsNew[idx] = d.ButtonsButtons[1];// Å~
 
 		// ç∂ÉXÉeÉBÉbÉN
 		ret.AKeyLX = d.X;

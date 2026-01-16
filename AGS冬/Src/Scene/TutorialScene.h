@@ -20,5 +20,6 @@ public:
 
 private:
 
-	int image_;
+	int tutorialImg_[3];
+	int pageIndex_;   // © ¡‰½ƒy[ƒW–Ú‚©
 };

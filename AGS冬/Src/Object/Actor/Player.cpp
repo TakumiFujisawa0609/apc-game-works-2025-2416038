@@ -485,7 +485,7 @@ void Player::InitTransform(void)
 	localAngles_ = { 0.0f, AsoUtility::Deg2RadF(180.0f), 0.0f };
 
 	// ˆÊ’u
-	pos_ = VGet(150.0f, 0.0f, 150.0f);
+	pos_ = VGet( 300.0f, 0.0f, 300.0f );
 
 	// “–‚½‚è”»’è‚ğì¬
 	startCapsulePos_ = { 0.0f,110,0.0f };

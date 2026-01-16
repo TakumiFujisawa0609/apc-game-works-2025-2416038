@@ -2,6 +2,7 @@
 #include "../Manager/SceneManager.h"
 #include "../Manager/Camera.h"
 #include "../Utility/AsoUtility.h"
+#include "../Object/Actor/Player.h"
 #include "TitleScene.h"
 
 TitleScene::TitleScene(void)
@@ -16,9 +17,14 @@ TitleScene::~TitleScene(void)
 
 void TitleScene::Init(void)
 {
+    SetBackgroundColor(0, 0, 0);
+
     // カメラ
     camera_ = SceneManager::GetInstance()->GetCamera();
     camera_->ChangeMode(Camera::MODE::FIXED_POINT);
+
+    player_ = new Player();
+    player_->Init();
 
     // テレビモデル読み込み
 	tvModelId_ = MV1LoadModel("Data/Model/Stage/TV.mv1");
@@ -44,7 +50,6 @@ void TitleScene::Init(void)
 
 void TitleScene::Update(void)
 {
-    SetBackgroundColor(0, 0, 0);
 
 	// メニュー更新
 	UpdateMenu();
@@ -60,19 +65,23 @@ void TitleScene::Update(void)
 void TitleScene::Draw(void)
 {
     MV1DrawModel(tvModelId_);
-	MV1DrawModel(floorModelId_);
+    MV1DrawModel(floorModelId_);
+
+    //player_->Draw();
 
     const char* menu[] = { "GAME START", "TUTORIAL", "EXIT" };
     for (int i = 0; i < 3; i++)
     {
         int color = (i == cursorIndex_) ? GetColor(255, 255, 0) : GetColor(255, 255, 255);
-;
-        DrawFormatStringToHandle(
-            1270, 270 + i * 200,
-            color,
-            funwariFontHandle_,
-            menu[i]
-        );
+
+        if (!isGameStart_)
+        {
+            DrawFormatStringToHandle(
+                1270, 270 + i * 200,
+                color,
+                funwariFontHandle_,
+                menu[i]);
+        }
     }
 
     //ライト設定
@@ -92,6 +101,9 @@ void TitleScene::Release(void)
 {
 	MV1DeleteModel(tvModelId_);
 	MV1DeleteModel(floorModelId_);
+
+    player_->Release();
+	delete player_;
 }
 
 void TitleScene::UpdateMenu(void)
@@ -136,9 +148,9 @@ void TitleScene::UpdateMenu(void)
         switch (cursorIndex_)
         {
         case 0: // GAME START
-            SceneManager::GetInstance()->ChangeScene(SceneManager::SCENE_ID::TUTORIAL);
+			isGameStart_ = true;
+            SceneManager::GetInstance()->ChangeScene(SceneManager::SCENE_ID::GAME);
             break;
-
         case 1: // Tutprial
             SceneManager::GetInstance()->ChangeScene(SceneManager::SCENE_ID::TUTORIAL);
             break;

@@ -180,23 +180,29 @@ void Camera::SetBeforeDrawVictory(void)
 
 	// プレイヤー座標と回転
 	VECTOR playerPos = follow_->GetPos();
+	playerPos.y += 50.0f;
 	float playerRotY = follow_->GetRot().y;
 
 	// プレイヤー正面方向のベクトル
 	VECTOR forward = VGet(sinf(playerRotY), 0.0f, cosf(playerRotY));
 
 	// カメラ位置：プレイヤーの正面の逆方向 + 高さ
-	float distance = 500.0f * zoomDistance_; // 距離調整
-	float height = 150.0f;                  // 高さ調整
+	float distance = 420.0f * zoomDistance_; // 距離調整
 	VECTOR offset = VScale(forward, distance);
-	offset.y += height;
-	pos_ = VAdd(playerPos, offset);
 
+	pos_ = VAdd(playerPos, offset);
 	// 注視点はプレイヤー
 	targetPos_ = playerPos;
 
 	// 上方向ベクトル
 	VECTOR up = VGet(0.0f, 1.0f, 0.0f);
+
+	//// --- カメラ基準の左方向 ---
+	//VECTOR camForward = VNorm(VSub(targetPos_, pos_));
+	//VECTOR right = VNorm(VCross(up, camForward));
+
+	//float sideOffset = -50.0f; 
+	//pos_ = VAdd(pos_, VScale(right, sideOffset));
 
 	// カメラ角度を自動計算
 	VECTOR dir = VSub(targetPos_, pos_);
