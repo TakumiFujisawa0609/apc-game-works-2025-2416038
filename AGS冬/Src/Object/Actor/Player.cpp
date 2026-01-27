@@ -8,6 +8,10 @@
 #include "Player.h"
 
 Player::Player(void)
+	:
+	wayPoints_(),
+	activeWayPointIndex_(0),
+	nextWayPoint_(AsoUtility::VECTOR_ZERO)
 {
 }
 
@@ -530,6 +534,7 @@ void Player::InitAnimation(void)
 
 void Player::InitPost(void)
 {
+	// ジャンプ状態初期化
 	jumpState_ = JumpState::Ground;
 
 	// ジャンプ力の初期化
@@ -541,4 +546,7 @@ void Player::InitPost(void)
 	halfH_ = 80.0f;
 
 	hp_ = MAX_HP;
+
+	// 巡回ルート
+
 }
