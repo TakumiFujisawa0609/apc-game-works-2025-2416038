@@ -151,6 +151,13 @@ protected:
 
 	bool isRespawn_ = true;
 
+	// 巡回ルート座標
+	std::vector<VECTOR> wayPoints_;
+	// 現在、移動先としている巡回先ルートのインデックス
+	int activeWayPointIndex_;
+	// 現在、移動先としている巡回先座標
+	VECTOR nextWayPoint_;
+
 private:
 };
 
