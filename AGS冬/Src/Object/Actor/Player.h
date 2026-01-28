@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include <DxLib.h>
 #include "ActorBase.h"
 
@@ -89,6 +90,8 @@ public:
 	// HPの取得
 	int GetHp(void);
 
+	void SetPos(VECTOR pos);
+
 	// カプセルの当たり判定を取得
 	const VECTOR& GetStartCapsulePos(void) const { return startCapsulePos_; }
 	const VECTOR& GetEndCapsulePos(void) const { return endCapsulePos_; }
@@ -144,6 +147,9 @@ protected:
 	void DrawVictory(void);
 	void DrawTitle(void);
 
+	// 巡回ルートの移動方向を設定する
+	void SetMoveDirPatrol(void);
+
 	bool isJump_;
 	float jumpPow_;
 
@@ -159,5 +165,8 @@ protected:
 	VECTOR nextWayPoint_;
 
 private:
+
+	// ウェイポイントに到達したか
+	bool reachedWayPoint_ = false;
 };
 

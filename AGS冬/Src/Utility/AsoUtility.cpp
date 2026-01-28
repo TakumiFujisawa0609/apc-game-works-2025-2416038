@@ -370,6 +370,24 @@ double AsoUtility::Distance(const VECTOR& v1, const VECTOR& v2)
     return sqrt(pow(v2.x - v1.x, 2) + pow(v2.y - v1.y, 2) + pow(v2.z - v1.z, 2));
 }
 
+bool AsoUtility::IsHitSphere(const VECTOR& pos1, const VECTOR& pos2, float radius2)
+{
+    // “_‚Æ‹…‘Ì‚ÌÕ“Ë”»’è
+    bool ret = false;
+
+    // À•W‚Ì·‚©‚ç‚¨Œİ‚¢‚Ì‹——£‚ğæ‚é
+    VECTOR diff = VSub(pos2, pos1);
+
+    // O•½•û‚Ì’è—‚Å”äŠr(SqrMagnitude‚Æ“¯‚¶)
+    float dis = (diff.x * diff.x) + (diff.y * diff.y) + (diff.z * diff.z);
+    if (dis < (radius2 * radius2))
+    {
+        ret = true;
+    }
+
+    return ret;
+}
+
 bool AsoUtility::IsHitSpheres(const VECTOR& pos1, float radius1, const VECTOR& pos2, float radius2)
 {
     // ‹…‘Ì“¯m‚ÌÕ“Ë”»’è

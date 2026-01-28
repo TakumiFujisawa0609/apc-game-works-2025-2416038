@@ -25,6 +25,8 @@ void TitleScene::Init(void)
 
     player_ = new Player();
     player_->Init();
+	player_->SetPos(VGet(1510, 100, 600));
+	player_->ChangeState(Player::STATE::TITLE);
 
     // テレビモデル読み込み
 	tvModelId_ = MV1LoadModel("Data/Model/Stage/TV.mv1");
@@ -53,13 +55,15 @@ void TitleScene::Update(void)
 
 	// メニュー更新
 	UpdateMenu();
+
+    player_->Update();
     
-    //if (CheckHitKey(KEY_INPUT_W)) { pointLightPos_.z += 30; }
-    //if (CheckHitKey(KEY_INPUT_A)) { pointLightPos_.x -= 30; }
-    //if (CheckHitKey(KEY_INPUT_S)) { pointLightPos_.z -= 30; }
-    //if (CheckHitKey(KEY_INPUT_D)) { pointLightPos_.x += 30; }
-    //if (CheckHitKey(KEY_INPUT_UP)) { pointLightPos_.y += 30; }
-    //if (CheckHitKey(KEY_INPUT_DOWN)) { pointLightPos_.y -= 30; }
+    if (CheckHitKey(KEY_INPUT_W)) { testPos_.z += 30; }
+    if (CheckHitKey(KEY_INPUT_A)) { testPos_.x -= 30; }
+    if (CheckHitKey(KEY_INPUT_S)) { testPos_.z -= 30; }
+    if (CheckHitKey(KEY_INPUT_D)) { testPos_.x += 30; }
+    if (CheckHitKey(KEY_INPUT_UP)) { testPos_.y += 30; }
+    if (CheckHitKey(KEY_INPUT_DOWN)) { testPos_.y -= 30; }
 }
 
 void TitleScene::Draw(void)
@@ -67,7 +71,7 @@ void TitleScene::Draw(void)
     MV1DrawModel(tvModelId_);
     MV1DrawModel(floorModelId_);
 
-    //player_->Draw();
+    player_->Draw();
 
     const char* menu[] = { "GAME START", "TUTORIAL", "EXIT" };
     for (int i = 0; i < 3; i++)
@@ -90,11 +94,14 @@ void TitleScene::Draw(void)
         1000.0f, 0.000f, 0.001f, 0.000f
     );
 
- //   // ライト座標
- //   DrawFormatString(10, 10, GetColor(255, 255, 255),
- //       "Light Pos X: %.1f Y: %.1f Z: %.1f",
- //       pointLightPos_.x, pointLightPos_.y, pointLightPos_.z
-	//);
+    DrawSphere3D(testPos_, 50.0f, 16,
+		GetColor(255, 255, 0), GetColor(255, 255, 0), false);
+
+    // ライト座標
+    DrawFormatString(10, 10, GetColor(255, 255, 255),
+        "Pos X: %.1f Y: %.1f Z: %.1f",
+        testPos_.x, testPos_.y, testPos_.z
+	);
 }
 
 void TitleScene::Release(void)

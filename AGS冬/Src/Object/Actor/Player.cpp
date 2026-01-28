@@ -218,6 +218,12 @@ int Player::GetHp(void)
 	return hp_;
 }
 
+void Player::SetPos(VECTOR pos)
+{
+	pos_ = pos;
+	MV1SetPosition(modelId_, pos_);
+}
+
 void Player::CollisionStage(VECTOR pos)
 {
 	// 衝突判定時に指定座標に押し戻す
@@ -255,7 +261,7 @@ void Player::ProcessMove(void)
 
 	}
 
-	// WASDでカメラを移動させる
+	// WASDで移動させる
 	const float movePow = 5.0f;
 
 	if (!AsoUtility::EqualsVZero(dir))
@@ -375,6 +381,31 @@ void Player::ChangeVictory(void)
 
 void Player::ChangeTitle(void)
 {
+	MV1SetScale(modelId_, VGet(2.5f, 2.5f, 2.5f));
+
+	// マテリアルをすべてエミッシブに設定
+	int materialNum = MV1GetMaterialNum(modelId_);
+	for (int i = 0; i < materialNum; ++i)
+	{
+		MV1SetMaterialDifColor(modelId_, i, GetColorF(1.0f, 1.0f, 1.0f, 1.0)); // 拡散反射
+		MV1SetMaterialSpcColor(modelId_, i, GetColorF(1.0f, 1.0f, 1.0f, 0.01f)); // 鏡面反射
+		MV1SetMaterialEmiColor(modelId_, i, GetColorF(1.0f, 1.0f, 1.0f, 0.01f)); // 自発光
+		MV1SetMaterialAmbColor(modelId_, i, GetColorF(1.0f, 1.0f, 1.0f, 0.01f)); // 環境光
+	}
+
+
+	// 次の巡回ポイント更新
+	nextWayPoint_ = wayPoints_[activeWayPointIndex_];
+
+	// 巡回ルートの移動方向を設定
+	SetMoveDirPatrol();
+ 
+	// 移動スピード
+	moveSpeed_ = 5.0f;
+
+	// 歩きアニメーション再生
+	animationController_->Play(
+		static_cast<int>(ANIM_TYPE::RUN), true);
 }
 
 void Player::UpdateStanby(void)
@@ -427,6 +458,38 @@ void Player::UpdateVictory(void)
 
 void Player::UpdateTitle(void)
 {
+	// 巡回ポイントとの球体衝突判定（半径５０．０ｆくらい）
+	bool isHit = AsoUtility::IsHitSphere(pos_, nextWayPoint_, 50.0f);
+
+	if (isHit && !reachedWayPoint_)
+	{
+		// 巡回ポイントインデックス更新
+		activeWayPointIndex_++;
+
+		if (activeWayPointIndex_ >= wayPoints_.size())
+		{
+			activeWayPointIndex_ = 0; // 巡回リセット
+			nextWayPoint_ = wayPoints_[activeWayPointIndex_]; // 巡回ポイント更新
+
+			// 最初の巡回ポイントへ戻る
+			pos_ = wayPoints_[activeWayPointIndex_];
+
+			return;
+		}
+
+		nextWayPoint_ = wayPoints_[activeWayPointIndex_];
+		reachedWayPoint_ = true;
+	}
+	if (!isHit)
+	{
+		reachedWayPoint_ = false;
+	}
+
+	// 巡回ルートの移動方向を設定
+	SetMoveDirPatrol();
+
+	// 移動
+	pos_ = VAdd(pos_, VScale(moveDir_, moveSpeed_));
 }
 
 void Player::DrawStanby(void)
@@ -468,6 +531,32 @@ void Player::DrawVictory(void)
 
 void Player::DrawTitle(void)
 {
+	// 巡回ルート描画
+	for (const auto& point : wayPoints_)
+	{
+		DrawSphere3D(
+			point, 50.0f, 10,
+			0x0000ff, 0x0000ff, false);
+	}
+
+	DrawFormatString(
+		0, 100, 0xffffff,
+		"巡回ポイントインデックス：%d",
+		activeWayPointIndex_);
+}
+
+void Player::SetMoveDirPatrol(void)
+{
+	// 巡回先座標XZ
+	VECTOR tmpPos = nextWayPoint_;
+	tmpPos.y = 0.0f;
+
+	// 現在地座標XZ
+	VECTOR pos = pos_;
+	pos.y = 0.0f;
+
+	// XZ平面上の移動方向を計算
+	moveDir_ = VNorm(VSub(tmpPos, pos));
 }
 
 void Player::InitLoad(void)
@@ -545,5 +634,8 @@ void Player::InitPost(void)
 	hp_ = MAX_HP;
 
 	// 巡回ルート
-
+	wayPoints_.emplace_back(VGet(1510, 100, 600));
+	wayPoints_.emplace_back(VGet(1420, 100, 70));
+	wayPoints_.emplace_back(VGet(1020, 100, -150));
+	wayPoints_.emplace_back(VGet(-120, 100, -150));
 }

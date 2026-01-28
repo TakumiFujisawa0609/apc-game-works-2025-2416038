@@ -37,5 +37,7 @@ private:
 
 	VECTOR pointLightPos_ = { 600.0f, 550.0f, 500.0f };
 
+	VECTOR testPos_ = { 0.0f, 0.0f, 0.0f };
+
 	bool isGameStart_ = false;
 };

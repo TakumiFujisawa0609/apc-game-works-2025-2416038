@@ -46,6 +46,10 @@ protected:
 
 	// 移動方向
 	VECTOR moveDir_;
+	// 移動スピード
+	float moveSpeed_;
+	// 移動量
+	VECTOR movePow_;
 
 	// カプセルの当たり判定座標
 	VECTOR startCapsulePos_;
