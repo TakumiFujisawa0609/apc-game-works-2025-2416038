@@ -45,7 +45,7 @@ void GameScene::Init(void)
 	hpManager_->Init();
 	collision_->Init(player_, stageManager_, gimmickManager_);
 
-	// ゲームおーば判定
+	// ゲームオーバー判定
 	isGameOver_ = false;
 
 	isClear_ = false;
@@ -129,6 +129,14 @@ void GameScene::Update(void)
 	{
 		UpdatePauseMenu();
 		return;
+	}
+
+	// ヒットストップ中はタイマー停止
+	if (SceneManager::GetInstance()->IsHitStop()){
+		timer_->Pause();   // ★タイマー停止
+	}
+	else{
+		timer_->Resume();  // ★タイマー再開
 	}
 
 	stageManager_->Update();

@@ -60,6 +60,10 @@ public:
 	// カメラの取得
 	Camera* GetCamera(void) const;
 
+	// ヒットストップ
+	void StartHitStop(int frame);
+	bool IsHitStop() const;
+
 private:
 
 	// 静的インスタンス
@@ -86,6 +90,9 @@ private:
 	// デルタタイム
 	std::chrono::system_clock::time_point preTime_;
 	float deltaTime_;
+
+	// ヒットストップ用カウンター
+	int hitStopFrame_ = 0;
 
 	// デフォルトコンストラクタをprivateにして、
 	// 外部から生成できない様にする

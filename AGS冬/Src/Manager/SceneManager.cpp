@@ -112,6 +112,12 @@ void SceneManager::Update(void)
 		return;
 	}
 
+	// ヒットストップ処理
+	if (hitStopFrame_ > 0)
+	{
+		hitStopFrame_--;
+	}
+
 	// デルタタイム
 	auto nowTime = std::chrono::system_clock::now();
 	deltaTime_ = static_cast<float>(
@@ -215,6 +221,20 @@ float SceneManager::GetDeltaTime(void) const
 Camera* SceneManager::GetCamera(void) const
 {
 	return camera_;
+}
+
+void SceneManager::StartHitStop(int frame)
+{
+	// 強いヒットを優先
+	if (hitStopFrame_ < frame)
+	{
+		hitStopFrame_ = frame;
+	}
+}
+
+bool SceneManager::IsHitStop() const
+{
+	return hitStopFrame_ > 0;
 }
 
 void SceneManager::ResetDeltaTime(void)

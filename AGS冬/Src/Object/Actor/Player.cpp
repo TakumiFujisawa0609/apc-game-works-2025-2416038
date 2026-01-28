@@ -22,13 +22,9 @@ void Player::Update(void)
 	{
 		cntDamage_++;
 	}
-	
-	// --- ヒットストップ中は移動や入力を止める ---
-	if (hitStopTimer_ > 0)
-	{
-		hitStopTimer_--;
-		return;
-	}
+
+	// --- ヒットストップ中はロジック停止 ---
+	if (SceneManager::GetInstance()->IsHitStop()) return;
 
 	ActorBase::Update();
 
@@ -197,7 +193,8 @@ void Player::Damage(int damage)
 
 	cntDamage_ = 0;	// ダメージカウンター初期化
 
-	hitStopTimer_ = 50;	// プレイヤーだけヒットストップ開始
+	// ヒットストップ開始
+	SceneManager::GetInstance()->StartHitStop(50);
 
 	ChangeState(STATE::DAMAGE);
 
