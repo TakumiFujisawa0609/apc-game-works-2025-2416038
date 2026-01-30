@@ -273,16 +273,16 @@ InputManager::JOYPAD_IN_STATE InputManager::GetJPadInputState(JOYPAD_NO no)
 		//   A
 
 		idx = static_cast<int>(JOYPAD_BTN::Y);
-		ret.ButtonsNew[idx] = d.ButtonsButtons[3];// Y
+		ret.ButtonsNew[idx] = d.Buttons[3];// Y
 
 		idx = static_cast<int>(JOYPAD_BTN::X);
-		ret.ButtonsNew[idx] = d.ButtonsButtons[2];// X
+		ret.ButtonsNew[idx] = d.Buttons[2];// X
 
 		idx = static_cast<int>(JOYPAD_BTN::B);
-		ret.ButtonsNew[idx] = d.ButtonsButtons[1];// B
+		ret.ButtonsNew[idx] = d.Buttons[1];// B
 
 		idx = static_cast<int>(JOYPAD_BTN::A);
-		ret.ButtonsNew[idx] = d.ButtonsButtons[0];// A
+		ret.ButtonsNew[idx] = d.Buttons[0];// A
 
 		//idx = static_cast<int>(JOYPAD_BTN::TOP);
 		//ret.ButtonsNew[idx] = d.ButtonsButtons[3];// TOP
@@ -300,7 +300,7 @@ InputManager::JOYPAD_IN_STATE InputManager::GetJPadInputState(JOYPAD_NO no)
 		//ret.ButtonsNew[idx] = d.ButtonsButtons[1];// DOWN
 
 		idx = static_cast<int>(JOYPAD_BTN::START);
-		ret.ButtonsNew[idx] = d.ButtonsButtons[7];// START
+		ret.ButtonsNew[idx] = d.Buttons[7];// START
 
 		////idx = static_cast<int>(JOYPAD_BTN::RIGHT);
 		////ret.ButtonsNew[idx] = d.ButtonsButtons[8];// PushLeftStick

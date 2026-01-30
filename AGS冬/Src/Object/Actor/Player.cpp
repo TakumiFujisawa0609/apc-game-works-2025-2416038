@@ -534,9 +534,9 @@ void Player::DrawTitle(void)
 	// „‰ñƒ‹[ƒg•`‰æ
 	for (const auto& point : wayPoints_)
 	{
-		DrawSphere3D(
+		/*DrawSphere3D(
 			point, 50.0f, 10,
-			0x0000ff, 0x0000ff, false);
+			0x0000ff, 0x0000ff, false);*/
 	}
 
 	DrawFormatString(
