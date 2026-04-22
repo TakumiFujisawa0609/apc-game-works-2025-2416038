@@ -134,6 +134,8 @@ void GameScene::Update(void)
 	// ヒットストップ中はタイマー停止
 	if (SceneManager::GetInstance()->IsHitStop()){
 		timer_->Pause();   // ★タイマー停止
+		player_->Update();
+		return;
 	}
 	else{
 		timer_->Resume();  // ★タイマー再開

@@ -226,6 +226,7 @@ void GimmickFalling::UpdateWave2(void)
         // フェードアウト
         if (info.hasLanded && info.modelHandle >= 0) {
 
+            SoundManager::GetInstance()->PlayFallingObject();
             // 着地後の待機時間
             info.landTimer += 2.0f;
 
@@ -241,6 +242,8 @@ void GimmickFalling::UpdateWave2(void)
                     MV1DeleteModel(info.modelHandle);
                     info.modelHandle = -1;
                 }
+
+                SoundManager::GetInstance()->StopFallingObject();
             }
         }
 
@@ -295,6 +298,7 @@ void GimmickFalling::UpdateWave3(void)
         // フェードアウト
         if (info.hasLanded && info.modelHandle >= 0) {
 
+            SoundManager::GetInstance()->PlayFallingObject();
             // 着地後の待機時間
             info.landTimer += 2.0f;
 
@@ -310,6 +314,8 @@ void GimmickFalling::UpdateWave3(void)
                     MV1DeleteModel(info.modelHandle);
                     info.modelHandle = -1;
                 }
+
+                SoundManager::GetInstance()->StopFallingObject();
             }
         }
 
